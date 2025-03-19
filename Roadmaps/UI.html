@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI/UX Design Roadmap</title>
+  <style>
+    /* CSS Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #333, #555);
+      color: #fff;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    header p {
+      margin: 0.5rem 0 0;
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .tree {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+      padding: 1rem;
+    }
+
+    .tree ul {
+      list-style-type: none;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .tree ul li {
+      margin: 0;
+      padding: 10px 20px;
+      position: relative;
+    }
+
+    .tree ul li::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -10px;
+      width: 2px;
+      height: 100%;
+      background-color: #009688;
+    }
+
+    .tree ul li::after {
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: -10px;
+      width: 20px;
+      height: 2px;
+      background-color: #009688;
+    }
+
+    .tree ul li:last-child::before {
+      height: 20px;
+    }
+
+    /* Main Step Styling */
+    .tree ul > li > span {
+      background-color: #ff9800; /* Orange color for main steps */
+      border-color: #e65100; /* Darker orange for border */
+      color: #fff; /* White text for contrast */
+      font-weight: bold;
+    }
+
+    .tree ul li span {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #fff;
+      border: 2px solid #009688;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .tree ul li span:hover {
+      background-color: #009688;
+      color: #fff;
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #333, #555);
+      color: #fff;
+      margin-top: 2rem;
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Back Button Styles */
+    .back-button {
+      display: block;
+      width: 200px;
+      margin: 2rem auto;
+      padding: 12px 24px;
+      background-color: #009688;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .back-button:hover {
+      background-color: #00796b;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tree ul li {
+      animation: fadeIn 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    .tree ul li:nth-child(1) { animation-delay: 0.1s; }
+    .tree ul li:nth-child(2) { animation-delay: 0.2s; }
+    .tree ul li:nth-child(3) { animation-delay: 0.3s; }
+    .tree ul li:nth-child(4) { animation-delay: 0.4s; }
+    .tree ul li:nth-child(5) { animation-delay: 0.5s; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>UI/UX Design Roadmap</h1>
+    <p>From Zero to Advanced with Step-by-Step Projects</p>
+  </header>
+
+  <div class="tree">
+    <ul>
+      <!-- Step 1: UI/UX Basics -->
+      <li>
+        <span>Step 1: Learn UI/UX Basics</span>
+        <ul>
+          <li><span>What is UI/UX Design?</span></li>
+          <li><span>Design Principles (Balance, Contrast, Alignment)</span></li>
+          <li><span>User-Centered Design</span></li>
+          <li><span>Project: Redesign a Landing Page</span></li>
+        </ul>
+      </li>
+
+      <!-- Step 2: Wireframing and Prototyping -->
+      <li>
+        <span>Step 2: Wireframing and Prototyping</span>
+        <ul>
+          <li><span>Tools: Figma, Adobe XD, Sketch</span></li>
+          <li><span>Low-Fidelity vs High-Fidelity Wireframes</span></li>
+          <li><span>Interactive Prototypes</span></li>
+          <li><span>Project: Create a Wireframe for a Mobile App</span></li>
+        </ul>
+      </li>
+
+      <!-- Step 3: Visual Design -->
+      <li>
+        <span>Step 3: Learn Visual Design</span>
+        <ul>
+          <li><span>Typography and Color Theory</span></li>
+          <li><span>Iconography and Imagery</span></li>
+          <li><span>Design Systems and Style Guides</span></li>
+          <li><span>Project: Design a Style Guide for a Brand</span></li>
+        </ul>
+      </li>
+
+      <!-- Step 4: User Research -->
+      <li>
+        <span>Step 4: User Research</span>
+        <ul>
+          <li><span>User Personas and User Stories</span></li>
+          <li><span>Usability Testing</span></li>
+          <li><span>Surveys and Interviews</span></li>
+          <li><span>Project: Conduct a Usability Test for a Website</span></li>
+        </ul>
+      </li>
+
+      <!-- Step 5: Interaction Design -->
+      <li>
+        <span>Step 5: Learn Interaction Design</span>
+        <ul>
+          <li><span>Microinteractions</span></li>
+          <li><span>Animation Principles</span></li>
+          <li><span>Tools: Principle, After Effects</span></li>
+          <li><span>Project: Add Microinteractions to a Prototype</span></li>
+        </ul>
+      </li>
+
+      <!-- Step 6: Advanced UX Design -->
+      <li>
+        <span>Step 6: Advanced UX Design</span>
+        <ul>
+          <li><span>Information Architecture</span></li>
+          <li><span>Accessibility and Inclusive Design</span></li>
+          <li><span>UX Writing</span></li>
+          <li><span>Project: Redesign a Website for Accessibility</span></li>
+        </ul>
+      </li>
+
+      <!-- Step 7: Portfolio and Career -->
+      <li>
+        <span>Step 7: Build Your Portfolio</span>
+        <ul>
+          <li><span>Showcase Your Projects</span></li>
+          <li><span>Case Studies</span></li>
+          <li><span>Networking and Job Applications</span></li>
+          <li><span>Project: Create a UI/UX Design Portfolio</span></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Back Button -->
+  <a href="roadmaps.html" class="back-button">Back to Career Paths</a>
+
+  <footer>
+    <p>Happy Designing! 🚀</p>
+  </footer>
+
+  <script>
+    // JavaScript for Interactivity
+    document.addEventListener("DOMContentLoaded", function () {
+      const items = document.querySelectorAll(".tree ul li span");
+
+      items.forEach((item) => {
+        item.addEventListener("click", () => {
+          alert(`You clicked: ${item.textContent}`);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

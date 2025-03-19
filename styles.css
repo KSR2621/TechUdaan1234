@@ -1,0 +1,774 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: url('https://www.simplilearn.com/ice9/free_resources_article_thumb/top-7-steps-to-decide-the-right-career-path-ccr9-article.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 15px 20px;
+    color: white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 0 15px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.hamburger {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background: #555;
+}
+
+.career-paths {
+    background: #f9f9f9; /* Light background for the section */
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.career-paths h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+    color: #333;
+    font-weight: bold;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 20px;
+    justify-items: center;
+}
+
+.card {
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* Vibrant gradient */
+    padding: 25px;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: white; /* White text for contrast */
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.card h3 {
+    margin-top: 0;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.btn {
+    background: #ff9f43; /* Bright orange button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn:hover {
+    background: #ff7f00; /* Darker orange on hover */
+    transform: scale(1.05);
+}
+
+.show-more {
+    margin-top: 40px;
+}
+
+.show-more .btn {
+    background: #6a11cb; /* Purple gradient color */
+    padding: 12px 30px;
+    font-size: 18px;
+}
+
+.show-more .btn:hover {
+    background: #2575fc; /* Blue gradient color */
+}
+
+/* One-on-One Counseling Section */
+.counseling {
+    background: #fff;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.counseling .heading {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.counseling .sub-heading {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #555;
+}
+
+.experts-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.expert-card {
+    background-color: #ffeb3b;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    transition: transform 0.3s;
+}
+
+.expert-card:hover {
+    transform: scale(1.05);
+}
+
+.expert-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #2196f3;
+}
+
+.expert-name {
+    margin-top: 15px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.expert-info {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0;
+}
+
+.btn-info, .btn-show-more {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-info:hover, .btn-show-more:hover {
+    background-color: #555;
+}
+
+.btn-show-more {
+    margin-top: 20px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background: rgba(0, 0, 0, 0.9);
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-links li {
+        margin: 15px 0;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .show {
+        display: flex;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        max-width: 100%;
+    }
+
+    .counseling .heading {
+        font-size: 2rem;
+    }
+
+    .counseling .sub-heading {
+        font-size: 1rem;
+    }
+
+    .expert-card {
+        width: 90%;
+    }
+}
+
+/* Counseling Section */
+.counseling {
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Light gradient background */
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.counseling h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.counseling-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 20px;
+    justify-items: center;
+}
+
+.counselor-card {
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* Vibrant gradient background */
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: white; /* White text for contrast */
+}
+
+.counselor-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.counselor-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    object-fit: cover;
+    border: 4px solid white; /* White border around the image */
+}
+
+.counselor-card h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.counselor-card p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.counselor-card .btn {
+    background: #ff9f43; /* Bright orange button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.counselor-card .btn:hover {
+    background: #ff7f00; /* Darker orange on hover */
+    transform: scale(1.05);
+}
+
+.show-more-experts {
+    margin-top: 40px;
+}
+
+.show-more-experts .btn {
+    background: #6a11cb; /* Purple gradient color */
+    color: white;
+    padding: 12px 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.show-more-experts .btn:hover {
+    background: #2575fc; /* Blue gradient color */
+    transform: scale(1.05);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .counseling-container {
+        grid-template-columns: 1fr;
+    }
+
+    .counselor-card {
+        max-width: 100%;
+    }
+
+    .counseling h2 {
+        font-size: 28px;
+    }
+}
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+  
+  .testimonial-section {
+    text-align: center;
+    padding: 50px;
+    background-color: #ffffff;
+  }
+  
+  .testimonial-section h2 {
+    color: #2b2826;
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+  
+  .testimonial-slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .testimonial-slider img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    transition: transform 0.5s ease, width 0.5s ease, height 0.5s ease;
+    cursor: pointer;
+    opacity: 0.5;
+  }
+  
+  .testimonial-slider img.active {
+    width: 120px;
+    height: 120px;
+    border-color: #ff9800;
+    opacity: 1;
+    animation: bounce 2s infinite;
+  }
+  
+  .testimonial-slider img.hidden {
+    display: none;
+  }
+  
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+  
+  .testimonial-content {
+    margin: 30px auto;
+    max-width: 700px;
+    color: #333;
+  }
+  
+  .testimonial-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .testimonial-content .stars {
+    color: #ffc107;
+    margin: 10px 0;
+  }
+  
+  .testimonial-content .author {
+    margin-top: 10px;
+    font-style: italic;
+    color: #555;
+  }
+  
+  .navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .navigation button {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .navigation button:hover {
+    background-color: #e2530c;
+  }
+
+  
+
+  /* About Section */
+.about {
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* Vibrant gradient background */
+    padding: 80px 20px;
+    text-align: center;
+    color: white; /* White text for contrast */
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.about p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.about .btn {
+    background: #ff9f43; /* Bright orange button */
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.3s;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.about .btn:hover {
+    background: #ff7f00; /* Darker orange on hover */
+    transform: scale(1.05);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .about h2 {
+        font-size: 28px;
+    }
+
+    .about p {
+        font-size: 16px;
+    }
+
+    .about .btn {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+}
+
+
+
+/* Meet Our Team Section */
+.meet-our-team {
+    background: #f9f9f9; /* Light background for the section */
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.meet-our-team h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.team-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 20px;
+    justify-items: center;
+}
+
+.team-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.team-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.team-card img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    object-fit: cover;
+    border: 4px solid #6a11cb; /* Vibrant border around the image */
+}
+
+.team-card h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.team-card .job-title {
+    font-size: 18px;
+    color: #6a11cb; /* Vibrant color for job title */
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.team-card .description {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.team-card .btn {
+    background: #6a11cb; /* Vibrant purple button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.team-card .btn:hover {
+    background: #2575fc; /* Blue gradient color on hover */
+    transform: scale(1.05);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .team-container {
+        grid-template-columns: 1fr;
+    }
+
+    .team-card {
+        max-width: 100%;
+    }
+
+    .meet-our-team h2 {
+        font-size: 28px;
+    }
+} 
+
+/* Contact Us Section */
+.contact-us {
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* Vibrant gradient background */
+    padding: 80px 20px;
+    text-align: center;
+    color: white; /* White text for contrast */
+}
+
+.contact-us h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.contact-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-content p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.whatsapp-btn {
+    background: #25d366; /* WhatsApp green color */
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.whatsapp-btn img {
+    width: 24px;
+    height: 24px;
+}
+
+.whatsapp-btn:hover {
+    background: #128c7e; /* Darker green on hover */
+    transform: scale(1.05);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .contact-us h2 {
+        font-size: 28px;
+    }
+
+    .contact-content p {
+        font-size: 16px;
+    }
+
+    .whatsapp-btn {
+        font-size: 16px;
+        padding: 12px 24px;
+    }
+}
+
+
+
+/* Footer Section */
+.footer {
+    background: #333; /* Dark background for the footer */
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-bottom {
+    font-size: 14px;
+}

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile App Development Roadmap</title>
+  <style>
+    /* CSS Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #333, #555);
+      color: #fff;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    header p {
+      margin: 0.5rem 0 0;
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .tree {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+      padding: 1rem;
+    }
+
+    .tree ul {
+      list-style-type: none;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .tree ul li {
+      margin: 0;
+      padding: 10px 20px;
+      position: relative;
+    }
+
+    .tree ul li::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -10px;
+      width: 2px;
+      height: 100%;
+      background-color: #009688;
+    }
+
+    .tree ul li::after {
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: -10px;
+      width: 20px;
+      height: 2px;
+      background-color: #009688;
+    }
+
+    .tree ul li:last-child::before {
+      height: 20px;
+    }
+
+    /* Main Step Styling */
+    .tree ul > li > span {
+      background-color: #ff9800; /* Orange color for main steps */
+      border-color: #e65100; /* Darker orange for border */
+      color: #fff; /* White text for contrast */
+      font-weight: bold;
+    }
+
+    .tree ul li span {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #fff;
+      border: 2px solid #009688;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      color: #333;
+    }
+
+    .tree ul li span:hover {
+      background-color: #009688;
+      color: #fff;
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #333, #555);
+      color: #fff;
+      margin-top: 2rem;
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Back Button Styles */
+    .back-button {
+      display: block;
+      width: 200px;
+      margin: 2rem auto;
+      padding: 12px 24px;
+      background-color: #009688;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .back-button:hover {
+      background-color: #00796b;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tree ul li {
+      animation: fadeIn 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    .tree ul li:nth-child(1) { animation-delay: 0.1s; }
+    .tree ul li:nth-child(2) { animation-delay: 0.2s; }
+    .tree ul li:nth-child(3) { animation-delay: 0.3s; }
+    .tree ul li:nth-child(4) { animation-delay: 0.4s; }
+    .tree ul li:nth-child(5) { animation-delay: 0.5s; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mobile App Development Roadmap</h1>
+    <p>From Zero to Advanced with Step-by-Step Projects</p>
+  </header>
+
+  <div class="tree">
+    <ul>
+      <!-- Step 1: Introduction to Mobile Development -->
+      <li>
+        <span>Step 1: Introduction to Mobile Development</span>
+        <ul>
+          <li><span>Native vs Cross-Platform Development</span></li>
+          <li><span>Overview of Mobile Platforms (iOS, Android)</span></li>
+          <li><span>Setting Up Development Environment</span></li>
+          <li><span>Project: Build a Hello World App</span></li>
+        </ul>
+      </li>
+
+      <!-- Step 2: Learn a Programming Language -->
+      <li>
+        <span>Step 2: Learn a Programming Language</span>
+        <ul>
+          <li><span>Swift for iOS Development</span></li>
+          <li><span>Kotlin for Android Development</span></li>
+          <li><span>JavaScript for Cross-Platform (React Native)</span></li>
+          <li><span>Project: Build a Simple Calculator App</span></li>
+        </ul>
+      </li>
+
+      <!-- Step 3: UI/UX Design for Mobile Apps -->
+      <li>
+        <span>Step 3: UI/UX Design for Mobile Apps</span>
+        <ul>
+          <li><span>Mobile Design Principles</span></li>
+          <li><span>Tools: Figma, Sketch, Adobe XD</span></li>
+          <li><span>Responsive Design for Mobile</span></li>
+          <li><span>Project: Design a Weather App UI</span></li>
+        </ul>
+      </li>
+
+      <!-- Step 4: Native App Development -->
+      <li>
+        <span>Step 4: Native App Development</span>
+        <ul>
+          <li><span>iOS Development with SwiftUI</span></li>
+          <li><span>Android Development with Jetpack Compose</span></li>
+          <li><span>Core Features (Navigation, Storage, APIs)</span></li>
+          <li><span>Project: Build a Notes App</span></li>
+        </ul>
+      </li>
+
+      <!-- Step 5: Cross-Platform Development -->
+      <li>
+        <span>Step 5: Cross-Platform Development</span>
+        <ul>
+          <li><span>React Native Basics</span></li>
+          <li><span>Flutter Basics</span></li>
+          <li><span>State Management in Cross-Platform Apps</span></li>
+          <li><span>Project: Build a Todo App with React Native</span></li>
+        </ul>
+      </li>
+
+      <!-- Step 6: Backend Integration -->
+      <li>
+        <span>Step 6: Backend Integration</span>
+        <ul>
+          <li><span>REST APIs and GraphQL</span></li>
+          <li><span>Firebase for Mobile Apps</span></li>
+          <li><span>Authentication and Database Integration</span></li>
+          <li><span>Project: Build a Chat App with Firebase</span></li>
+        </ul>
+      </li>
+
+      <!-- Step 7: Advanced Topics -->
+      <li>
+        <span>Step 7: Advanced Topics</span>
+        <ul>
+          <li><span>Push Notifications</span></li>
+          <li><span>Offline Storage and Sync</span></li>
+          <li><span>Performance Optimization</span></li>
+          <li><span>Project: Build a News App with Offline Support</span></li>
+        </ul>
+      </li>
+
+      <!-- Step 8: Publishing and Monetization -->
+      <li>
+        <span>Step 8: Publishing and Monetization</span>
+        <ul>
+          <li><span>App Store Guidelines</span></li>
+          <li><span>Google Play Store Guidelines</span></li>
+          <li><span>Monetization Strategies (Ads, Subscriptions)</span></li>
+          <li><span>Project: Publish Your App on App Stores</span></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Back Button -->
+  <a href="roadmaps.html" class="back-button">Back to Career Paths</a>
+
+  <footer>
+    <p>Happy Coding! 🚀</p>
+  </footer>
+
+  <script>
+    // JavaScript for Interactivity
+    document.addEventListener("DOMContentLoaded", function () {
+      const items = document.querySelectorAll(".tree ul li span");
+
+      items.forEach((item) => {
+        item.addEventListener("click", () => {
+          alert(`You clicked: ${item.textContent}`);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

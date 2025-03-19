@@ -1,0 +1,149 @@
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f3f4f6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  
+  /* Heading Container */
+  .heading-container {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  /* Main Heading Style */
+  h2 {
+    font-size: 3rem;
+    color: #333;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+  }
+  
+  /* Card Grid Layout */
+  .roadmap-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px; /* More space between cards */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  
+  /* Card Container */
+  .card {
+    background: linear-gradient(135deg, #6d28d9, #2563eb);
+    color: #fff;
+    border-radius: 16px;
+    padding: 2rem 1.8rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Add Glow on Hover */
+  .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Card Title */
+  .card h3 {
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  
+  /* Card Description */
+  .card p {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Button Style */
+  .btn {
+    background-color: #ff9800;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+  }
+  
+  /* Button Hover Effect */
+  .btn:hover {
+    background-color: #e67e22;
+    transform: scale(1.05);
+  }
+  
+  /* Back Button Section */
+  .back-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+  
+  /* Back Button Styling */
+  .back-button {
+    background-color: #ff9800;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    text-decoration: none;
+  }
+  
+  /* Back Button Hover Effect */
+  .back-button:hover {
+    background-color: #e67e22;
+  }
+  
+  /* Mobile Responsive Design */
+  @media (max-width: 768px) {
+    .roadmap-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 0 10px;
+    }
+  
+    h2 {
+      font-size: 2.2rem;
+    }
+  
+    .card {
+      padding: 1.5rem 1.2rem;
+    }
+  }
+  
+  /* Small Screens (Mobile) */
+  @media (max-width: 480px) {
+    .roadmap-grid {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+  
+    h2 {
+      font-size: 1.8rem;
+    }
+  
+    .btn,
+    .back-button {
+      padding: 10px 20px;
+      font-size: 0.9rem;
+    }
+  }
+  
