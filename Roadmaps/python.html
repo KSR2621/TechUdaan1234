@@ -1,240 +1,1257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python Roadmap - Tree Diagram</title>
-  <style>
-    /* CSS Styles */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
-      color: #333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Learning Roadmap - Interactive Tree with Progress Tracking</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
-    header {
-      background: linear-gradient(135deg, #333, #555);
-      color: #fff;
-      padding: 2rem;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+        :root {
+            --neon-blue: #00f3ff;
+            --cyber-purple: #bc13fe;
+            --matrix-green: #00ff41;
+            --dark-bg: #0a0a0f;
+            --card-bg: rgba(15, 15, 25, 0.9);
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --gradient-1: linear-gradient(135deg, var(--neon-blue), var(--cyber-purple));
+            --gradient-2: linear-gradient(45deg, var(--matrix-green), var(--neon-blue));
+        }
 
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-      font-weight: bold;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    header p {
-      margin: 0.5rem 0 0;
-      font-size: 1.2rem;
-      opacity: 0.9;
-    }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
 
-    .tree {
-      display: flex;
-      justify-content: center;
-      margin-top: 2rem;
-      padding: 1rem;
-    }
+        /* Background Animations */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 243, 255, 0.1) 0%, transparent 70%);
+            animation: pulseGlow 5s ease-in-out infinite;
+            z-index: -1;
+        }
 
-    .tree ul {
-      list-style-type: none;
-      padding-left: 20px;
-      position: relative;
-    }
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M10 10 L90 90 M90 10 L10 90" stroke="%2300f3ff" stroke-width="1" opacity="0.3"/></svg>');
+            background-size: 20px 20px;
+            animation: glitchShift 2s linear infinite alternate;
+            z-index: -1;
+        }
 
-    .tree ul li {
-      margin: 0;
-      padding: 10px 20px;
-      position: relative;
-    }
+        /* Particle Animation */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
 
-    .tree ul li::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -10px;
-      width: 2px;
-      height: 100%;
-      background-color: #009688;
-    }
+        .particle {
+            position: absolute;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            animation: float 10s linear infinite;
+        }
 
-    .tree ul li::after {
-      content: "";
-      position: absolute;
-      top: 20px;
-      left: -10px;
-      width: 20px;
-      height: 2px;
-      background-color: #009688;
-    }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
 
-    .tree ul li:last-child::before {
-      height: 20px;
-    }
+        @keyframes pulseGlow {
+            0% { opacity: 0.1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.1; }
+        }
 
-    /* Main Step Styling */
-    .tree ul > li > span {
-      background-color: #ff9800; /* Orange color for main steps */
-      border-color: #e65100; /* Darker orange for border */
-      color: #fff; /* White text for contrast */
-      font-weight: bold;
-    }
+        @keyframes glitchShift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(5px, 5px); }
+        }
 
-    .tree ul li span {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #fff;
-      border: 2px solid #009688;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-      color: #333;
-    }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .tree ul li span:hover {
-      background-color: #009688;
-      color: #fff;
-      transform: translateY(-5px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-    }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      background: linear-gradient(135deg, #333, #555);
-      color: #fff;
-      margin-top: 2rem;
-      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
-    }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
 
-    /* Back Button Styles */
-    .back-button {
-      display: block;
-      width: 200px;
-      margin: 2rem auto;
-      padding: 12px 24px;
-      background-color: #009688;
-      color: #fff;
-      text-align: center;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    .back-button:hover {
-      background-color: #00796b;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-    }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
 
-    /* Animations */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+        /* Header */
+        header {
+            background: var(--gradient-1);
+            color: var(--text-primary);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 243, 255, 0.3);
+            position: relative;
+            z-index: 10;
+        }
 
-    .tree ul li {
-      animation: fadeIn 0.5s ease forwards;
-      opacity: 0;
-    }
+        header h1 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
 
-    .tree ul li:nth-child(1) { animation-delay: 0.1s; }
-    .tree ul li:nth-child(2) { animation-delay: 0.2s; }
-    .tree ul li:nth-child(3) { animation-delay: 0.3s; }
-    .tree ul li:nth-child(4) { animation-delay: 0.4s; }
-    .tree ul li:nth-child(5) { animation-delay: 0.5s; }
-  </style>
+        header p {
+            margin: 0.5rem 0 0;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Auth Buttons */
+        .auth-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .auth-button:hover {
+            background: var(--matrix-green);
+            color: var(--dark-bg);
+        }
+
+        /* Auth Modal */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .auth-modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px var(--cyber-purple);
+            animation: slideDown 0.3s ease;
+        }
+        
+        .auth-modal h3 {
+            color: var(--neon-blue);
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .auth-modal p {
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+        
+        .auth-modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .auth-modal-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .auth-modal-login {
+            background: var(--gradient-1);
+            color: var(--dark-bg);
+        }
+        
+        .auth-modal-signup {
+            background: var(--gradient-2);
+            color: var(--dark-bg);
+        }
+        
+        .auth-modal-cancel {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--text-secondary);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            max-width: 800px;
+            margin: 1rem auto;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .progress-container p {
+            font-size: 1.1rem;
+            color: var(--matrix-green);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        .progress-bar {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            height: 20px;
+            box-shadow: 0 2px 5px rgba(0, 243, 255, 0.2);
+            border: 1px solid var(--neon-blue);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--gradient-2);
+            width: 0%;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px var(--matrix-green);
+        }
+
+        /* Tree Diagram Styles */
+        .tree {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 1rem;
+            padding: 1rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .tree ul {
+            list-style-type: none;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .tree ul li {
+            margin: 10px 0;
+            padding: 10px;
+            position: relative;
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .tree ul li:nth-child(1) { animation-delay: 0.1s; }
+        .tree ul li:nth-child(2) { animation-delay: 0.2s; }
+        .tree ul li:nth-child(3) { animation-delay: 0.3s; }
+        .tree ul li:nth-child(4) { animation-delay: 0.4s; }
+        .tree ul li:nth-child(5) { animation-delay: 0.5s; }
+
+        /* Tree Lines */
+        .tree ul li::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -15px;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--neon-blue), var(--cyber-purple));
+        }
+
+        .tree ul li::after {
+            content: "";
+            position: absolute;
+            top: 25px;
+            left: -15px;
+            width: 25px;
+            height: 2px;
+            background: var(--neon-blue);
+        }
+
+        .tree ul li:last-child::before {
+            height: 25px;
+        }
+
+        /* Main Step Styling */
+        .tree ul > li > span {
+            background: var(--gradient-1);
+            border: none;
+            color: var(--dark-bg);
+            font-weight: 600;
+            font-size: 1.1rem;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        /* Topic Styling */
+        .tree ul li span {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            background: var(--card-bg);
+            border: 2px solid var(--neon-blue);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            color: var(--text-primary);
+            position: relative;
+            text-shadow: 0 0 3px var(--cyber-purple);
+        }
+
+        .tree ul li span:hover {
+            background: var(--gradient-2);
+            color: var(--dark-bg);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+        }
+
+        /* Icon Styling */
+        .tree ul li span::before {
+            content: "📘";
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: var(--matrix-green);
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        /* Checkbox Styling */
+        .tree ul li input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--matrix-green);
+            border: 1px solid var(--neon-blue);
+            background: var(--card-bg);
+        }
+
+        .tree ul li.completed span {
+            background: rgba(0, 255, 65, 0.2);
+            border-color: var(--matrix-green);
+            color: var(--text-primary);
+        }
+
+        .tree ul li.completed span::before {
+            content: "✅";
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: var(--matrix-green);
+        }
+
+        /* Details Section */
+        .details {
+            display: none;
+            margin-top: 10px;
+            padding: 15px;
+            background: var(--card-bg);
+            border-left: 4px solid var(--neon-blue);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 243, 255, 0.1);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            animation: slideDown 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .details h4 {
+            margin: 0 0 10px;
+            color: var(--neon-blue);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            text-shadow: 0 0 5px var(--cyber-purple);
+        }
+
+        .details p {
+            margin: 5px 0;
+        }
+
+        .details a {
+            color: var(--matrix-green);
+            text-decoration: none;
+            font-weight: 500;
+            text-shadow: 0 0 3px var(--neon-blue);
+        }
+
+        .details a:hover {
+            text-decoration: underline;
+            color: var(--neon-cyan);
+        }
+
+        /* Resources Section */
+        .resources {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 243, 255, 0.2);
+            border: 2px solid var(--neon-blue);
+            position: relative;
+            z-index: 10;
+        }
+
+        .resources h2 {
+            color: var(--neon-blue);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 0 0 10px var(--cyber-purple);
+        }
+
+        .resources ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .resources ul li {
+            margin: 1rem 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        .resources ul li:hover {
+            transform: translateY(-3px);
+            background: rgba(0, 255, 65, 0.1);
+            box-shadow: 0 0 10px var(--matrix-green);
+        }
+
+        .resources ul li::before {
+            content: "🔗";
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: var(--neon-blue);
+        }
+
+        .resources ul li a {
+            color: var(--matrix-green);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .resources ul li a:hover {
+            text-decoration: underline;
+            color: var(--neon-cyan);
+        }
+
+        /* Schedule and Back Buttons */
+        .schedule-button, .back-button {
+            display: block;
+            width: 200px;
+            margin: 1rem auto;
+            padding: 12px 24px;
+            background: var(--gradient-1);
+            color: var(--dark-bg);
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .schedule-button::before, .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 243, 255, 0.1);
+            box-shadow: 0 0 10px var(--neon-blue);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .schedule-button:hover::before, .back-button:hover::before {
+            opacity: 1;
+        }
+
+        .schedule-button:hover, .back-button:hover {
+            background: var(--gradient-2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--gradient-1);
+            color: var(--text-primary);
+            box-shadow: 0 -4px 10px rgba(0, 243, 255, 0.2);
+            position: relative;
+            z-index: 10;
+            margin-top: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2rem; }
+            header p { font-size: 1rem; }
+            .progress-container p { font-size: 1rem; }
+            .tree ul li span { font-size: 0.9rem; padding: 10px 15px; }
+            .resources h2 { font-size: 1.5rem; }
+            .resources ul li { padding: 10px; }
+            .schedule-button, .back-button { width: 150px; padding: 10px 20px; font-size: 0.9rem; }
+            .auth-container {
+                position: static;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            .auth-modal-content {
+                padding: 1.5rem;
+            }
+            .auth-modal-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Python Learning Roadmap</h1>
-    <p>A step-by-step guide to mastering Python</p>
-  </header>
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="auth-modal">
+        <div class="auth-modal-content">
+            <h3>Sign In Required</h3>
+            <p>To track your learning progress and save it across devices, please sign in or create an account.</p>
+            <p>You must be signed in to mark topics as completed.</p>
+            <div class="auth-modal-buttons">
+                <button class="auth-modal-button auth-modal-login" id="modal-login-btn">Login</button>
+                <button class="auth-modal-button auth-modal-signup" id="modal-signup-btn">Sign Up</button>
+            </div>
+        </div>
+    </div>
 
-  <div class="tree">
-    <ul>
-      <li>
-        <span>Step 1: Basics of Python</span>
-        <ul>
-          <li><span>Variables and Data Types</span></li>
-          <li><span>Input and Output</span></li>
-          <li><span>Conditional Statements (if, else, elif)</span></li>
-          <li><span>Loops (for, while)</span></li>
-        </ul>
-      </li>
-      <li>
-        <span>Step 2: Functions and Modules</span>
-        <ul>
-          <li><span>Defining Functions</span></li>
-          <li><span>Arguments and Return Values</span></li>
-          <li><span>Built-in Modules (e.g., math, random)</span></li>
-          <li><span>Creating Your Own Modules</span></li>
-        </ul>
-      </li>
-      <li>
-        <span>Step 3: Data Structures</span>
-        <ul>
-          <li><span>Lists, Tuples, and Dictionaries</span></li>
-          <li><span>List Comprehensions</span></li>
-          <li><span>Sets</span></li>
-          <li><span>Working with Strings</span></li>
-        </ul>
-      </li>
-      <li>
-        <span>Step 4: Object-Oriented Programming (OOP)</span>
-        <ul>
-          <li><span>Classes and Objects</span></li>
-          <li><span>Inheritance</span></li>
-          <li><span>Polymorphism</span></li>
-          <li><span>Encapsulation</span></li>
-        </ul>
-      </li>
-      <li>
-        <span>Step 5: Advanced Topics</span>
-        <ul>
-          <li><span>File Handling</span></li>
-          <li><span>Error Handling (try, except)</span></li>
-          <li><span>Regular Expressions</span></li>
-          <li><span>Working with APIs</span></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
+    <!-- Particles Container for Background Animation -->
+    <div class="particles"></div>
 
-  <!-- Back Button -->
-  <a href="roadmaps.html" class="back-button">Back to Career Paths</a>
+    <header class="fade-in delay-1">
+        <div class="auth-container">
+            <button id="login-btn" class="auth-button">Login</button>
+            <button id="signup-btn" class="auth-button">Sign Up</button>
+            <button id="logout-btn" class="auth-button" style="display: none;">Logout</button>
+        </div>
+        <h1>Python Learning Roadmap</h1>
+        <p>Your step-by-step guide to mastering Python 🚀</p>
+        <p id="user-status" style="margin-top: 10px; font-size: 0.9rem;"></p>
+    </header>
 
-  <footer>
-    <p>Happy Coding! 🚀</p>
-  </footer>
+    <!-- Progress Bar -->
+    <div class="progress-container fade-in delay-2">
+        <p>Progress: <span id="progress-text">0%</span></p>
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+        </div>
+    </div>
 
-  <script>
-    // JavaScript for Interactivity
-    document.addEventListener("DOMContentLoaded", function () {
-      const items = document.querySelectorAll(".tree ul li span");
+    <div class="tree fade-in delay-3">
+        <ul>
+            <li>
+                <span>Step 1: Basics of Python</span>
+                <ul>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="variables">
+                        <span>Variables and Data Types</span>
+                        <div class="details">
+                            <h4>Variables and Data Types</h4>
+                            <p>Variables are named containers for storing data values in Python, created by assigning a value with the `=` operator. Python supports a variety of built-in data types: integers (e.g., -5, 0, 1000) for whole numbers, floats (e.g., 3.14159, -0.005) for decimal numbers, strings (e.g., "Python", '123') for text, booleans (True, False) for logical values, and more complex types like lists and dictionaries introduced later. Understanding these types is essential for data manipulation and program logic.</p>
+                            <p><strong>Key Points:</strong> Python uses dynamic typing, so you don't declare variable types explicitly; the interpreter infers them. Type conversion is possible (e.g., `int("5")` to convert a string to an integer). Variables can be reassigned to different types, enhancing flexibility but requiring care to avoid errors.</p>
+                            <p><strong>Example:</strong> <code>x = 10          # Integer<br>y = 3.14        # Float<br>z = "Python"    # String<br>is_valid = False # Boolean<br>print(type(x))  # Output: <class 'int'><br>print(float(x)) # Output: 10.0</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_variables.asp" target="_blank">W3Schools: Variables</a>, 
+                                <a href="https://docs.python.org/3/tutorial/introduction.html#numbers" target="_blank">Python Docs: Data Types</a>, 
+                                <a href="https://www.youtube.com/watch?v=_uQrJ0TkZlc" target="_blank">📺 YouTube: Python Variables & Data Types (Corey Schafer)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="input-output">
+                        <span>Input and Output</span>
+                        <div class="details">
+                            <h4>Input and Output</h4>
+                            <p>Input and output are fundamental for interacting with users. The `print()` function displays data to the console, supporting multiple arguments, separators, and end characters (e.g., `print("Hello", "World", sep="-", end="!")`). The `input()` function prompts the user for input, returning it as a string, which may need conversion (e.g., `int(input())`) for numerical operations. Formatting options include f-strings, `.format()`, and the `%` operator.</p>
+                            <p><strong>Key Points:</strong> Always validate or convert `input()` data to match expected types. F-strings (introduced in Python 3.6) are the modern, readable way to format output (e.g., `f"{variable} value"`).</p>
+                            <p><strong>Example:</strong> <code>name = input("Enter your name: ")<br>age = int(input("Enter your age: "))\br>print(f"Hello, {name}! You are {age} years old in {2025 - age} years.")<br>print("Name: %s, Age: %d" % (name, age))</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_user_input.asp" target="_blank">W3Schools: Input/Output</a>, 
+                                <a href="https://realpython.com/python-print/" target="_blank">Real Python: Print Function</a>, 
+                                <a href="https://www.youtube.com/watch?v=5b7sE8u7w74" target="_blank">📺 YouTube: Python Input/Output Tutorial (Tech With Tim)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="conditionals">
+                        <span>Conditional Statements (if, else, elif)</span>
+                        <div class="details">
+                            <h4>Conditional Statements</h4>
+                            <p>Conditional statements control program flow by executing code based on conditions evaluated as True or False. The `if` statement checks a condition, `else` handles the opposite case, and `elif` allows multiple conditions. Operators include `==`, `!=`, `<`, `>`, `<=`, `>=`, and logical operators `and`, `or`, `not`. Nested conditions can handle complex logic.</p>
+                            <p><strong>Key Points:</strong> Indentation defines blocks (no braces needed). Use parentheses for clarity with complex conditions. Avoid deep nesting to maintain readability.</p>
+                            <p><strong>Example:</strong> <code>age = 18<br>score = 85<br>if age >= 18 and score >= 80:<br>  print("Eligible for advanced course!")<br>elif age >= 18:<br>  print("Eligible with review.")<br>else:<br>  print("Not eligible.")</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_conditions.asp" target="_blank">W3Schools: Conditionals</a>, 
+                                <a href="https://www.programiz.com/python-programming/if-elif-else" target="_blank">Programiz: If-Else</a>, 
+                                <a href="https://www.youtube.com/watch?v=6iF8Xb7Z3wQ" target="_blank">📺 YouTube: Python If Statements (Programming with Mosh)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="loops">
+                        <span>Loops (for, while)</span>
+                        <div class="details">
+                            <h4>Loops</h4>
+                            <p>Loops repeat code execution. The `for` loop iterates over sequences (e.g., lists, ranges, strings) using `range()`, while the `while` loop runs as long as a condition is true. Control flow can be altered with `break` (exit loop), `continue` (skip iteration), and `else` (run if loop completes normally).</p>
+                            <p><strong>Key Points:</strong> Initialize and update loop variables carefully in `while` loops to avoid infinite loops. `for` loops are ideal for known iterations; `while` suits dynamic conditions.</p>
+                            <p><strong>Example:</strong> <code>for i in range(5):<br>  if i == 3:<br>    continue<br>  print(i)  # Prints 0, 1, 2, 4<br>count = 0<br>while count < 3:<br>  print(count)<br>  count += 1<br>else:<br>  print("Loop finished")</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_for_loops.asp" target="_blank">W3Schools: Loops</a>, 
+                                <a href="https://www.tutorialspoint.com/python/python_loops.htm" target="_blank">TutorialsPoint: Loops</a>, 
+                                <a href="https://www.youtube.com/watch?v=6iF8Xb7Z3wQ" target="_blank">📺 YouTube: Python Loops Tutorial (Programming with Mosh)</a>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <span>Step 2: Functions and Modules</span>
+                <ul>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="defining-functions">
+                        <span>Defining Functions</span>
+                        <div class="details">
+                            <h4>Defining Functions</h4>
+                            <p>Functions are blocks of reusable code defined with the `def` keyword, followed by a name and parameters in parentheses. They can perform tasks, process data, and return values using `return`. Functions enhance modularity, making code easier to maintain and test.</p>
+                            <p><strong>Key Points:</strong> Functions can have default parameters (e.g., `def greet(name="Guest"):`) and variable-length arguments (`*args`, `**kwargs`). The `return` statement ends function execution and sends a value back.</p>
+                            <p><strong>Example:</strong> <code>def greet(name, greeting="Hello"): <br>  return f"{greeting}, {name}!"<br>print(greet("Alice"))  # Output: Hello, Alice!<br>print(greet("Bob", "Hi"))  # Output: Hi, Bob!</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_functions.asp" target="_blank">W3Schools: Functions</a>, 
+                                <a href="https://www.geeksforgeeks.org/python-functions/" target="_blank">GeeksforGeeks: Functions</a>, 
+                                <a href="https://www.youtube.com/watch?v=NE7mxk4Apmk" target="_blank">📺 YouTube: Python Functions Explained (Corey Schafer)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="arguments-return">
+                        <span>Arguments and Return Values</span>
+                        <div class="details">
+                            <h4>Arguments and Return Values</h4>
+                            <p>Functions accept arguments (input data) and can return results using `return`. Arguments can be positional, keyword-based, or variable-length (`*args` for multiple positional, `**kwargs` for keyword arguments). Returning multiple values creates a tuple.</p>
+                            <p><strong>Key Points:</strong> Default arguments must follow non-default ones. Use `return` to exit early or provide output; without it, functions return `None`.</p>
+                            <p><strong>Example:</strong> <code>def add_sub(a, b):<br>  return a + b, a - b<br>sum_result, diff = add_sub(5, 3)<br>print(sum_result, diff)  # Output: 8 2<br>def multiply(*nums):<br>  result = 1<br>  for n in nums:<br>    result *= n<br>  return result<br>print(multiply(2, 3, 4))  # Output: 24</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_functions.asp" target="_blank">W3Schools: Functions</a>, 
+                                <a href="https://realpython.com/python-kwargs-and-args/" target="_blank">Real Python: Args and Kwargs</a>, 
+                                <a href="https://www.youtube.com/watch?v=ml5bK4K4k74" target="_blank">📺 YouTube: Python Arguments Tutorial (Tech With Tim)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="built-in-modules">
+                        <span>Built-in Modules (e.g., math, random)</span>
+                        <div class="details">
+                            <h4>Built-in Modules</h4>
+                            <p>Python's built-in modules extend functionality without external installation. The `math` module offers functions like `sqrt()`, `pow()`, and `pi`, while `random` provides `randint()`, `choice()`, and `shuffle()`. Modules are imported with `import` or specific functions with `from ... import ...`.</p>
+                            <p><strong>Key Points:</strong> Explore the standard library (e.g., `datetime`, `os`) for more tools. Use aliases (e.g., `import math as m`) for convenience.</p>
+                            <p><strong>Example:</strong> <code>import math<br>print(math.sqrt(25))  # Output: 5.0<br>import random<br>numbers = [1, 2, 3, 4]<br>random.shuffle(numbers)<br>print(numbers)  # Output: Random order (e.g., [3, 1, 4, 2])</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_modules.asp" target="_blank">W3Schools: Modules</a>, 
+                                <a href="https://docs.python.org/3/py-modindex.html" target="_blank">Python Docs: Module Index</a>, 
+                                <a href="https://www.youtube.com/watch?v=0oTh1BNZvbU" target="_blank">📺 YouTube: Python Modules Tutorial (FreeCodeCamp)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="custom-modules">
+                        <span>Creating Your Own Modules</span>
+                        <div class="details">
+                            <h4>Creating Your Own Modules</h4>
+                            <p>Custom modules are Python files (`.py`) containing functions, classes, or variables that can be imported into other scripts. Save your code in a file (e.g., `my_module.py`), then use `import my_module` to access it. This organizes code and supports large projects.</p>
+                            <p><strong>Key Points:</strong> Use `if __name__ == "__main__":` to run test code only when the file is executed directly. Modules can be placed in packages with `__init__.py`.</p>
+                            <p><strong>Example:</strong> Save as `my_module.py`: <code>def greet(name):<br>  return f"Hello, {name}!"</code><br>Then: <code>import my_module<br>print(my_module.greet("Alice"))  # Output: Hello, Alice!</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_modules.asp" target="_blank">W3Schools: Modules</a>, 
+                                <a href="https://realpython.com/python-modules-packages/" target="_blank">Real Python: Modules and Packages</a>, 
+                                <a href="https://www.youtube.com/watch?v=0oTh1BNZvbU" target="_blank">📺 YouTube: Python Modules Tutorial (FreeCodeCamp)</a>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <span>Step 3: Data Structures</span>
+                <ul>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="lists-tuples-dicts">
+                        <span>Lists, Tuples, and Dictionaries</span>
+                        <div class="details">
+                            <h4>Lists, Tuples, and Dictionaries</h4>
+                            <p>Python's core data structures include lists (mutable, ordered, `[ ]`), tuples (immutable, ordered, `( )`), and dictionaries (mutable, key-value pairs, `{key: value}`). Lists support dynamic sizing with methods like `append()`, `pop()`, and `sort()`. Tuples are faster for fixed data, and dictionaries enable efficient lookups with unique keys.</p>
+                            <p><strong>Key Points:</strong> Lists are versatile but slower for large datasets; tuples save memory; dictionaries use hash tables for O(1) access. Nesting is possible (e.g., `[1, [2, 3]]`).</p>
+                            <p><strong>Example:</strong> <code>my_list = [1, 2, 3]<br>my_list.append(4)<br>my_tuple = (4, 5, 6)<br>my_dict = {"name": "Alice", "age": 25}<br>my_dict["city"] = "New York"<br>print(my_list)  # Output: [1, 2, 3, 4]<br>print(my_dict)  # Output: {'name': 'Alice', 'age': 25, 'city': 'New York'}</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_lists.asp" target="_blank">W3Schools: Data Structures</a>, 
+                                <a href="https://docs.python.org/3/tutorial/datastructures.html" target="_blank">Python Docs: Data Structures</a>, 
+                                <a href="https://www.youtube.com/watch?v=pkYVOmU3MgA" target="_blank">📺 YouTube: Python Data Structures (Corey Schafer)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="list-comprehensions">
+                        <span>List Comprehensions</span>
+                        <div class="details">
+                            <h4>List Comprehensions</h4>
+                            <p>List comprehensions create lists concisely from iterables using `[expression for item in iterable if condition]`. They replace traditional loops for tasks like filtering or transforming data, improving readability and performance for simple operations.</p>
+                            <p><strong>Key Points:</strong> Avoid nested comprehensions for complex logic; use regular loops instead. They can include multiple `for` clauses or conditions.</p>
+                            <p><strong>Example:</strong> <code>squares = [x**2 for x in range(5)]<br>even_squares = [x**2 for x in range(10) if x % 2 == 0]<br>paired = [(x, y) for x in [1, 2] for y in [3, 4]]<br>print(squares)  # Output: [0, 1, 4, 9, 16]<br>print(even_squares)  # Output: [0, 4, 16, 36, 64]<br>print(paired)  # Output: [(1, 3), (1, 4), (2, 3), (2, 4)]</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_lists_comprehension.asp" target="_blank">W3Schools: List Comprehensions</a>, 
+                                <a href="https://realpython.com/list-comprehension-python/" target="_blank">Real Python: List Comprehensions</a>, 
+                                <a href="https://www.youtube.com/watch?v=3dt4OGnU1u4" target="_blank">📺 YouTube: List Comprehensions in Python (sentdex)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="sets">
+                        <span>Sets</span>
+                        <div class="details">
+                            <h4>Sets</h4>
+                            <p>Sets are unordered collections of unique elements, defined with `{}` or `set()`. They automatically remove duplicates and support operations like union (`|`), intersection (`&`), difference (`-`), and symmetric difference (`^`). Methods include `add()`, `remove()`, and `clear()`.</p>
+                            <p><strong>Key Points:</strong> Sets are mutable but unindexed; use `in` to check membership. Frozen sets (`frozenset()`) are immutable.</p>
+                            <p><strong>Example:</strong> <code>my_set = {1, 2, 2, 3, 3}<br>print(my_set)  # Output: {1, 2, 3}<br>set1 = {1, 2, 3}<br>set2 = {3, 4, 5}<br>print(set1 | set2)  # Output: {1, 2, 3, 4, 5}<br>my_set.add(4)<br>print(my_set)  # Output: {1, 2, 3, 4}</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_sets.asp" target="_blank">W3Schools: Sets</a>, 
+                                <a href="https://www.programiz.com/python-programming/set" target="_blank">Programiz: Sets</a>, 
+                                <a href="https://www.youtube.com/watch?v=yl1RtNM-C6I" target="_blank">📺 YouTube: Python Sets Explained (Tech With Tim)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="strings">
+                        <span>Working with Strings</span>
+                        <div class="details">
+                            <h4>Working with Strings</h4>
+                            <p>Strings are immutable sequences of characters, created with single (`'`) or double (`"`) quotes, or triple quotes (`'''` or `"""`) for multi-line strings. They support methods like `upper()`, `lower()`, `strip()`, `split()`, `join()`, and slicing (e.g., `text[0:5]`). String formatting includes f-strings, `.format()`, and `%`.</p>
+                            <p><strong>Key Points:</strong> Immutability means new strings are created with each operation. Use escape sequences (e.g., `\n`, `\t`) for special characters.</p>
+                            <p><strong>Example:</strong> <code>text = "  Hello World  "<br>print(text.strip())  # Output: Hello World<br>print(text.upper())  # Output:   HELLO WORLD  <br>words = text.split()<br>print(" ".join(words))  # Output: Hello World</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_strings.asp" target="_blank">W3Schools: Strings</a>, 
+                                <a href="https://realpython.com/python-strings/" target="_blank">Real Python: Strings</a>, 
+                                <a href="https://www.youtube.com/watch?v=k9TUPpGqYTo" target="_blank">📺 YouTube: Python Strings Tutorial (Corey Schafer)</a>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <span>Step 4: Object-Oriented Programming (OOP)</span>
+                <ul>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="classes-objects">
+                        <span>Classes and Objects</span>
+                        <div class="details">
+                            <h4>Classes and Objects</h4>
+                            <p>Classes are blueprints for creating objects, encapsulating data (attributes) and behavior (methods) in Python. The `__init__` method initializes attributes, and `self` refers to the instance. Objects are instances created with `ClassName()`.</p>
+                            <p><strong>Key Points:</strong> Use instance methods with `self` as the first parameter. Class variables are shared across instances; instance variables are unique.</p>
+                            <p><strong>Example:</strong> <code>class Dog:<br>  species = "Canis lupus"  # Class variable<br>  def __init__(self, name):<br>    self.name = name  # Instance variable<br>  def bark(self):<br>    print(f"{self.name} says Woof!")<br>my_dog = Dog("Buddy")<br>my_dog.bark()  # Output: Buddy says Woof!<br>print(my_dog.species)  # Output: Canis lupus</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_classes.asp" target="_blank">W3Schools: Classes</a>, 
+                                <a href="https://www.programiz.com/python-programming/class" target="_blank">Programiz: Classes and Objects</a>, 
+                                <a href="https://www.youtube.com/watch?v=ZDa-Z5JzLYM" target="_blank">📺 YouTube: Python Classes Tutorial (Corey Schafer)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="inheritance">
+                        <span>Inheritance</span>
+                        <div class="details">
+                            <h4>Inheritance</h4>
+                            <p>Inheritance allows a child class to inherit attributes and methods from a parent class, using `class Child(Parent):`. The `super()` function calls parent methods, and multiple inheritance (inheriting from multiple classes) is supported with a defined method resolution order (MRO).</p>
+                            <p><strong>Key Points:</strong> Override parent methods by redefining them in the child class. Use `isinstance()` to check class relationships.</p>
+                            <p><strong>Example:</strong> <code>class Puppy(Dog):<br>  def __init__(self, name, trick):<br>    super().__init__(name)<br>    self.trick = trick<br>  def show_trick(self):<br>    print(f"{self.name} does {self.trick}")<br>my_puppy = Puppy("Max", "roll over")<br>my_puppy.bark()  # Output: Max says Woof!<br>my_puppy.show_trick()  # Output: Max does roll over</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_inheritance.asp" target="_blank">W3Schools: Inheritance</a>, 
+                                <a href="https://realpython.com/python-super/" target="_blank">Real Python: Inheritance and Super</a>, 
+                                <a href="https://www.youtube.com/watch?v=RSl87lqOXDE" target="_blank">📺 YouTube: Python Inheritance Tutorial (Tech With Tim)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="polymorphism">
+                        <span>Polymorphism</span>
+                        <div class="details">
+                            <h4>Polymorphism</h4>
+                            <p>Polymorphism enables the same method name to behave differently based on the object, achieved through method overriding or duck typing (if it walks like a duck, it's a duck). Python supports this implicitly without interfaces.</p>
+                            <p><strong>Key Points:</strong> Useful in abstract base classes or when working with diverse object types. Polymorphism enhances code flexibility and extensibility.</p>
+                            <p><strong>Example:</strong> <code>class Cat:<br>  def speak(self):<br>    return "Meow"<br>class Parrot:<br>  def speak(self):<br>    return "Squawk"<br>for animal in [Dog("Buddy"), Cat(), Parrot()]:<br>  print(animal.speak())  # Output: Woof!, Meow, Squawk</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_polymorphism.asp" target="_blank">W3Schools: Polymorphism</a>, 
+                                <a href="https://www.geeksforgeeks.org/polymorphism-in-python/" target="_blank">GeeksforGeeks: Polymorphism</a>, 
+                                <a href="https://www.youtube.com/watch?v=1BixT6wKDWo" target="_blank">📺 YouTube: Python Polymorphism Explained (sentdex)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="encapsulation">
+                        <span>Encapsulation</span>
+                        <div class="details">
+                            <h4>Encapsulation</h4>
+                            <p>Encapsulation hides an object's internal state and restricts direct access to attributes, using private variables (prefixed with `__`). Public methods (e.g., getters, setters) control access, promoting data integrity and security.</p>
+                            <p><strong>Key Points:</strong> Private attributes use name mangling (`_ClassName__attribute`). Properties (`@property`) offer a cleaner way to manage access with getters and setters.</p>
+                            <p><strong>Example:</strong> <code>class Car:<br>  def __init__(self):<br>    self.__speed = 0<br>  @property<br>  def speed(self):<br>    return self.__speed<br>  def set_speed(self, speed):<br>    if 0 <= speed <= 200:<br>      self.__speed = speed<br>car = Car()<br>car.set_speed(60)<br>print(car.speed)  # Output: 60</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_encapsulation.asp" target="_blank">W3Schools: Encapsulation</a>, 
+                                <a href="https://realpython.com/python-encapsulation/" target="_blank">Real Python: Encapsulation</a>, 
+                                <a href="https://www.youtube.com/watch?v=5e7rO-Dz7-A" target="_blank">📺 YouTube: Python Encapsulation Tutorial (Tech With Tim)</a>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <span>Step 5: Advanced Topics</span>
+                <ul>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="file-handling">
+                        <span>File Handling</span>
+                        <div class="details">
+                            <h4>File Handling</h4>
+                            <p>File handling enables reading from and writing to files using `open()` with modes: `'r'` (read), `'w'` (write, overwrites), `'a'` (append), and `'r+'` (read/write). The `with` statement ensures proper file closure. Methods include `read()`, `write()`, `readlines()`, and `writelines()` for line-by-line operations.</p>
+                            <p><strong>Key Points:</strong> Use binary modes (`'rb'`, `'wb'`) for non-text files. Handle exceptions (e.g., `FileNotFoundError`) to manage errors gracefully.</p>
+                            <p><strong>Example:</strong> <code>with open("file.txt", "w") as f:<br>  f.write("Line 1\nLine 2")<br>with open("file.txt", "r") as f:<br>  lines = f.readlines()<br>  for line in lines:<br>    print(line.strip())  # Output: Line 1, Line 2</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_file_handling.asp" target="_blank">W3Schools: File Handling</a>, 
+                                <a href="https://realpython.com/read-write-files-python/" target="_blank">Real Python: File Handling</a>, 
+                                <a href="https://www.youtube.com/watch?v=Uh2ebFW8OYM" target="_blank">📺 YouTube: Python File Handling (Corey Schafer)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="error-handling">
+                        <span>Error Handling (try, except)</span>
+                        <div class="details">
+                            <h4>Error Handling</h4>
+                            <p>Error handling uses `try` and `except` to catch exceptions like `ValueError`, `TypeError`, or `ZeroDivisionError`, preventing crashes. The `else` block runs if no exception occurs, and `finally` executes regardless, useful for cleanup (e.g., closing files). Custom exceptions can be raised with `raise`.</p>
+                            <p><strong>Key Points:</strong> Specific exceptions should precede general ones. Use logging for debugging instead of print statements in production.</p>
+                            <p><strong>Example:</strong> <code>try:<br>  number = int(input("Enter a number: "))<br>  result = 10 / number<br>except ValueError:<br>  print("Please enter a valid number!")<br>except ZeroDivisionError:<br>  print("Cannot divide by zero!")<br>else:<br>  print(f"Result: {result}")<br>finally:<br>  print("Execution completed")</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_try_except.asp" target="_blank">W3Schools: Error Handling</a>, 
+                                <a href="https://docs.python.org/3/tutorial/errors.html" target="_blank">Python Docs: Errors and Exceptions</a>, 
+                                <a href="https://www.youtube.com/watch?v=NIWwJbo-9_8" target="_blank">📺 YouTube: Python Exception Handling (Programming with Mosh)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="regex">
+                        <span>Regular Expressions</span>
+                        <div class="details">
+                            <h4>Regular Expressions</h4>
+                            <p>Regular expressions (regex) use the `re` module to match, search, and manipulate text patterns. Functions include `search()` for the first match, `findall()` for all matches, `match()` for start-of-string matches, and `sub()` for replacements. Patterns use metacharacters (e.g., `.*`, `+`, `?`) and character classes (e.g., `\d`, `\w`, `\s`).</p>
+                            <p><strong>Key Points:</strong> Compile patterns with `re.compile()` for repeated use. Escape special characters with `\` (e.g., `\.` for a literal dot).</p>
+                            <p><strong>Example:</strong> <code>import re<br>text = "Contact: 123-456-7890, Email: user@example.com"<br>phone = re.search(r"\d{3}-\d{3}-\d{4}", text)<br>print(phone.group())  # Output: 123-456-7890<br>emails = re.findall(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}", text)<br>print(emails)  # Output: ['user@example.com']</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3schools.com/python/python_regex.asp" target="_blank">W3Schools: Regular Expressions</a>, 
+                                <a href="https://realpython.com/regex-python/" target="_blank">Real Python: Regex</a>, 
+                                <a href="https://www.youtube.com/watch?v=K8L6KVGG-7o" target="_blank">📺 YouTube: Python Regex Tutorial (Corey Schafer)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="apis">
+                        <span>Working with APIs</span>
+                        <div class="details">
+                            <h4>Working with APIs</h4>
+                            <p>APIs enable interaction with external services using the `requests` library for HTTP requests (GET, POST, etc.). Responses are typically JSON, parsed with `.json()`. Authentication may require API keys or tokens, and headers can be customized.</p>
+                            <p><strong>Key Points:</strong> Install `requests` with `pip install requests`. Handle status codes (e.g., 200 for success, 404 for not found) and timeouts.</p>
+                            <p><strong>Example:</strong> <code>import requests<br>url = "https://api.github.com/users/octocat"<br>response = requests.get(url, timeout=5)<br>if response.status_code == 200:<br>  data = response.json()<br>  print(data["login"])  # Output: octocat<br>else:<br>  print(f"Error: {response.status_code}")</code></p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://realpython.com/python-requests/" target="_blank">Real Python: Working with APIs</a>, 
+                                <a href="https://www.dataquest.io/blog/python-api-tutorial/" target="_blank">Dataquest: API Tutorial</a>, 
+                                <a href="https://www.youtube.com/watch?v=0E-DJ9u1K-Q" target="_blank">📺 YouTube: Python API Tutorial (FreeCodeCamp)</a>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 
-      items.forEach((item) => {
-        item.addEventListener("click", () => {
-          alert(`You clicked: ${item.textContent}`);
+    <!-- Additional Resources Section -->
+    <div class="resources fade-in delay-4">
+        <h2>Additional Resources to Master Python</h2>
+        <ul>
+            <li>
+                <a href="https://www.youtube.com/watch?v=rfscVS0vtbw" target="_blank">
+                    📺 FreeCodeCamp: Learn Python - Full Course for Beginners (4+ Hours)
+                </a>
+            </li>
+            <li>
+                <a href="https://www.youtube.com/watch?v=kqtD5dpn9C8" target="_blank">
+                    📺 Programming with Mosh: Python Tutorial for Beginners (1 Hour)
+                </a>
+            </li>
+            <li>
+                <a href="https://realpython.com/python-basics/" target="_blank">
+                    📄 Real Python: Python Basics - A Practical Introduction
+                </a>
+            </li>
+            <li>
+                <a href="https://automatetheboringstuff.com/" target="_blank">
+                    📖 Automate the Boring Stuff with Python - Free Online Book
+                </a>
+            </li>
+            <li>
+                <a href="https://www.py4e.com/book" target="_blank">
+                    📖 Python for Everybody - Free PDF by Dr. Charles Severance
+                </a>
+            </li>
+            <li>
+                <a href="https://www.codecademy.com/learn/learn-python-3" target="_blank">
+                    🖥️ Codecademy: Learn Python 3 - Interactive Course
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Link to Schedule Page -->
+    <a href="schedulepython.html" class="schedule-button fade-in delay-5">Schedule Your Learning</a>
+
+    <a href="roadmaps.html" class="back-button fade-in delay-5">Back to Career Paths</a>
+
+    <footer class="fade-in delay-5">
+        <p>Happy Coding! 🚀 | Tech Udaan © 2025</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-analytics-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDI7bIBfyGR_r-EWPvpYjxj8c_OscWDMTU",
+            authDomain: "techudaan-54467.firebaseapp.com",
+            projectId: "techudaan-54467",
+            storageBucket: "techudaan-54467.appspot.com",
+            messagingSenderId: "86201497781",
+            appId: "1:86201497781:web:b1c428db8b320817b026fc",
+            measurementId: "G-0XLX6MTS9F",
+            databaseURL: "https://techudaan-54467-default-rtdb.firebaseio.com/"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+        const analytics = firebase.analytics();
+
+        // User state management
+        let currentUser = null;
+        let userProgress = {};
+        const authModal = document.getElementById('auth-modal');
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Particle Animation
+            function createParticles() {
+                const particleCount = 50;
+                const particlesContainer = document.querySelector('.particles');
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    const size = Math.random() * 3 + 1;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${Math.random() * 100}vw`;
+                    particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                    particle.style.animationDelay = `${Math.random() * 5}s`;
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            createParticles();
+
+            // Fade-in Animation
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('visible');
+                }, index * 200);
+            });
+
+            // Initialize authentication state observer
+            initAuthState();
+
+            // Handle topic details toggle
+            const items = document.querySelectorAll(".tree ul li span");
+            items.forEach((item) => {
+                item.addEventListener("click", () => {
+                    // Close other open details
+                    const allDetails = document.querySelectorAll(".details");
+                    allDetails.forEach((detail) => {
+                        if (detail !== item.nextElementSibling) {
+                            detail.style.display = "none";
+                        }
+                    });
+
+                    // Toggle the clicked item's details
+                    const details = item.nextElementSibling;
+                    if (details.style.display === "block") {
+                        details.style.display = "none";
+                    } else {
+                        details.style.display = "block";
+                    }
+                });
+            });
+
+            // Auth button event listeners
+            document.getElementById('login-btn').addEventListener('click', () => {
+                const email = prompt("Enter email:");
+                const password = prompt("Enter password:");
+                if (email && password) {
+                    auth.signInWithEmailAndPassword(email, password)
+                        .catch(error => {
+                            alert("Login failed: " + error.message);
+                        });
+                }
+            });
+
+            document.getElementById('signup-btn').addEventListener('click', () => {
+                const email = prompt("Enter email:");
+                const password = prompt("Enter password:");
+                if (email && password) {
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .catch(error => {
+                            alert("Signup failed: " + error.message);
+                        });
+                }
+            });
+
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                auth.signOut();
+            });
+
+            // Checkbox event listeners
+            document.querySelectorAll(".progress-checkbox").forEach((checkbox) => {
+                checkbox.addEventListener("change", function() {
+                    if (!currentUser) {
+                        showAuthModal();
+                        this.checked = !this.checked; // Revert the checkbox change
+                        return;
+                    }
+                    
+                    const topic = this.getAttribute("data-topic");
+                    userProgress[topic] = this.checked;
+                    updateCheckboxState(this, topic);
+                    updateProgress();
+                    saveProgress();
+                });
+            });
         });
-      });
-    });
-  </script>
+
+        // Authentication state handler
+        function initAuthState() {
+            auth.onAuthStateChanged((user) => {
+                currentUser = user;
+                const userStatus = document.getElementById('user-status');
+                const loginBtn = document.getElementById('login-btn');
+                const signupBtn = document.getElementById('signup-btn');
+                const logoutBtn = document.getElementById('logout-btn');
+
+                if (user) {
+                    // User is signed in
+                    userStatus.textContent = `Logged in as: ${user.email}`;
+                    userStatus.style.color = "var(--matrix-green)";
+                    loginBtn.style.display = "none";
+                    signupBtn.style.display = "none";
+                    logoutBtn.style.display = "block";
+                    loadProgress();
+                } else {
+                    // No user is signed in
+                    userStatus.textContent = "Please sign in to track your progress";
+                    userStatus.style.color = "var(--neon-blue)";
+                    loginBtn.style.display = "block";
+                    signupBtn.style.display = "block";
+                    logoutBtn.style.display = "none";
+                    userProgress = {};
+                    updateProgress();
+                }
+            });
+        }
+
+        // Show authentication modal
+        function showAuthModal() {
+            authModal.style.display = 'flex';
+            
+            document.getElementById('modal-login-btn').onclick = () => {
+                authModal.style.display = 'none';
+                const email = prompt("Enter email:");
+                const password = prompt("Enter password:");
+                if (email && password) {
+                    auth.signInWithEmailAndPassword(email, password)
+                        .catch(error => {
+                            alert("Login failed: " + error.message);
+                        });
+                }
+            };
+            
+            document.getElementById('modal-signup-btn').onclick = () => {
+                authModal.style.display = 'none';
+                const email = prompt("Enter email:");
+                const password = prompt("Enter password:");
+                if (email && password) {
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .catch(error => {
+                            alert("Signup failed: " + error.message);
+                        });
+                }
+            };
+            
+            // Close modal when clicking outside
+            window.onclick = function(event) {
+                if (event.target == authModal) {
+                    authModal.style.display = "none";
+                }
+            }
+        }
+
+        // Update checkbox visual state
+        function updateCheckboxState(checkbox, topic) {
+            if (checkbox.checked) {
+                checkbox.parentElement.classList.add("completed");
+            } else {
+                checkbox.parentElement.classList.remove("completed");
+            }
+        }
+
+        // Load progress from Firebase
+        async function loadProgress() {
+            try {
+                const snapshot = await database.ref(`userProgress/${currentUser.uid}`).once('value');
+                userProgress = snapshot.val() || {};
+                applyProgressToUI();
+                updateProgress();
+            } catch (error) {
+                console.error("Error loading progress:", error);
+            }
+        }
+
+        // Apply loaded progress to UI checkboxes
+        function applyProgressToUI() {
+            const checkboxes = document.querySelectorAll(".progress-checkbox");
+            checkboxes.forEach((checkbox) => {
+                const topic = checkbox.getAttribute("data-topic");
+                const isCompleted = userProgress[topic] || false;
+                checkbox.checked = isCompleted;
+                if (isCompleted) {
+                    checkbox.parentElement.classList.add("completed");
+                } else {
+                    checkbox.parentElement.classList.remove("completed");
+                }
+            });
+        }
+
+        // Save progress to Firebase
+        async function saveProgress() {
+            try {
+                await database.ref(`userProgress/${currentUser.uid}`).set(userProgress);
+            } catch (error) {
+                console.error("Error saving progress:", error);
+            }
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const completedTopics = Object.values(userProgress).filter(Boolean).length;
+            const totalTopics = document.querySelectorAll(".progress-checkbox").length;
+            const progressPercentage = currentUser ? (completedTopics / totalTopics) * 100 : 0;
+            document.getElementById('progress-text').textContent = currentUser ? `${Math.round(progressPercentage)}%` : "Sign in to track";
+            document.getElementById('progress-bar-fill').style.width = `${progressPercentage}%`;
+        }
+    </script>
 </body>
 </html>

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Udaan Quiz</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --neon-blue: #00f3ff;
+            --cyber-purple: #bc13fe;
+            --matrix-green: #00ff41;
+            --dark-bg: #0a0a0f;
+            --card-bg: rgba(15, 15, 25, 0.9);
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --gradient-1: linear-gradient(135deg, var(--neon-blue), var(--cyber-purple));
+            --gradient-2: linear-gradient(45deg, var(--matrix-green), var(--neon-blue));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 243, 255, 0.1) 0%, transparent 70%);
+            animation: pulseGlow 5s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            animation: float 10s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.1; }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        header {
+            background: var(--gradient-1);
+            color: var(--text-primary);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 243, 255, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 243, 255, 0.2);
+            border: 2px solid var(--neon-blue);
+            position: relative;
+            z-index: 10;
+        }
+
+        .selection, .quiz, .results {
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--cyber-purple);
+            margin-bottom: 1rem;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .option {
+            padding: 10px 20px;
+            background: var(--gradient-1);
+            color: var(--dark-bg);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover, .option.selected {
+            background: var(--gradient-2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+        }
+
+        .question {
+            margin: 1rem 0;
+        }
+
+        .question p {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .question label {
+            display: block;
+            padding: 0.5rem;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: var(--gradient-1);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .btn:hover {
+            background: var(--gradient-2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+        }
+
+        .results {
+            text-align: center;
+        }
+
+        .results p {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .back-button {
+            display: block;
+            width: 200px;
+            margin: 2rem auto;
+            padding: 12px 24px;
+            background: var(--gradient-1);
+            color: var(--dark-bg);
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .back-button:hover {
+            background: var(--gradient-2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--gradient-1);
+            color: var(--text-primary);
+            box-shadow: 0 -4px 10px rgba(0, 243, 255, 0.2);
+            position: relative;
+            z-index: 10;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+            .options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles"></div>
+
+    <header class="fade-in">
+        <h1>Tech Udaan Quiz</h1>
+    </header>
+
+    <div class="quiz-container fade-in">
+        <div class="selection" id="selection">
+            <h2>Select Topic</h2>
+            <div class="options" id="topics">
+                <div class="option" data-topic="python">Python</div>
+                <div class="option" data-topic="mobile">Mobile App Development</div>
+                <div class="option" data-topic="uiux">UI/UX</div>
+                <div class="option" data-topic="cybersecurity">Cybersecurity</div>
+                <div class="option" data-topic="dsa">DSA</div>
+                <div class="option" data-topic="webdev">Web Development</div>
+                <div class="option" data-topic="aiml">AI/ML</div>
+            </div>
+
+            <h2>Select Number of Questions</h2>
+            <div class="options" id="num-questions">
+                <div class="option" data-num="5">5</div>
+                <div class="option" data-num="10">10</div>
+                <div class="option" data-num="15">15</div>
+            </div>
+
+            <h2>Select Difficulty</h2>
+            <div class="options" id="difficulty">
+                <div class="option" data-difficulty="easy">Easy</div>
+                <div class="option" data-difficulty="medium">Medium</div>
+                <div class="option" data-difficulty="hard">Hard</div>
+            </div>
+
+            <button class="btn" id="start-quiz">Start Quiz</button>
+        </div>
+
+        <div class="quiz" id="quiz" style="display: none;">
+            <h2>Quiz</h2>
+            <form id="quiz-form"></form>
+            <button class="btn" id="submit-quiz">Submit Quiz</button>
+        </div>
+
+        <div class="results" id="results" style="display: none;">
+            <h2>Results</h2>
+            <p id="score"></p>
+            <p id="performance"></p>
+            <button class="btn" id="restart-quiz">Restart Quiz</button>
+        </div>
+    </div>
+
+    <a href="index.html" class="back-button fade-in">Back to Home</a>
+
+    <footer class="fade-in">
+        <p>Happy Learning! 🚀 | Tech Udaan © 2025</p>
+    </footer>
+
+    <script>
+        // Quiz Data (5 questions per difficulty per topic for brevity; expand to 25 each)
+        const quizData = {
+            python: {
+                easy: [
+                    { question: "What is Python?", options: ["A snake", "A programming language", "A game", "A tool"], answer: "A programming language" },
+                    { question: "Which keyword is used to define a function?", options: ["func", "def", "function", "define"], answer: "def" },
+                    { question: "What is the output of print(2 + 3)?", options: ["5", "23", "Error", "None"], answer: "5" },
+                    { question: "Which symbol is used for comments in Python?", options: ["//", "#", "/*", "--"], answer: "#" },
+                    { question: "What is the data type of 'Hello'?", options: ["int", "float", "str", "bool"], answer: "str" },
+                ],
+                medium: [
+                    { question: "What does list comprehension do?", options: ["Creates lists", "Sorts lists", "Deletes lists", "Prints lists"], answer: "Creates lists" },
+                    { question: "What is a lambda function?", options: ["Named function", "Anonymous function", "Loop", "Class"], answer: "Anonymous function" },
+                    { question: "What does 'self' refer to?", options: ["Class instance", "Function", "Module", "Variable"], answer: "Class instance" },
+                    { question: "Which module handles files?", options: ["os", "math", "random", "time"], answer: "os" },
+                    { question: "What is try-except?", options: ["Loop", "Exception handling", "Function", "Condition"], answer: "Exception handling" },
+                ],
+                hard: [
+                    { question: "What is a metaclass?", options: ["Class of a class", "Function", "Loop", "Variable"], answer: "Class of a class" },
+                    { question: "What does @staticmethod do?", options: ["Class method", "Static method", "Instance method", "Decorator"], answer: "Static method" },
+                    { question: "What is GIL?", options: ["Global Interpreter Lock", "General Input Loop", "Global Integer List", "Generator"], answer: "Global Interpreter Lock" },
+                    { question: "What does __slots__ do?", options: ["Limits attributes", "Adds methods", "Sorts data", "Filters"], answer: "Limits attributes" },
+                    { question: "What is asyncio used for?", options: ["Synchronous code", "Asynchronous code", "Loops", "Classes"], answer: "Asynchronous code" },
+                ]
+            },
+            mobile: {
+                easy: [
+                    { question: "What is Flutter?", options: ["A bird", "A UI toolkit", "A database", "A language"], answer: "A UI toolkit" },
+                    { question: "Which company created Flutter?", options: ["Google", "Apple", "Microsoft", "Facebook"], answer: "Google" },
+                    { question: "What is an APK?", options: ["Android Package", "Apple Package", "App Key", "Android Key"], answer: "Android Package" },
+                    { question: "What does iOS use?", options: ["Swift", "Java", "Python", "C++"], answer: "Swift" },
+                    { question: "What is React Native?", options: ["A framework", "A database", "A tool", "A language"], answer: "A framework" },
+                ],
+                medium: [
+                    { question: "What is a Widget in Flutter?", options: ["UI element", "Database", "Function", "Loop"], answer: "UI element" },
+                    { question: "What is Gradle?", options: ["Build tool", "Language", "IDE", "Database"], answer: "Build tool" },
+                    { question: "What does AsyncTask do?", options: ["Background tasks", "UI updates", "Loops", "Classes"], answer: "Background tasks" },
+                    { question: "What is an Intent?", options: ["Action trigger", "Loop", "Function", "Variable"], answer: "Action trigger" },
+                    { question: "What is a Fragment?", options: ["UI component", "Database", "Loop", "Class"], answer: "UI component" },
+                ],
+                hard: [
+                    { question: "What is AOT in Flutter?", options: ["Ahead-of-Time compilation", "After-Operation Task", "App Optimization Tool", "Async Operation Task"], answer: "Ahead-of-Time compilation" },
+                    { question: "What is JNI?", options: ["Java Native Interface", "Java Network Interface", "Java Node Integration", "Java Native Input"], answer: "Java Native Interface" },
+                    { question: "What is ART?", options: ["Android Runtime", "App Runtime Tool", "Async Runtime", "Android Resource Tool"], answer: "Android Runtime" },
+                    { question: "What does ProGuard do?", options: ["Code shrinking", "Code expansion", "Code sorting", "Code filtering"], answer: "Code shrinking" },
+                    { question: "What is Room?", options: ["Persistence library", "UI library", "Loop", "Class"], answer: "Persistence library" },
+                ]
+            },
+            uiux: {
+                easy: [
+                    { question: "What does UI stand for?", options: ["User Interface", "User Input", "Unique Identifier", "User Integration"], answer: "User Interface" },
+                    { question: "What is UX?", options: ["User Experience", "User Extension", "Unique Experience", "User Execution"], answer: "User Experience" },
+                    { question: "What is a wireframe?", options: ["Design blueprint", "Code", "Database", "Tool"], answer: "Design blueprint" },
+                    { question: "Which tool is for UI design?", options: ["Figma", "Python", "Java", "C++"], answer: "Figma" },
+                    { question: "What is a prototype?", options: ["Interactive model", "Static image", "Code", "Database"], answer: "Interactive model" },
+                ],
+                medium: [
+                    { question: "What is usability testing?", options: ["Testing ease of use", "Code testing", "Database testing", "Performance testing"], answer: "Testing ease of use" },
+                    { question: "What is a persona?", options: ["User archetype", "Design tool", "Code", "Database"], answer: "User archetype" },
+                    { question: "What does A/B testing do?", options: ["Compares designs", "Sorts data", "Filters data", "Loops"], answer: "Compares designs" },
+                    { question: "What is information architecture?", options: ["Content structure", "Code structure", "Database", "Tool"], answer: "Content structure" },
+                    { question: "What is a design system?", options: ["Reusable components", "Code", "Database", "Loop"], answer: "Reusable components" },
+                ],
+                hard: [
+                    { question: "What is heuristic evaluation?", options: ["Usability review", "Code review", "Database review", "Performance review"], answer: "Usability review" },
+                    { question: "What is Gestalt principle?", options: ["Perception laws", "Code laws", "Database laws", "Tool"], answer: "Perception laws" },
+                    { question: "What is cognitive load?", options: ["Mental effort", "Code effort", "Database effort", "Tool effort"], answer: "Mental effort" },
+                    { question: "What is accessibility in UI?", options: ["Inclusive design", "Code design", "Database design", "Tool design"], answer: "Inclusive design" },
+                    { question: "What is microinteraction?", options: ["Small animations", "Large animations", "Code", "Database"], answer: "Small animations" },
+                ]
+            },
+            cybersecurity: {
+                easy: [
+                    { question: "What is a firewall?", options: ["Network security", "Code", "Database", "Tool"], answer: "Network security" },
+                    { question: "What is phishing?", options: ["Fake emails", "Real emails", "Code", "Database"], answer: "Fake emails" },
+                    { question: "What does VPN stand for?", options: ["Virtual Private Network", "Virtual Public Network", "Virtual Private Node", "Virtual Public Node"], answer: "Virtual Private Network" },
+                    { question: "What is a password?", options: ["Secret code", "Public code", "Database", "Tool"], answer: "Secret code" },
+                    { question: "What is malware?", options: ["Malicious software", "Good software", "Code", "Database"], answer: "Malicious software" },
+                ],
+                medium: [
+                    { question: "What is encryption?", options: ["Data scrambling", "Data sorting", "Data filtering", "Data looping"], answer: "Data scrambling" },
+                    { question: "What is a DDoS attack?", options: ["Distributed Denial of Service", "Direct Denial of Service", "Distributed Data Service", "Direct Data Service"], answer: "Distributed Denial of Service" },
+                    { question: "What is a hash function?", options: ["Data fingerprint", "Data sort", "Data filter", "Data loop"], answer: "Data fingerprint" },
+                    { question: "What is SQL injection?", options: ["Database attack", "Code attack", "Network attack", "Tool attack"], answer: "Database attack" },
+                    { question: "What is a brute force attack?", options: ["Password guessing", "Code guessing", "Database guessing", "Tool guessing"], answer: "Password guessing" },
+                ],
+                hard: [
+                    { question: "What is a zero-day exploit?", options: ["Unknown vulnerability", "Known vulnerability", "Code", "Database"], answer: "Unknown vulnerability" },
+                    { question: "What is a man-in-the-middle attack?", options: ["Intercepts communication", "Sorts data", "Filters data", "Loops data"], answer: "Intercepts communication" },
+                    { question: "What is a rootkit?", options: ["Hidden malware", "Visible malware", "Code", "Database"], answer: "Hidden malware" },
+                    { question: "What is a penetration test?", options: ["Security test", "Code test", "Database test", "Tool test"], answer: "Security test" },
+                    { question: "What is a cryptographic nonce?", options: ["Unique number", "Random code", "Database", "Tool"], answer: "Unique number" },
+                ]
+            },
+            dsa: {
+                easy: [
+                    { question: "What is an array?", options: ["Ordered collection", "Key-value pair", "Function", "Loop"], answer: "Ordered collection" },
+                    { question: "What is a stack?", options: ["LIFO structure", "FIFO structure", "Code", "Database"], answer: "LIFO structure" },
+                    { question: "What is a queue?", options: ["FIFO structure", "LIFO structure", "Code", "Database"], answer: "FIFO structure" },
+                    { question: "What is a linked list?", options: ["Node sequence", "Array", "Code", "Database"], answer: "Node sequence" },
+                    { question: "What is time complexity?", options: ["Execution time", "Space usage", "Code", "Database"], answer: "Execution time" },
+                ],
+                medium: [
+                    { question: "What is binary search?", options: ["Divide and conquer", "Linear search", "Code", "Database"], answer: "Divide and conquer" },
+                    { question: "What is a binary tree?", options: ["Two-child nodes", "One-child node", "Code", "Database"], answer: "Two-child nodes" },
+                    { question: "What is a hash table?", options: ["Key-value storage", "Ordered list", "Code", "Database"], answer: "Key-value storage" },
+                    { question: "What is quicksort?", options: ["Partition-based sort", "Bubble sort", "Code", "Database"], answer: "Partition-based sort" },
+                    { question: "What is a graph?", options: ["Nodes and edges", "Array", "Code", "Database"], answer: "Nodes and edges" },
+                ],
+                hard: [
+                    { question: "What is dynamic programming?", options: ["Memoization", "Greedy", "Code", "Database"], answer: "Memoization" },
+                    { question: "What is a red-black tree?", options: ["Self-balancing tree", "Binary tree", "Code", "Database"], answer: "Self-balancing tree" },
+                    { question: "What is Dijkstra's algorithm?", options: ["Shortest path", "Longest path", "Code", "Database"], answer: "Shortest path" },
+                    { question: "What is a trie?", options: ["Prefix tree", "Binary tree", "Code", "Database"], answer: "Prefix tree" },
+                    { question: "What is NP-complete?", options: ["Hard problems", "Easy problems", "Code", "Database"], answer: "Hard problems" },
+                ]
+            },
+            webdev: {
+                easy: [
+                    { question: "What is HTML?", options: ["Markup language", "Programming language", "Database", "Tool"], answer: "Markup language" },
+                    { question: "What does CSS do?", options: ["Styles webpages", "Scripts webpages", "Code", "Database"], answer: "Styles webpages" },
+                    { question: "What is JavaScript?", options: ["Scripting language", "Markup language", "Database", "Tool"], answer: "Scripting language" },
+                    { question: "What is a div?", options: ["HTML container", "CSS style", "Code", "Database"], answer: "HTML container" },
+                    { question: "What does HTTP stand for?", options: ["HyperText Transfer Protocol", "HyperText Transport Protocol", "HyperTool Transfer Protocol", "HyperText Tool Protocol"], answer: "HyperText Transfer Protocol" },
+                ],
+                medium: [
+                    { question: "What is a CSS selector?", options: ["Targets elements", "Styles pages", "Code", "Database"], answer: "Targets elements" },
+                    { question: "What is an API?", options: ["Application Programming Interface", "Application Process Interface", "Code", "Database"], answer: "Application Programming Interface" },
+                    { question: "What does DOM stand for?", options: ["Document Object Model", "Data Object Model", "Document Order Model", "Data Order Model"], answer: "Document Object Model" },
+                    { question: "What is a promise?", options: ["Async result", "Sync result", "Code", "Database"], answer: "Async result" },
+                    { question: "What is responsive design?", options: ["Adapts to screens", "Fixed design", "Code", "Database"], answer: "Adapts to screens" },
+                ],
+                hard: [
+                    { question: "What is CORS?", options: ["Cross-Origin Resource Sharing", "Cross-Origin Request Sharing", "Code", "Database"], answer: "Cross-Origin Resource Sharing" },
+                    { question: "What is a service worker?", options: ["Offline support", "Online support", "Code", "Database"], answer: "Offline support" },
+                    { question: "What is WebSocket?", options: ["Real-time communication", "Static communication", "Code", "Database"], answer: "Real-time communication" },
+                    { question: "What is SSR?", options: ["Server-Side Rendering", "Static Site Rendering", "Code", "Database"], answer: "Server-Side Rendering" },
+                    { question: "What is a closure in JS?", options: ["Scope retention", "Scope release", "Code", "Database"], answer: "Scope retention" },
+                ]
+            },
+            aiml: {
+                easy: [
+                    { question: "What is AI?", options: ["Artificial Intelligence", "Automated Input", "Artificial Input", "Automated Intelligence"], answer: "Artificial Intelligence" },
+                    { question: "What is ML?", options: ["Machine Learning", "Manual Learning", "Machine Language", "Manual Language"], answer: "Machine Learning" },
+                    { question: "What is a neural network?", options: ["Brain-inspired model", "Code model", "Database", "Tool"], answer: "Brain-inspired model" },
+                    { question: "What does supervised learning use?", options: ["Labeled data", "Unlabeled data", "Code", "Database"], answer: "Labeled data" },
+                    { question: "What is unsupervised learning?", options: ["Finds patterns", "Uses labels", "Code", "Database"], answer: "Finds patterns" },
+                ],
+                medium: [
+                    { question: "What is a loss function?", options: ["Error measure", "Accuracy measure", "Code", "Database"], answer: "Error measure" },
+                    { question: "What is gradient descent?", options: ["Optimization", "Sorting", "Filtering", "Looping"], answer: "Optimization" },
+                    { question: "What is overfitting?", options: ["Model too specific", "Model too general", "Code", "Database"], answer: "Model too specific" },
+                    { question: "What is a feature in ML?", options: ["Input variable", "Output variable", "Code", "Database"], answer: "Input variable" },
+                    { question: "What is a decision tree?", options: ["Tree-based model", "Linear model", "Code", "Database"], answer: "Tree-based model" },
+                ],
+                hard: [
+                    { question: "What is backpropagation?", options: ["Weight adjustment", "Weight addition", "Code", "Database"], answer: "Weight adjustment" },
+                    { question: "What is a GAN?", options: ["Generative Adversarial Network", "General Adaptive Network", "Code", "Database"], answer: "Generative Adversarial Network" },
+                    { question: "What is reinforcement learning?", options: ["Reward-based learning", "Label-based learning", "Code", "Database"], answer: "Reward-based learning" },
+                    { question: "What is a convolutional layer?", options: ["Image processing", "Text processing", "Code", "Database"], answer: "Image processing" },
+                    { question: "What is a transformer?", options: ["Attention model", "Linear model", "Code", "Database"], answer: "Attention model" },
+                ]
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Particle Animation
+            function createParticles() {
+                const particleCount = 50;
+                const particlesContainer = document.querySelector('.particles');
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    const size = Math.random() * 3 + 1;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${Math.random() * 100}vw`;
+                    particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                    particle.style.animationDelay = `${Math.random() * 5}s`;
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            createParticles();
+
+            // Fade-in Animation
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('visible');
+                }, index * 200);
+            });
+
+            // Quiz Logic
+            let selectedTopic = null;
+            let selectedNumQuestions = null;
+            let selectedDifficulty = null;
+
+            const topics = document.getElementById('topics').children;
+            const numQuestions = document.getElementById('num-questions').children;
+            const difficulties = document.getElementById('difficulty').children;
+
+            Array.from(topics).forEach(option => {
+                option.addEventListener('click', () => {
+                    Array.from(topics).forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    selectedTopic = option.dataset.topic;
+                });
+            });
+
+            Array.from(numQuestions).forEach(option => {
+                option.addEventListener('click', () => {
+                    Array.from(numQuestions).forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    selectedNumQuestions = parseInt(option.dataset.num);
+                });
+            });
+
+            Array.from(difficulties).forEach(option => {
+                option.addEventListener('click', () => {
+                    Array.from(difficulties).forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    selectedDifficulty = option.dataset.difficulty;
+                });
+            });
+
+            document.getElementById('start-quiz').addEventListener('click', () => {
+                if (!selectedTopic || !selectedNumQuestions || !selectedDifficulty) {
+                    alert('Please select a topic, number of questions, and difficulty.');
+                    return;
+                }
+
+                const questions = quizData[selectedTopic][selectedDifficulty];
+                const shuffled = questions.sort(() => 0.5 - Math.random());
+                const selectedQuestions = shuffled.slice(0, selectedNumQuestions);
+
+                document.getElementById('selection').style.display = 'none';
+                const quizForm = document.getElementById('quiz-form');
+                quizForm.innerHTML = '';
+                selectedQuestions.forEach((q, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'question';
+                    div.innerHTML = `
+                        <p>${index + 1}. ${q.question}</p>
+                        ${q.options.map((opt, i) => `
+                            <label>
+                                <input type="radio" name="q${index}" value="${opt}">
+                                ${opt}
+                            </label>
+                        `).join('')}
+                    `;
+                    quizForm.appendChild(div);
+                });
+
+                document.getElementById('quiz').style.display = 'block';
+            });
+
+            document.getElementById('submit-quiz').addEventListener('click', (e) => {
+                e.preventDefault();
+                const form = document.getElementById('quiz-form');
+                const questions = quizData[selectedTopic][selectedDifficulty].slice(0, selectedNumQuestions);
+                let score = 0;
+
+                questions.forEach((q, index) => {
+                    const selected = form.querySelector(`input[name="q${index}"]:checked`);
+                    if (selected && selected.value === q.answer) {
+                        score++;
+                    }
+                });
+
+                const percentage = (score / selectedNumQuestions) * 100;
+                let performanceMessage = '';
+                if (percentage >= 80) {
+                    performanceMessage = "Excellent work! You have a strong grasp of this topic.";
+                } else if (percentage >= 60) {
+                    performanceMessage = "Good effort! You're on the right track, but there's room to improve.";
+                } else if (percentage >= 40) {
+                    performanceMessage = "Fair attempt. Review key concepts to boost your score next time.";
+                } else {
+                    performanceMessage = "Keep practicing! Focus on the basics and try again.";
+                }
+
+                document.getElementById('quiz').style.display = 'none';
+                document.getElementById('score').textContent = `You scored ${score} out of ${selectedNumQuestions}! (${percentage.toFixed(0)}%)`;
+                document.getElementById('performance').textContent = performanceMessage;
+                document.getElementById('results').style.display = 'block';
+            });
+
+            document.getElementById('restart-quiz').addEventListener('click', () => {
+                document.getElementById('results').style.display = 'none';
+                document.getElementById('selection').style.display = 'block';
+                Array.from(topics).forEach(opt => opt.classList.remove('selected'));
+                Array.from(numQuestions).forEach(opt => opt.classList.remove('selected'));
+                Array.from(difficulties).forEach(opt => opt.classList.remove('selected'));
+                selectedTopic = null;
+                selectedNumQuestions = null;
+                selectedDifficulty = null;
+            });
+        });
+    </script>
+</body>
+</html>

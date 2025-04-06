@@ -5,27 +5,142 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Web Development Roadmap</title>
   <style>
-    /* CSS Styles */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
-      color: #333;
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --neon-blue: #00f3ff;
+      --cyber-purple: #bc13fe;
+      --matrix-green: #00ff41;
+      --dark-bg: #0a0a0f;
+      --card-bg: rgba(15, 15, 25, 0.9);
+      --text-primary: #e0e0e0;
+      --text-secondary: #a0a0a0;
+      --gradient-1: linear-gradient(135deg, var(--neon-blue), var(--cyber-purple));
+      --gradient-2: linear-gradient(45deg, var(--matrix-green), var(--neon-blue));
     }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--dark-bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* Background Animations */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(0, 243, 255, 0.1) 0%, transparent 70%);
+      animation: pulseGlow 5s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M10 10 L90 90 M90 10 L10 90" stroke="%2300f3ff" stroke-width="1" opacity="0.3"/></svg>');
+      background-size: 20px 20px;
+      animation: glitchShift 2s linear infinite alternate;
+      z-index: -1;
+    }
+
+    /* Particle Animation */
+    .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      background: var(--neon-blue);
+      border-radius: 50%;
+      animation: float 10s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0); opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    @keyframes pulseGlow {
+      0% { opacity: 0.1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 0.1; }
+    }
+
+    @keyframes glitchShift {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(5px, 5px); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+    .delay-5 { transition-delay: 0.5s; }
+
+    /* Header */
     header {
-      background: linear-gradient(135deg, #333, #555);
-      color: #fff;
+      background: var(--gradient-1);
+      color: var(--text-primary);
       padding: 2rem;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 15px rgba(0, 243, 255, 0.3);
+      position: relative;
+      z-index: 10;
     }
 
     header h1 {
       margin: 0;
-      font-size: 2.5rem;
-      font-weight: bold;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px var(--neon-blue);
     }
 
     header p {
@@ -34,122 +149,113 @@
       opacity: 0.9;
     }
 
+/* Schedule Button */
+.schedule-button {
+  display: block;
+  width: 200px;
+  margin: 1rem auto;
+  padding: 12px 24px;
+  background: var(--gradient-1);
+  color: var(--dark-bg);
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
+  font-family: 'Playfair Display', serif;
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.schedule-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 243, 255, 0.1);
+  box-shadow: 0 0 10px var(--neon-blue);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.schedule-button:hover::before {
+  opacity: 1;
+}
+
+.schedule-button:hover {
+  background: var(--gradient-2);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .schedule-button {
+    width: 150px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+    /* Progress Bar */
+    .progress-container {
+      max-width: 800px;
+      margin: 1rem auto;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .progress-container p {
+      font-size: 1.1rem;
+      color: var(--matrix-green);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 5px var(--neon-blue);
+    }
+
+    .progress-bar {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      overflow: hidden;
+      height: 20px;
+      box-shadow: 0 2px 5px rgba(0, 243, 255, 0.2);
+      border: 1px solid var(--neon-blue);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--gradient-2);
+      width: 0%;
+      transition: width 0.5s ease;
+      box-shadow: 0 0 10px var(--matrix-green);
+    }
+
+    /* Tree Diagram Styles */
     .tree {
       display: flex;
       justify-content: center;
-      margin-top: 2rem;
+      margin: 2rem 1rem;
       padding: 1rem;
+      position: relative;
+      z-index: 10;
     }
 
     .tree ul {
       list-style-type: none;
-      padding-left: 20px;
+      padding-left: 30px;
       position: relative;
     }
 
     .tree ul li {
-      margin: 0;
-      padding: 10px 20px;
+      margin: 10px 0;
+      padding: 10px;
       position: relative;
-    }
-
-    .tree ul li::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -10px;
-      width: 2px;
-      height: 100%;
-      background-color: #009688;
-    }
-
-    .tree ul li::after {
-      content: "";
-      position: absolute;
-      top: 20px;
-      left: -10px;
-      width: 20px;
-      height: 2px;
-      background-color: #009688;
-    }
-
-    .tree ul li:last-child::before {
-      height: 20px;
-    }
-
-    /* Main Step Styling */
-    .tree ul > li > span {
-      background-color: #ff9800; /* Orange color for main steps */
-      border-color: #e65100; /* Darker orange for border */
-      color: #fff; /* White text for contrast */
-      font-weight: bold;
-    }
-
-    .tree ul li span {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #fff;
-      border: 2px solid #009688;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-      color: #333;
-    }
-
-    .tree ul li span:hover {
-      background-color: #009688;
-      color: #fff;
-      transform: translateY(-5px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      background: linear-gradient(135deg, #333, #555);
-      color: #fff;
-      margin-top: 2rem;
-      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Back Button Styles */
-    .back-button {
-      display: block;
-      width: 200px;
-      margin: 2rem auto;
-      padding: 12px 24px;
-      background-color: #009688;
-      color: #fff;
-      text-align: center;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .back-button:hover {
-      background-color: #00796b;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .tree ul li {
       animation: fadeIn 0.5s ease forwards;
       opacity: 0;
     }
@@ -159,109 +265,462 @@
     .tree ul li:nth-child(3) { animation-delay: 0.3s; }
     .tree ul li:nth-child(4) { animation-delay: 0.4s; }
     .tree ul li:nth-child(5) { animation-delay: 0.5s; }
+
+    .tree ul li::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -15px;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--neon-blue), var(--cyber-purple));
+    }
+
+    .tree ul li::after {
+      content: "";
+      position: absolute;
+      top: 25px;
+      left: -15px;
+      width: 25px;
+      height: 2px;
+      background: var(--neon-blue);
+    }
+
+    .tree ul li:last-child::before {
+      height: 25px;
+    }
+
+    .tree ul > li > span {
+      background: var(--gradient-1);
+      border: none;
+      color: var(--dark-bg);
+      font-weight: 600;
+      font-size: 1.1rem;
+      font-family: 'Playfair Display', serif;
+      text-shadow: 0 0 5px var(--neon-blue);
+    }
+
+    .tree ul li span {
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+      background: var(--card-bg);
+      border: 2px solid var(--neon-blue);
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      color: var(--text-primary);
+      position: relative;
+      text-shadow: 0 0 3px var(--cyber-purple);
+    }
+
+    .tree ul li span:hover {
+      background: var(--gradient-2);
+      color: var(--dark-bg);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+    }
+
+    .tree ul li span::before {
+      content: "📘";
+      margin-right: 10px;
+      font-size: 1.2rem;
+      color: var(--matrix-green);
+      text-shadow: 0 0 5px var(--neon-blue);
+    }
+
+    .tree ul li input[type="checkbox"] {
+      margin-right: 10px;
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--matrix-green);
+      border: 1px solid var(--neon-blue);
+      background: var(--card-bg);
+    }
+
+    .tree ul li.completed span {
+      background: rgba(0, 255, 65, 0.2);
+      border-color: var(--matrix-green);
+      color: var(--text-primary);
+    }
+
+    .tree ul li.completed span::before {
+      content: "✅";
+      margin-right: 10px;
+      font-size: 1.2rem;
+      color: var(--matrix-green);
+    }
+
+    .details {
+      display: none;
+      margin-top: 10px;
+      padding: 15px;
+      background: var(--card-bg);
+      border-left: 4px solid var(--neon-blue);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 243, 255, 0.1);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      animation: slideDown 0.3s ease;
+      color: var(--text-secondary);
+    }
+
+    .details h4 {
+      margin: 0 0 10px;
+      color: var(--neon-blue);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      text-shadow: 0 0 5px var(--cyber-purple);
+    }
+
+    .details p {
+      margin: 5px 0;
+    }
+
+    .details a {
+      color: var(--matrix-green);
+      text-decoration: none;
+      font-weight: 500;
+      text-shadow: 0 0 3px var(--neon-blue);
+    }
+
+    .details a:hover {
+      text-decoration: underline;
+      color: var(--neon-blue);
+    }
+
+    .back-button {
+      display: block;
+      width: 200px;
+      margin: 1rem auto;
+      padding: 12px 24px;
+      background: var(--gradient-1);
+      color: var(--dark-bg);
+      text-align: center;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
+      font-family: 'Playfair Display', serif;
+      position: relative;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .back-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 243, 255, 0.1);
+      box-shadow: 0 0 10px var(--neon-blue);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .back-button:hover::before {
+      opacity: 1;
+    }
+
+    .back-button:hover {
+      background: var(--gradient-2);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--gradient-1);
+      color: var(--text-primary);
+      box-shadow: 0 -4px 10px rgba(0, 243, 255, 0.2);
+      position: relative;
+      z-index: 10;
+    }
+
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.2rem; }
+      header p { font-size: 1rem; }
+      .progress-container p { font-size: 1rem; }
+      .tree ul li span { font-size: 0.9rem; padding: 10px 15px; }
+      .back-button { width: 150px; padding: 10px 20px; font-size: 0.9rem; }
+    }
   </style>
 </head>
 <body>
-  <header>
+  <!-- Particles Container for Background Animation -->
+  <div class="particles"></div>
+
+  <header class="fade-in delay-1">
     <h1>Web Development Roadmap</h1>
-    <p>From Zero to Advanced with Step-by-Step Projects</p>
+    <p>Master Front-End and Back-End Development 🚀</p>
   </header>
 
-  <div class="tree">
+  <!-- Progress Bar -->
+  <div class="progress-container fade-in delay-2">
+    <p>Progress: <span id="progress-text">0%</span></p>
+    <div class="progress-bar">
+      <div class="progress-bar-fill" id="progress-bar-fill"></div>
+    </div>
+  </div>
+
+  <div class="tree fade-in delay-3">
     <ul>
-      <!-- Step 1: HTML Basics -->
-      <li>
-        <span>Step 1: Learn HTML Basics</span>
+      <li><span>Step 1: Front-End Basics</span>
         <ul>
-          <li><span>Tags, Elements, and Attributes</span></li>
-          <li><span>Forms and Inputs</span></li>
-          <li><span>Semantic HTML</span></li>
-          <li><span>Project: Build a Personal Portfolio Page</span></li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="html"><span>HTML Fundamentals</span>
+            <div class="details">
+              <h4>HTML Fundamentals</h4>
+              <p>HTML (HyperText Markup Language) structures web content using tags (e.g., `<div>`, `<p>`) for headings, paragraphs, and images.</p>
+              <p><strong>Key Points:</strong> Use semantic tags; ensure accessibility; validate code.</p>
+              <p><strong>Example:</strong> `<h1>Welcome</h1><p>This is a paragraph.</p>`</p>
+              <p><strong>Resource:</strong> <a href="https://www.w3schools.com/html/" target="_blank">W3Schools: HTML</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank">MDN HTML</a>, <a href="https://www.youtube.com/watch?v=pQN-pnXPaZg" target="_blank">📺 YouTube: HTML Tutorial (freeCodeCamp)</a></p>
+            </div>
+          </li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="css"><span>CSS Basics</span>
+            <div class="details">
+              <h4>CSS Basics</h4>
+              <p>CSS (Cascading Style Sheets) styles HTML with properties like color, layout, and responsiveness using selectors and media queries.</p>
+              <p><strong>Key Points:</strong> Use Flexbox/Grid; ensure mobile responsiveness; avoid !important.</p>
+              <p><strong>Example:</strong> `div { background: blue; }`</p>
+              <p><strong>Resource:</strong> <a href="https://www.w3schools.com/css/" target="_blank">W3Schools: CSS</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" target="_blank">MDN CSS</a>, <a href="https://www.youtube.com/watch?v=UB1O30fR-EE" target="_blank">📺 YouTube: CSS Tutorial (Traversy Media)</a></p>
+            </div>
+          </li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="javascript"><span>JavaScript Basics</span>
+            <div class="details">
+              <h4>JavaScript Basics</h4>
+              <p>JavaScript adds interactivity with variables, functions, and event handling for dynamic web pages.</p>
+              <p><strong>Key Points:</strong> Use let/const; handle DOM events; debug with console.</p>
+              <p><strong>Example:</strong> `document.querySelector('button').addEventListener('click', () => alert('Clicked'));`</p>
+              <p><strong>Resource:</strong> <a href="https://www.w3schools.com/js/" target="_blank">W3Schools: JS</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">MDN JS</a>, <a href="https://www.youtube.com/watch?v=PkZNo7MFNFg" target="_blank">📺 YouTube: JS Tutorial (freeCodeCamp)</a></p>
+            </div>
+          </li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="project-frontend"><span>Project: Personal Portfolio</span>
+            <div class="details">
+              <h4>Project: Personal Portfolio</h4>
+              <p>Create a portfolio with HTML for structure, CSS for styling, and JavaScript for interactivity.</p>
+              <p><strong>Key Points:</strong> Use a grid layout; add a contact form; host on GitHub Pages.</p>
+              <p><strong>Example:</strong> A page with bio, projects, and a contact button.</p>
+              <p><strong>Resource:</strong> <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>, <a href="https://www.w3schools.com/html/html_forms.asp" target="_blank">W3Schools: Forms</a>, <a href="https://www.youtube.com/watch?v=UB1O30fR-EE" target="_blank">📺 YouTube: Portfolio Tutorial (Traversy Media)</a></p>
+            </div>
+          </li>
         </ul>
       </li>
-
-      <!-- Step 2: CSS Basics -->
-      <li>
-        <span>Step 2: Learn CSS Basics</span>
+      <li><span>Step 2: Front-End Advanced</span>
         <ul>
-          <li><span>Selectors, Box Model, and Flexbox</span></li>
-          <li><span>Grid Layout</span></li>
-          <li><span>Responsive Design (Media Queries)</span></li>
-          <li><span>Project: Style Your Portfolio Page</span></li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="react"><span>React.js</span>
+            <div class="details">
+              <h4>React.js</h4>
+              <p>React is a JavaScript library for building UI components with a virtual DOM and state management.</p>
+              <p><strong>Key Points:</strong> Use hooks; manage state with useState; optimize with memo.</p>
+              <p><strong>Example:</strong> `function App() { const [count, setCount] = useState(0); return <button onClick={() => setCount(count + 1)}>{count}</button>; }`</p>
+              <p><strong>Resource:</strong> <a href="https://react.dev/" target="_blank">React Docs</a>, <a href="https://www.robinwieruch.de/react-hooks/" target="_blank">React Hooks Guide</a>, <a href="https://www.youtube.com/watch?v=SqcY0GlETPk" target="_blank">📺 YouTube: React Tutorial (Net Ninja)</a></p>
+            </div>
+          </li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="responsive"><span>Responsive and Adaptive Design</span>
+            <div class="details">
+              <h4>Responsive and Adaptive Design</h4>
+              <p>Responsive design adjusts layouts with media queries; adaptive design uses fixed breakpoints for different devices.</p>
+              <p><strong>Key Points:</strong> Use relative units (%, vw); test on real devices; prioritize mobile-first.</p>
+              <p><strong>Example:</strong> A CSS media query: `@media (max-width: 600px) { body { font-size: 14px; } }`</p>
+              <p><strong>Resource:</strong> <a href="https://www.w3schools.com/css/css_rwd_intro.asp" target="_blank">W3Schools: RWD</a>, <a href="https://www.smashingmagazine.com/2011/01/guidelines-for-responsive-web-design/" target="_blank">Smashing Magazine: RWD</a>, <a href="https://www.youtube.com/watch?v=9-0Bof6X0qA" target="_blank">📺 YouTube: Responsive Design (Traversy Media)</a></p>
+            </div>
+          </li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="testing"><span>Testing and Debugging</span>
+            <div class="details">
+              <h4>Testing and Debugging</h4>
+              <p>Test front-end with tools like Jest (React) and debug using browser DevTools for layout and performance issues.</p>
+              <p><strong>Key Points:</strong> Write unit tests; use console.log; check accessibility.</p>
+              <p><strong>Example:</strong> Testing a React component with Jest: `test('renders button', () => { expect(screen.getByText('Click')).toBeInTheDocument(); });`</p>
+              <p><strong>Resource:</strong> <a href="https://jestjs.io/docs/getting-started" target="_blank">Jest Docs</a>, <a href="https://developer.chrome.com/docs/devtools/" target="_blank">Chrome DevTools</a>, <a href="https://www.youtube.com/watch?v=7r4xVDI2vho" target="_blank">📺 YouTube: Testing Tutorial (Kent C. Dodds)</a></p>
+            </div>
+          </li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="project-advanced-frontend"><span>Project: E-Commerce Website</span>
+            <div class="details">
+              <h4>Project: E-Commerce Website</h4>
+              <p>Build an e-commerce site with React, responsive design, and product filtering.</p>
+              <p><strong>Key Points:</strong> Use state for cart; apply CSS Grid; test on multiple browsers.</p>
+              <p><strong>Example:</strong> A site with product cards and a checkout page.</p>
+              <p><strong>Resource:</strong> <a href="https://react.dev/learn" target="_blank">React Learn</a>, <a href="https://www.w3schools.com/css/css_grid.asp" target="_blank">W3Schools: Grid</a>, <a href="https://www.youtube.com/watch?v=SqcY0GlETPk" target="_blank">📺 YouTube: E-Commerce (Net Ninja)</a></p>
+            </div>
+          </li>
         </ul>
       </li>
-
-      <!-- Step 3: JavaScript Basics -->
-      <li>
-        <span>Step 3: Learn JavaScript Basics</span>
+      <li><span>Step 3: Back-End Development</span>
         <ul>
-          <li><span>Variables, Data Types, and Functions</span></li>
-          <li><span>DOM Manipulation</span></li>
-          <li><span>Event Handling</span></li>
-          <li><span>Project: Add Interactivity to Your Portfolio</span></li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="node"><span>Node.js and Express</span>
+            <div class="details">
+              <h4>Node.js and Express</h4>
+              <p>Node.js enables server-side JavaScript; Express is a framework for building APIs and web servers.</p>
+              <p><strong>Key Points:</strong> Use middleware; handle routes; connect to databases.</p>
+              <p><strong>Example:</strong> `app.get('/api', (req, res) => res.json({ message: 'Hello' }));`</p>
+              <p><strong>Resource:</strong> <a href="https://nodejs.org/en/docs" target="_blank">Node.js Docs</a>, <a href="https://expressjs.com/" target="_blank">Express Docs</a>, <a href="https://www.youtube.com/watch?v=TlB_eWDSMt4" target="_blank">📺 YouTube: Node.js Tutorial (Net Ninja)</a></p>
+            </div>
+          </li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="databases"><span>Databases (SQL/NoSQL)</span>
+            <div class="details">
+              <h4>Databases</h4>
+              <p>SQL (e.g., MySQL) for structured data; NoSQL (e.g., MongoDB) for flexible, scalable data.</p>
+              <p><strong>Key Points:</strong> Normalize SQL data; use indexes; choose NoSQL for unstructured data.</p>
+              <p><strong>Example:</strong> `SELECT * FROM users WHERE age > 18;` in MySQL.</p>
+              <p><strong>Resource:</strong> <a href="https://www.w3schools.com/sql/" target="_blank">W3Schools: SQL</a>, <a href="https://www.mongodb.com/docs/" target="_blank">MongoDB Docs</a>, <a href="https://www.youtube.com/watch?v=ndlx5n8I1v0" target="_blank">📺 YouTube: Database Tutorial (freeCodeCamp)</a></p>
+            </div>
+          </li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="auth"><span>Authentication and Authorization</span>
+            <div class="details">
+              <h4>Authentication and Authorization</h4>
+              <p>Implement user login with JWT or OAuth, securing routes with middleware.</p>
+              <p><strong>Key Points:</strong> Use bcrypt for passwords; validate tokens; restrict access.</p>
+              <p><strong>Example:</strong> `app.use(authenticateToken);` in Express.</p>
+              <p><strong>Resource:</strong> <a href="https://jwt.io/introduction" target="_blank">JWT Intro</a>, <a href="https://oauth.net/2/" target="_blank">OAuth 2.0</a>, <a href="https://www.youtube.com/watch?v=7Q17ubqLfaM" target="_blank">📺 YouTube: Auth Tutorial (Traversy Media)</a></p>
+            </div>
+          </li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="project-backend"><span>Project: API Server</span>
+            <div class="details">
+              <h4>Project: API Server</h4>
+              <p>Build a RESTful API with Node.js, Express, and a database for a blog or e-commerce system.</p>
+              <p><strong>Key Points:</strong> Define endpoints; connect to MongoDB; add authentication.</p>
+              <p><strong>Example:</strong> An API with `/posts` and `/users` endpoints.</p>
+              <p><strong>Resource:</strong> <a href="https://expressjs.com/en/starter/installing.html" target="_blank">Express Setup</a>, <a href="https://www.mongodb.com/docs/drivers/node/" target="_blank">MongoDB Node</a>, <a href="https://www.youtube.com/watch?v=TlB_eWDSMt4" target="_blank">📺 YouTube: API Tutorial (Net Ninja)</a></p>
+            </div>
+          </li>
         </ul>
       </li>
-
-      <!-- Step 4: Advanced JavaScript -->
-      <li>
-        <span>Step 4: Advanced JavaScript</span>
+      <li><span>Step 4: Deployment</span>
         <ul>
-          <li><span>ES6+ Features (Arrow Functions, Destructuring)</span></li>
-          <li><span>Async/Await and Promises</span></li>
-          <li><span>APIs and Fetch</span></li>
-          <li><span>Project: Build a Weather App</span></li>
-        </ul>
-      </li>
-
-      <!-- Step 5: Frontend Frameworks -->
-      <li>
-        <span>Step 5: Learn a Frontend Framework</span>
-        <ul>
-          <li><span>React Basics (Components, State, Props)</span></li>
-          <li><span>React Router</span></li>
-          <li><span>State Management (Redux or Context API)</span></li>
-          <li><span>Project: Build a Todo App with React</span></li>
-        </ul>
-      </li>
-
-      <!-- Step 6: Backend Development -->
-      <li>
-        <span>Step 6: Learn Backend Development</span>
-        <ul>
-          <li><span>Node.js and Express</span></li>
-          <li><span>REST APIs</span></li>
-          <li><span>Database Integration (MongoDB or SQL)</span></li>
-          <li><span>Project: Build a Blogging Platform</span></li>
-        </ul>
-      </li>
-
-      <!-- Step 7: Full-Stack Development -->
-      <li>
-        <span>Step 7: Full-Stack Development</span>
-        <ul>
-          <li><span>Authentication and Authorization</span></li>
-          <li><span>Deployment (Heroku, Netlify, Vercel)</span></li>
-          <li><span>Project: Build a Full-Stack E-Commerce App</span></li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="hosting"><span>Web Hosting and Deployment</span>
+            <div class="details">
+              <h4>Web Hosting and Deployment</h4>
+              <p>Deploy web apps using Heroku, Vercel, or AWS, configuring domains and CI/CD pipelines.</p>
+              <p><strong>Key Points:</strong> Use environment variables; set up HTTPS; monitor uptime.</p>
+              <p><strong>Example:</strong> Deploying a React app to Vercel.</p>
+              <p><strong>Resource:</strong> <a href="https://vercel.com/docs" target="_blank">Vercel Docs</a>, <a href="https://www.heroku.com/" target="_blank">Heroku</a>, <a href="https://www.youtube.com/watch?v=7mK_lz5GDOI" target="_blank">📺 YouTube: Deployment (Traversy Media)</a></p>
+            </div>
+          </li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="performance"><span>Performance Optimization</span>
+            <div class="details">
+              <h4>Performance Optimization</h4>
+              <p>Optimize with minification, lazy loading, and caching to improve load times.</p>
+              <p><strong>Key Points:</strong> Compress images; use CDN; analyze with Lighthouse.</p>
+              <p><strong>Example:</strong> Adding lazy loading to images with `loading="lazy"`. </p>
+              <p><strong>Resource:</strong> <a href="https://web.dev/performance/" target="_blank">Web.dev: Performance</a>, <a href="https://developers.google.com/speed" target="_blank">Google Speed</a>, <a href="https://www.youtube.com/watch?v=4kF5c7K99wQ" target="_blank">📺 YouTube: Optimization (Net Ninja)</a></p>
+            </div>
+          </li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="security-web"><span>Web Security</span>
+            <div class="details">
+              <h4>Web Security</h4>
+              <p>Secure web apps with HTTPS, CSRF protection, and input sanitization.</p>
+              <p><strong>Key Points:</strong> Use Helmet.js; validate inputs; enable CORS safely.</p>
+              <p><strong>Example:</strong> Adding HTTPS with Let’s Encrypt.</p>
+              <p><strong>Resource:</strong> <a href="https://helmetjs.github.io/" target="_blank">Helmet.js</a>, <a href="https://owasp.org/www-project-top-ten/" target="_blank">OWASP Top 10</a>, <a href="https://www.youtube.com/watch?v=rb8QvQ9PqOs" target="_blank">📺 YouTube: Web Security (Traversy Media)</a></p>
+            </div>
+          </li>
+          <li><input type="checkbox" class="progress-checkbox" data-topic="project-deploy"><span>Project: Deploy Full-Stack App</span>
+            <div class="details">
+              <h4>Project: Deploy Full-Stack App</h4>
+              <p>Deploy a full-stack app (e.g., blog with React front-end and Node.js back-end) to a hosting service.</p>
+              <p><strong>Key Points:</strong> Configure database; set up domain; test post-deployment.</p>
+              <p><strong>Example:</strong> A deployed blog with user login.</p>
+              <p><strong>Resource:</strong> <a href="https://vercel.com/guides/deploying-react-with-node" target="_blank">Vercel Guide</a>, <a href="https://www.heroku.com/node-js" target="_blank">Heroku Node</a>, <a href="https://www.youtube.com/watch?v=7mK_lz5GDOI" target="_blank">📺 YouTube: Full-Stack Deploy (Traversy Media)</a></p>
+            </div>
+          </li>
         </ul>
       </li>
     </ul>
   </div>
+  <a href="scheduledsa.html" class="schedule-button fade-in delay-5">Schedule Your Learning</a>
 
-  <!-- Back Button -->
-  <a href="roadmaps.html" class="back-button">Back to Career Paths</a>
+  <a href="roadmaps.html" class="back-button fade-in delay-5">Back to Career Paths</a>
 
-  <footer>
-    <p>Happy Coding! 🚀</p>
+  <footer class="fade-in delay-5">
+    <p>Happy Coding! 🚀 | Tech Udaan © 2025</p>
   </footer>
 
   <script>
-    // JavaScript for Interactivity
     document.addEventListener("DOMContentLoaded", function () {
-      const items = document.querySelectorAll(".tree ul li span");
+      // Particle Animation
+      function createParticles() {
+        const particleCount = 50;
+        const particlesContainer = document.querySelector('.particles');
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          const size = Math.random() * 3 + 1;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${Math.random() * 100}vw`;
+          particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+          particle.style.animationDelay = `${Math.random() * 5}s`;
+          particlesContainer.appendChild(particle);
+        }
+      }
+      createParticles();
 
+      // Fade-in Animation
+      const elements = document.querySelectorAll('.fade-in');
+      elements.forEach((element, index) => {
+        setTimeout(() => {
+          element.classList.add('visible');
+        }, index * 200);
+      });
+
+      const checkboxes = document.querySelectorAll(".progress-checkbox");
+      const progressText = document.getElementById("progress-text");
+      const progressBarFill = document.getElementById("progress-bar-fill");
+      const totalTopics = checkboxes.length;
+
+      // Load progress from localStorage
+      checkboxes.forEach((checkbox) => {
+        const topic = checkbox.getAttribute("data-topic");
+        const isChecked = localStorage.getItem(`webdev-progress-${topic}`) === "true";
+        checkbox.checked = isChecked;
+        if (isChecked) {
+          checkbox.parentElement.classList.add("completed");
+        }
+      });
+
+      // Update progress bar
+      function updateProgress() {
+        const completedTopics = document.querySelectorAll(".progress-checkbox:checked").length;
+        const progressPercentage = (completedTopics / totalTopics) * 100;
+        progressText.textContent = `${Math.round(progressPercentage)}%`;
+        progressBarFill.style.width = `${progressPercentage}%`;
+      }
+
+      // Initial progress update
+      updateProgress();
+
+      // Handle checkbox changes
+      checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+          const topic = checkbox.getAttribute("data-topic");
+          localStorage.setItem(`webdev-progress-${topic}`, checkbox.checked);
+          if (checkbox.checked) {
+            checkbox.parentElement.classList.add("completed");
+          } else {
+            checkbox.parentElement.classList.remove("completed");
+          }
+          updateProgress();
+        });
+      });
+
+      // Handle topic details toggle
+      const items = document.querySelectorAll(".tree ul li span");
       items.forEach((item) => {
         item.addEventListener("click", () => {
-          alert(`You clicked: ${item.textContent}`);
+          const allDetails = document.querySelectorAll(".details");
+          allDetails.forEach((detail) => {
+            if (detail !== item.nextElementSibling) detail.style.display = "none";
+          });
+          const details = item.nextElementSibling;
+          details.style.display = details.style.display === "block" ? "none" : "block";
         });
       });
     });

@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flutter Learning Schedule Planner</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --neon-blue: #00f3ff;
+            --cyber-purple: #bc13fe;
+            --matrix-green: #00ff41;
+            --dark-bg: #0a0a0f;
+            --card-bg: rgba(15, 15, 25, 0.9);
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --gradient-1: linear-gradient(135deg, var(--neon-blue), var(--cyber-purple));
+            --gradient-2: linear-gradient(45deg, var(--matrix-green), var(--neon-blue));
+            --priority-low: #ffd700; /* Gold for Low */
+            --priority-medium: #ff8c00; /* Orange for Medium */
+            --priority-high: #ff4500; /* Red for High */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 243, 255, 0.1) 0%, transparent 70%);
+            animation: pulseGlow 5s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M10 10 L90 90 M90 10 L10 90" stroke="%2300f3ff" stroke-width="1" opacity="0.3"/></svg>');
+            background-size: 20px 20px;
+            animation: glitchShift 2s linear infinite alternate;
+            z-index: -1;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            animation: float 10s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.1; }
+        }
+
+        @keyframes glitchShift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(5px, 5px); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
+
+        header {
+            background: var(--gradient-1);
+            color: var(--text-primary);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 243, 255, 0.3);
+            position: relative;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 243, 255, 0.2);
+            border: 2px solid var(--neon-blue);
+            position: relative;
+            z-index: 10;
+        }
+
+        h2 {
+            color: var(--neon-blue);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px var(--cyber-purple);
+        }
+
+        .form-section input, .form-section select, .form-section button, .form-section textarea {
+            padding: 10px;
+            margin: 0.5rem 0;
+            border: 2px solid var(--neon-blue);
+            border-radius: 8px;
+            background: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: calc(100% - 24px);
+        }
+
+        .form-section button {
+            background: var(--gradient-1);
+            color: var(--dark-bg);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .form-section button:hover {
+            background: var(--gradient-2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .schedule-item {
+            padding: 15px;
+            background: var(--card-bg);
+            border: 2px solid var(--neon-blue);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+        }
+
+        .schedule-item:hover {
+            background: var(--gradient-2);
+            color: var(--dark-bg);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+        }
+
+        .schedule-item.assigned.priority-low.color-coded {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--priority-low);
+        }
+
+        .schedule-item.assigned.priority-medium.color-coded {
+            background: rgba(255, 140, 0, 0.2);
+            border-color: var(--priority-medium);
+        }
+
+        .schedule-item.assigned.priority-high.color-coded {
+            background: rgba(255, 69, 0, 0.2);
+            border-color: var(--priority-high);
+        }
+
+        .priority-tag {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 0.8rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--dark-bg);
+        }
+
+        .priority-low .priority-tag { background: var(--priority-low); }
+        .priority-medium .priority-tag { background: var(--priority-medium); }
+        .priority-high .priority-tag { background: var(--priority-high); }
+
+        .visualization-section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .visualization-section th, .visualization-section td {
+            padding: 10px;
+            border: 1px solid var(--neon-blue);
+        }
+
+        .visualization-section thead tr {
+            background: var(--gradient-1);
+        }
+
+        .visualization-section tbody {
+            background: var(--card-bg);
+        }
+
+        .tree-visual {
+            margin-top: 2rem;
+        }
+
+        .tree-visual ul {
+            list-style-type: none;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .tree-visual ul li {
+            margin: 10px 0;
+            padding: 10px;
+            position: relative;
+        }
+
+        .tree-visual ul li::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -15px;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--neon-blue), var(--cyber-purple));
+        }
+
+        .tree-visual ul li::after {
+            content: "";
+            position: absolute;
+            top: 25px;
+            left: -15px;
+            width: 25px;
+            height: 2px;
+            background: var(--neon-blue);
+        }
+
+        .tree-visual ul li:last-child::before {
+            height: 25px;
+        }
+
+        .tree-visual span {
+            padding: 12px 20px;
+            background: var(--card-bg);
+            border: 2px solid var(--neon-blue);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
+            display: inline-block;
+        }
+
+        .back-button, .export-button, .clear-button {
+            display: block;
+            width: 200px;
+            margin: 1rem auto;
+            padding: 12px 24px;
+            background: var(--gradient-1);
+            color: var(--dark-bg);
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
+            font-family: 'Playfair Display', serif;
+            cursor: pointer;
+        }
+
+        .clear-button {
+            background: linear-gradient(135deg, #ff4500, #ff8c00);
+        }
+
+        .back-button:hover, .export-button:hover, .clear-button:hover {
+            background: var(--gradient-2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+        }
+
+        .toggle-container {
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-container {
+            margin: 1rem 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--gradient-1);
+            color: var(--text-primary);
+            box-shadow: 0 -4px 10px rgba(0, 243, 255, 0.2);
+            position: relative;
+            z-index: 10;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2rem; }
+            header p { font-size: 1rem; }
+            .schedule-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+            .schedule-item { padding: 10px; font-size: 0.9rem; }
+            .back-button, .export-button, .clear-button { width: 150px; padding: 10px 20px; font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles"></div>
+
+    <header class="fade-in delay-1">
+        <h1>Flutter Learning Schedule Planner</h1>
+        <p>Create your personalized mobile app development schedule with priorities 🚀</p>
+    </header>
+
+    <div class="container fade-in delay-2">
+        <div class="form-section">
+            <h2>Plan Your Schedule</h2>
+            <input type="number" id="days" placeholder="Number of Days" min="1">
+            <input type="number" id="hours" placeholder="Total Hours per Day" min="1" max="24">
+            <input type="number" id="duration" placeholder="Task Duration (hours)" min="0.5" step="0.5">
+            <select id="topic-select">
+                <option value="">Select a Topic</option>
+                <!-- Topics will be populated dynamically -->
+            </select>
+            <select id="priority-select">
+                <option value="low">Priority: Low</option>
+                <option value="medium">Priority: Medium</option>
+                <option value="high">Priority: High</option>
+            </select>
+            <textarea id="task-notes" placeholder="Add notes for this task (optional)" rows="3"></textarea>
+            <button id="generate-schedule">Generate Schedule</button>
+            <button id="clear-schedule" class="clear-button">Clear Schedule</button>
+        </div>
+
+        <div class="schedule-section" id="schedule-section" style="display: none;">
+            <h2>Your Interactive Schedule</h2>
+            <div class="toggle-container">
+                <label for="color-toggle">Color Code Priorities:</label>
+                <input type="checkbox" id="color-toggle" checked>
+            </div>
+            <div class="schedule-grid" id="schedule-grid"></div>
+        </div>
+
+        <div class="visualization-section" id="visualization-section" style="display: none;">
+            <h2>Schedule Visualizations</h2>
+            <h3>Table View</h3>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search by topic or notes...">
+            </div>
+            <table id="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Time Slot</th>
+                        <th>Topic</th>
+                        <th>Priority</th>
+                        <th>Notes</th>
+                        <th>Completed</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+
+            <h3>Tree View</h3>
+            <div class="tree-visual" id="tree-visual"></div>
+            <button id="export-schedule" class="export-button">Export as PDF</button>
+        </div>
+    </div>
+
+    <a href="flutter.html" class="back-button fade-in delay-3">Back to Flutter Roadmap</a>
+
+    <footer class="fade-in delay-4">
+        <p>Happy Scheduling! 🚀 | Tech Udaan © 2025</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        const { jsPDF } = window.jspdf;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Particle Animation
+            function createParticles() {
+                const particleCount = 50;
+                const particlesContainer = document.querySelector('.particles');
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    const size = Math.random() * 3 + 1;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${Math.random() * 100}vw`;
+                    particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                    particle.style.animationDelay = `${Math.random() * 5}s`;
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            createParticles();
+
+            // Fade-in Animation
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('visible');
+                }, index * 200);
+            });
+
+            // Hardcoded Flutter topics extracted from flutter.html
+            const flutterTopics = [
+                "Mobile Development Basics",
+                "Setting Up Development Environment",
+                "UI Design for Mobile",
+                "Project: Simple To-Do App",
+                "Native Development (Android/iOS)",
+                "Cross-Platform Development",
+                "Working with APIs",
+                "Project: Social Media Feed App",
+                "Offline Sync and Storage",
+                "Push Notifications",
+                "Security Best Practices",
+                "Project: E-Commerce App",
+                "Publishing to App Stores",
+                "App Updates and Maintenance",
+                "Analytics and User Feedback",
+                "Project: Deploy a Final App"
+            ];
+
+            // Populate topic dropdown
+            const topicSelect = document.getElementById('topic-select');
+            flutterTopics.forEach(topic => {
+                const option = document.createElement('option');
+                option.value = topic;
+                option.textContent = topic;
+                topicSelect.appendChild(option);
+            });
+
+            // Schedule Logic
+            const daysInput = document.getElementById('days');
+            const hoursInput = document.getElementById('hours');
+            const durationInput = document.getElementById('duration');
+            const prioritySelect = document.getElementById('priority-select');
+            const taskNotes = document.getElementById('task-notes');
+            const generateButton = document.getElementById('generate-schedule');
+            const clearButton = document.getElementById('clear-schedule');
+            const exportButton = document.getElementById('export-schedule');
+            const colorToggle = document.getElementById('color-toggle');
+            const searchInput = document.getElementById('search-input');
+            const scheduleGrid = document.getElementById('schedule-grid');
+            const scheduleSection = document.getElementById('schedule-section');
+            const visualizationSection = document.getElementById('visualization-section');
+            const tableBody = document.getElementById('table-body');
+            const treeVisual = document.getElementById('tree-visual');
+            let scheduleData = [];
+            let colorCoded = true;
+
+            generateButton.addEventListener('click', () => {
+                const days = parseInt(daysInput.value);
+                const hours = parseInt(hoursInput.value);
+                const duration = parseFloat(durationInput.value);
+                if (!days || !hours || hours > 24 || !duration || duration <= 0 || !topicSelect.value) {
+                    alert('Please enter valid days (1+), hours (1-24), duration (0.5+), and select a topic.');
+                    return;
+                }
+
+                scheduleGrid.innerHTML = '';
+                scheduleData = [];
+                scheduleSection.style.display = 'block';
+                visualizationSection.style.display = 'none';
+
+                for (let day = 1; day <= days; day++) {
+                    let currentHour = 0;
+                    while (currentHour + duration <= hours) {
+                        const item = document.createElement('div');
+                        item.className = 'schedule-item';
+                        item.textContent = `Day ${day}, ${currentHour}:00 - ${currentHour + duration}:00`;
+                        item.dataset.day = day;
+                        item.dataset.startHour = currentHour;
+                        scheduleGrid.appendChild(item);
+
+                        item.addEventListener('click', () => {
+                            if (!item.classList.contains('assigned')) {
+                                const priority = prioritySelect.value;
+                                const notes = taskNotes.value.trim();
+                                item.textContent = `Day ${day}, ${currentHour}:00 - ${currentHour + duration}:00: ${topicSelect.value}`;
+                                item.classList.add('assigned', `priority-${priority}`);
+                                if (colorCoded) item.classList.add('color-coded');
+                                const tag = document.createElement('span');
+                                tag.className = 'priority-tag';
+                                tag.textContent = priority.charAt(0).toUpperCase() + priority.slice(1);
+                                item.appendChild(tag);
+
+                                scheduleData.push({
+                                    day: day,
+                                    timeSlot: `${currentHour}:00 - ${currentHour + duration}:00`,
+                                    topic: topicSelect.value,
+                                    priority: priority,
+                                    notes: notes,
+                                    completed: false
+                                });
+                                updateVisualizations();
+                            }
+                        });
+                        currentHour += duration;
+                    }
+                }
+            });
+
+            clearButton.addEventListener('click', () => {
+                scheduleData = [];
+                scheduleGrid.innerHTML = '';
+                scheduleSection.style.display = 'none';
+                visualizationSection.style.display = 'none';
+                daysInput.value = '';
+                hoursInput.value = '';
+                durationInput.value = '';
+                topicSelect.value = '';
+                prioritySelect.value = 'low';
+                taskNotes.value = '';
+                searchInput.value = '';
+            });
+
+            colorToggle.addEventListener('change', () => {
+                colorCoded = colorToggle.checked;
+                document.querySelectorAll('.schedule-item.assigned').forEach(item => {
+                    item.classList.toggle('color-coded', colorCoded);
+                });
+            });
+
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase();
+                updateTableView(query);
+            });
+
+            exportButton.addEventListener('click', () => {
+                const doc = new jsPDF();
+                doc.setFontSize(16);
+                doc.text("Flutter Learning Schedule", 20, 20);
+                doc.setFontSize(12);
+                let y = 30;
+
+                scheduleData.forEach((entry, index) => {
+                    const text = `Day ${entry.day}, ${entry.timeSlot}: ${entry.topic} (Priority: ${entry.priority.charAt(0).toUpperCase() + entry.priority.slice(1)}) - ${entry.notes || 'No notes'} ${entry.completed ? '[Completed]' : ''}`;
+                    if (y > 280) {
+                        doc.addPage();
+                        y = 20;
+                    }
+                    doc.text(text, 20, y);
+                    y += 10;
+                });
+
+                doc.save('flutter_schedule.pdf');
+            });
+
+            function updateVisualizations() {
+                visualizationSection.style.display = 'block';
+                updateTableView('');
+                updateTreeView();
+            }
+
+            function updateTableView(query = '') {
+                tableBody.innerHTML = '';
+                scheduleData.filter(entry => 
+                    entry.topic.toLowerCase().includes(query) || 
+                    (entry.notes && entry.notes.toLowerCase().includes(query))
+                ).forEach((entry, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${entry.day}</td>
+                        <td>${entry.timeSlot}</td>
+                        <td>${entry.topic}</td>
+                        <td style="color: var(--priority-${entry.priority});">${entry.priority.charAt(0).toUpperCase() + entry.priority.slice(1)}</td>
+                        <td>${entry.notes || 'No notes'}</td>
+                        <td><input type="checkbox" ${entry.completed ? 'checked' : ''} onchange="toggleCompleted(${index})"></td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            function updateTreeView() {
+                treeVisual.innerHTML = '';
+                const daysMap = {};
+                scheduleData.forEach(entry => {
+                    if (!daysMap[entry.day]) daysMap[entry.day] = [];
+                    daysMap[entry.day].push(entry);
+                });
+
+                const ul = document.createElement('ul');
+                Object.keys(daysMap).forEach(day => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span>Day ${day}</span>`;
+                    const subUl = document.createElement('ul');
+                    daysMap[day].forEach(entry => {
+                        const subLi = document.createElement('li');
+                        subLi.innerHTML = `<span style="border-color: var(--priority-${entry.priority});">${entry.timeSlot}: ${entry.topic} (${entry.priority.charAt(0).toUpperCase() + entry.priority.slice(1)}) ${entry.completed ? '[Done]' : ''} - ${entry.notes || 'No notes'}</span>`;
+                        subUl.appendChild(subLi);
+                    });
+                    li.appendChild(subUl);
+                    ul.appendChild(li);
+                });
+                treeVisual.appendChild(ul);
+            }
+
+            window.toggleCompleted = function(index) {
+                scheduleData[index].completed = !scheduleData[index].completed;
+                updateVisualizations();
+            };
+        });
+    </script>
+</body>
+</html>

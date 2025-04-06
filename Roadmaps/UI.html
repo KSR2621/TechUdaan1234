@@ -1,271 +1,1395 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UI/UX Design Roadmap</title>
-  <style>
-    /* CSS Styles */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
-      color: #333;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI/UX Design Roadmap - Interactive Tree with Progress Tracking</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
-    header {
-      background: linear-gradient(135deg, #333, #555);
-      color: #fff;
-      padding: 2rem;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+        :root {
+            --neon-blue: #00f3ff;
+            --cyber-purple: #bc13fe;
+            --matrix-green: #00ff41;
+            --dark-bg: #0a0a0f;
+            --card-bg: rgba(15, 15, 25, 0.9);
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --gradient-1: linear-gradient(135deg, var(--neon-blue), var(--cyber-purple));
+            --gradient-2: linear-gradient(45deg, var(--matrix-green), var(--neon-blue));
+        }
 
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-      font-weight: bold;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    header p {
-      margin: 0.5rem 0 0;
-      font-size: 1.2rem;
-      opacity: 0.9;
-    }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
 
-    .tree {
-      display: flex;
-      justify-content: center;
-      margin-top: 2rem;
-      padding: 1rem;
-    }
+        /* Background Animations */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 243, 255, 0.1) 0%, transparent 70%);
+            animation: pulseGlow 5s ease-in-out infinite;
+            z-index: -1;
+        }
 
-    .tree ul {
-      list-style-type: none;
-      padding-left: 20px;
-      position: relative;
-    }
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M10 10 L90 90 M90 10 L10 90" stroke="%2300f3ff" stroke-width="1" opacity="0.3"/></svg>');
+            background-size: 20px 20px;
+            animation: glitchShift 2s linear infinite alternate;
+            z-index: -1;
+        }
 
-    .tree ul li {
-      margin: 0;
-      padding: 10px 20px;
-      position: relative;
-    }
+        /* Particle Animation */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
 
-    .tree ul li::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -10px;
-      width: 2px;
-      height: 100%;
-      background-color: #009688;
-    }
+        .particle {
+            position: absolute;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            animation: float 10s linear infinite;
+        }
 
-    .tree ul li::after {
-      content: "";
-      position: absolute;
-      top: 20px;
-      left: -10px;
-      width: 20px;
-      height: 2px;
-      background-color: #009688;
-    }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
 
-    .tree ul li:last-child::before {
-      height: 20px;
-    }
+        @keyframes pulseGlow {
+            0% { opacity: 0.1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.1; }
+        }
 
-    /* Main Step Styling */
-    .tree ul > li > span {
-      background-color: #ff9800; /* Orange color for main steps */
-      border-color: #e65100; /* Darker orange for border */
-      color: #fff; /* White text for contrast */
-      font-weight: bold;
-    }
+        @keyframes glitchShift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(5px, 5px); }
+        }
 
-    .tree ul li span {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #fff;
-      border: 2px solid #009688;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 1rem;
-      color: #333;
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .tree ul li span:hover {
-      background-color: #009688;
-      color: #fff;
-      transform: translateY(-5px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-    }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      background: linear-gradient(135deg, #333, #555);
-      color: #fff;
-      margin-top: 2rem;
-      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
-    }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
 
-    /* Back Button Styles */
-    .back-button {
-      display: block;
-      width: 200px;
-      margin: 2rem auto;
-      padding: 12px 24px;
-      background-color: #009688;
-      color: #fff;
-      text-align: center;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    .back-button:hover {
-      background-color: #00796b;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-    }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+        .delay-5 { transition-delay: 0.5s; }
 
-    /* Animations */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+        /* Header */
+        header {
+            background: var(--gradient-1);
+            color: var(--text-primary);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 243, 255, 0.3);
+            position: relative;
+            z-index: 10;
+        }
 
-    .tree ul li {
-      animation: fadeIn 0.5s ease forwards;
-      opacity: 0;
-    }
+        header h1 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
 
-    .tree ul li:nth-child(1) { animation-delay: 0.1s; }
-    .tree ul li:nth-child(2) { animation-delay: 0.2s; }
-    .tree ul li:nth-child(3) { animation-delay: 0.3s; }
-    .tree ul li:nth-child(4) { animation-delay: 0.4s; }
-    .tree ul li:nth-child(5) { animation-delay: 0.5s; }
-  </style>
+        header p {
+            margin: 0.5rem 0 0;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Auth Buttons */
+        .auth-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .auth-button:hover {
+            background: var(--matrix-green);
+            color: var(--dark-bg);
+        }
+
+        /* Auth Modal */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .auth-modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px var(--cyber-purple);
+            animation: slideDown 0.3s ease;
+        }
+        
+        .auth-modal h3 {
+            color: var(--neon-blue);
+            margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .auth-modal p {
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+        
+        .auth-modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .auth-modal-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .auth-modal-login {
+            background: var(--gradient-1);
+            color: var(--dark-bg);
+        }
+        
+        .auth-modal-signup {
+            background: var(--gradient-2);
+            color: var(--dark-bg);
+        }
+        
+        .auth-modal-cancel {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--text-secondary);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            max-width: 800px;
+            margin: 1rem auto;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .progress-container p {
+            font-size: 1.1rem;
+            color: var(--matrix-green);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        .progress-bar {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            height: 20px;
+            box-shadow: 0 2px 5px rgba(0, 243, 255, 0.2);
+            border: 1px solid var(--neon-blue);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--gradient-2);
+            width: 0%;
+            transition: width 0.5s ease;
+            box-shadow: 0 0 10px var(--matrix-green);
+        }
+
+        /* Tree Diagram Styles */
+        .tree {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 1rem;
+            padding: 1rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .tree ul {
+            list-style-type: none;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .tree ul li {
+            margin: 10px 0;
+            padding: 10px;
+            position: relative;
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .tree ul li:nth-child(1) { animation-delay: 0.1s; }
+        .tree ul li:nth-child(2) { animation-delay: 0.2s; }
+        .tree ul li:nth-child(3) { animation-delay: 0.3s; }
+        .tree ul li:nth-child(4) { animation-delay: 0.4s; }
+        .tree ul li:nth-child(5) { animation-delay: 0.5s; }
+
+        /* Tree Lines */
+        .tree ul li::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -15px;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--neon-blue), var(--cyber-purple));
+        }
+
+        .tree ul li::after {
+            content: "";
+            position: absolute;
+            top: 25px;
+            left: -15px;
+            width: 25px;
+            height: 2px;
+            background: var(--neon-blue);
+        }
+
+        .tree ul li:last-child::before {
+            height: 25px;
+        }
+
+        /* Main Step Styling */
+        .tree ul > li > span {
+            background: var(--gradient-1);
+            border: none;
+            color: var(--dark-bg);
+            font-weight: 600;
+            font-size: 1.1rem;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        /* Topic Styling */
+        .tree ul li span {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            background: var(--card-bg);
+            border: 2px solid var(--neon-blue);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            color: var(--text-primary);
+            position: relative;
+            text-shadow: 0 0 3px var(--cyber-purple);
+        }
+
+        .tree ul li span:hover {
+            background: var(--gradient-2);
+            color: var(--dark-bg);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+        }
+
+        /* Icon Styling */
+        .tree ul li span::before {
+            content: "📘";
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: var(--matrix-green);
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+
+        /* Checkbox Styling */
+        .tree ul li input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--matrix-green);
+            border: 1px solid var(--neon-blue);
+            background: var(--card-bg);
+        }
+
+        .tree ul li.completed span {
+            background: rgba(0, 255, 65, 0.2);
+            border-color: var(--matrix-green);
+            color: var(--text-primary);
+        }
+
+        .tree ul li.completed span::before {
+            content: "✅";
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: var(--matrix-green);
+        }
+
+        /* Details Section */
+        .details {
+            display: none;
+            margin-top: 10px;
+            padding: 15px;
+            background: var(--card-bg);
+            border-left: 4px solid var(--neon-blue);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 243, 255, 0.1);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            animation: slideDown 0.3s ease;
+            color: var(--text-secondary);
+        }
+
+        .details h4 {
+            margin: 0 0 10px;
+            color: var(--neon-blue);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            text-shadow: 0 0 5px var(--cyber-purple);
+        }
+
+        .details p {
+            margin: 5px 0;
+        }
+
+        .details a {
+            color: var(--matrix-green);
+            text-decoration: none;
+            font-weight: 500;
+            text-shadow: 0 0 3px var(--neon-blue);
+        }
+
+        .details a:hover {
+            text-decoration: underline;
+            color: var(--neon-blue);
+        }
+
+        /* Resources Section */
+        .resources {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 243, 255, 0.2);
+            border: 2px solid var(--neon-blue);
+            position: relative;
+            z-index: 10;
+        }
+
+        .resources h2 {
+            color: var(--neon-blue);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 0 0 10px var(--cyber-purple);
+        }
+
+        .resources ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .resources ul li {
+            margin: 1rem 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        .resources ul li:hover {
+            transform: translateY(-3px);
+            background: rgba(0, 255, 65, 0.1);
+            box-shadow: 0 0 10px var(--matrix-green);
+        }
+
+        .resources ul li::before {
+            content: "🔗";
+            margin-right: 10px;
+            font-size: 1.2rem;
+            color: var(--neon-blue);
+        }
+
+        .resources ul li a {
+            color: var(--matrix-green);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .resources ul li a:hover {
+            text-decoration: underline;
+            color: var(--neon-blue);
+        }
+
+        /* Schedule and Back Buttons */
+        .schedule-button, .back-button {
+            display: block;
+            width: 200px;
+            margin: 1rem auto;
+            padding: 12px 24px;
+            background: var(--gradient-1);
+            color: var(--dark-bg);
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .schedule-button::before, .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 243, 255, 0.1);
+            box-shadow: 0 0 10px var(--neon-blue);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .schedule-button:hover::before, .back-button:hover::before {
+            opacity: 1;
+        }
+
+        .schedule-button:hover, .back-button:hover {
+            background: var(--gradient-2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--gradient-1);
+            color: var(--text-primary);
+            box-shadow: 0 -4px 10px rgba(0, 243, 255, 0.2);
+            position: relative;
+            z-index: 10;
+            margin-top: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2rem; }
+            header p { font-size: 1rem; }
+            .progress-container p { font-size: 1rem; }
+            .tree ul li span { font-size: 0.9rem; padding: 10px 15px; }
+            .resources h2 { font-size: 1.5rem; }
+            .resources ul li { padding: 10px; }
+            .schedule-button, .back-button { width: 150px; padding: 10px 20px; font-size: 0.9rem; }
+            .auth-container {
+                position: static;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            .auth-modal-content {
+                padding: 1.5rem;
+            }
+            .auth-modal-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>UI/UX Design Roadmap</h1>
-    <p>From Zero to Advanced with Step-by-Step Projects</p>
-  </header>
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="auth-modal">
+        <div class="auth-modal-content">
+            <h3>Sign In Required</h3>
+            <p>To track your learning progress and save it across devices, please sign in or create an account.</p>
+            <p>You must be signed in to mark topics as completed.</p>
+            <div class="auth-modal-buttons">
+                <button class="auth-modal-button auth-modal-login" id="modal-login-btn">Login</button>
+                <button class="auth-modal-button auth-modal-signup" id="modal-signup-btn">Sign Up</button>
+            </div>
+        </div>
+    </div>
 
-  <div class="tree">
-    <ul>
-      <!-- Step 1: UI/UX Basics -->
-      <li>
-        <span>Step 1: Learn UI/UX Basics</span>
+    <!-- Particles Container for Background Animation -->
+    <div class="particles"></div>
+
+    <header class="fade-in delay-1">
+        <div class="auth-container">
+            <button id="login-btn" class="auth-button">Login</button>
+            <button id="signup-btn" class="auth-button">Sign Up</button>
+            <button id="logout-btn" class="auth-button" style="display: none;">Logout</button>
+        </div>
+        <h1>UI/UX Design Roadmap</h1>
+        <p>From Zero to Advanced with Step-by-Step Projects 🚀</p>
+        <p id="user-status" style="margin-top: 10px; font-size: 0.9rem;"></p>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="progress-container fade-in delay-2">
+        <p>Progress: <span id="progress-text">0%</span></p>
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+        </div>
+    </div>
+
+    <div class="tree fade-in delay-3">
         <ul>
-          <li><span>What is UI/UX Design?</span></li>
-          <li><span>Design Principles (Balance, Contrast, Alignment)</span></li>
-          <li><span>User-Centered Design</span></li>
-          <li><span>Project: Redesign a Landing Page</span></li>
-        </ul>
-      </li>
+            <!-- Step 1: UI/UX Basics -->
+            <li>
+                <span>Step 1: Learn UI/UX Basics</span>
+                <ul>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="what-is-ui-ux">
+                        <span>What is UI/UX Design?</span>
+                        <div class="details">
+                            <h4>What is UI/UX Design?</h4>
+                            <p>UI (User Interface) design focuses on the visual and interactive elements of a product (e.g., buttons, icons, layouts), ensuring an appealing and intuitive interface. UX (User Experience) design emphasizes the overall feel and usability, encompassing research, wireframes, and user satisfaction. Together, they create seamless digital experiences.</p>
+                            <p><strong>Key Points:</strong> UI is about aesthetics and layout; UX is about functionality and user journey. Collaboration between UI and UX designers is crucial for success.</p>
+                            <p><strong>Example:</strong> A website's clean button design (UI) paired with a logical navigation flow (UX) enhances user engagement.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.interaction-design.org/literature/topics/ui-vs-ux" target="_blank">Interaction Design: UI vs UX</a>, 
+                                <a href="https://www.smashingmagazine.com/2017/03/ui-vs-ux-whats-the-difference/" target="_blank">Smashing Magazine: UI vs UX</a>, 
+                                <a href="https://www.youtube.com/watch?v=0zGf2l7eYTA" target="_blank">📺 YouTube: UI/UX Basics (DesignCourse)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="design-principles">
+                        <span>Design Principles (Balance, Contrast, Alignment)</span>
+                        <div class="details">
+                            <h4>Design Principles</h4>
+                            <p>Design principles guide effective layouts: Balance ensures visual stability (symmetrical or asymmetrical), Contrast highlights key elements (e.g., color or size differences), and Alignment creates order by aligning elements consistently. These principles improve readability and aesthetics.</p>
+                            <p><strong>Key Points:</strong> Use contrast to draw attention to calls-to-action; maintain balance to avoid overwhelming users; ensure alignment for a professional look.</p>
+                            <p><strong>Example:</strong> A webpage with a bold headline (contrast), centered text (balance), and aligned buttons (alignment) for a cohesive design.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.canva.com/learn/design-elements-principles/" target="_blank">Canva: Design Principles</a>, 
+                                <a href="https://www.nngroup.com/articles/design-principles/" target="_blank">Nielsen Norman Group: Principles</a>, 
+                                <a href="https://www.youtube.com/watch?v=8s3qGsX6ZCc" target="_blank">📺 YouTube: Design Principles Explained (The Futur)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="user-centered-design">
+                        <span>User-Centered Design</span>
+                        <div class="details">
+                            <h4>User-Centered Design</h4>
+                            <p>User-Centered Design (UCD) involves designing products with the end-user in mind, through research, prototyping, and testing. It includes understanding user needs, iterative design, and feedback loops to refine the experience.</p>
+                            <p><strong>Key Points:</strong> Conduct user interviews and surveys early; iterate based on feedback; prioritize usability over aesthetics initially.</p>
+                            <p><strong>Example:</strong> Designing a mobile app by first interviewing users, creating a prototype, and testing it to ensure intuitive navigation.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.usability.gov/what-and-why/user-centered-design.html" target="_blank">Usability.gov: UCD</a>, 
+                                <a href="https://www.interaction-design.org/literature/topics/user-centered-design" target="_blank">Interaction Design: UCD</a>, 
+                                <a href="https://www.youtube.com/watch?v=9w9l2p2pKzg" target="_blank">📺 YouTube: User-Centered Design (UX Design Institute)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="project-landing-page">
+                        <span>Project: Redesign a Landing Page</span>
+                        <div class="details">
+                            <h4>Project: Redesign a Landing Page</h4>
+                            <p>This project involves analyzing an existing landing page, identifying usability issues, and redesigning it using tools like Figma. Focus on improving layout, color scheme, and call-to-action placement based on user-centered design principles.</p>
+                            <p><strong>Key Points:</strong> Start with a wireframe, gather user feedback, and iterate; use contrasting colors for buttons; ensure mobile responsiveness.</p>
+                            <p><strong>Example:</strong> Redesign a cluttered e-commerce landing page by simplifying the navigation and adding a prominent "Buy Now" button.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.figma.com/resources/" target="_blank">Figma Resources</a>, 
+                                <a href="https://www.smashingmagazine.com/2019/02/landing-page-design-tips/" target="_blank">Smashing Magazine: Landing Page Tips</a>, 
+                                <a href="https://www.youtube.com/watch?v=5XgY3yF0S5E" target="_blank">📺 YouTube: Landing Page Redesign (DesignCourse)</a>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
 
-      <!-- Step 2: Wireframing and Prototyping -->
-      <li>
-        <span>Step 2: Wireframing and Prototyping</span>
+            <!-- Step 2: Wireframing and Prototyping -->
+            <li>
+                <span>Step 2: Wireframing and Prototyping</span>
+                <ul>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="tools">
+                        <span>Tools: Figma, Adobe XD, Sketch</span>
+                        <div class="details">
+                            <h4>Tools: Figma, Adobe XD, Sketch</h4>
+                            <p>These tools are essential for wireframing and prototyping: Figma offers collaborative design with real-time editing, Adobe XD provides vector-based design and prototyping, and Sketch is popular for macOS users with a focus on UI design. Each supports exporting designs and sharing with teams.</p>
+                            <p><strong>Key Points:</strong> Figma is web-based and free for basics; Adobe XD integrates with Creative Cloud; Sketch requires a one-time purchase but lacks Windows support.</p>
+                            <p><strong>Example:</strong> Use Figma to create a wireframe, share it with a team, and prototype interactive buttons.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.figma.com/resources/" target="_blank">Figma Resources</a>, 
+                                <a href="https://helpx.adobe.com/xd/tutorials.html" target="_blank">Adobe XD Tutorials</a>, 
+                                <a href="https://www.youtube.com/watch?v=2o2zqK8D8b0" target="_blank">📺 YouTube: Figma Tutorial (Dansky)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="low-high-fidelity">
+                        <span>Low-Fidelity vs High-Fidelity Wireframes</span>
+                        <div class="details">
+                            <h4>Low-Fidelity vs High-Fidelity Wireframes</h4>
+                            <p>Low-fidelity wireframes are basic sketches or layouts (e.g., paper sketches, grayscale designs) to outline structure, while high-fidelity wireframes include detailed visuals, colors, and interactivity, closer to the final product. Low-fi is for early ideation; high-fi is for testing and presentation.</p>
+                            <p><strong>Key Points:</strong> Low-fi is quick and cheap; high-fi requires more time but provides accurate feedback; transition from low to high as the design matures.</p>
+                            <p><strong>Example:</strong> A low-fi sketch of a mobile app layout vs. a high-fi prototype with buttons and mock content in Figma.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.nngroup.com/articles/low-fidelity-prototyping/" target="_blank">Nielsen Norman Group: Low-Fi vs High-Fi</a>, 
+                                <a href="https://www.smashingmagazine.com/2014/10/the-art-of-wireframing/" target="_blank">Smashing Magazine: Wireframing</a>, 
+                                <a href="https://www.youtube.com/watch?v=2o2zqK8D8b0" target="_blank">📺 YouTube: Wireframing Tutorial (Dansky)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="interactive-prototypes">
+                        <span>Interactive Prototypes</span>
+                        <div class="details">
+                            <h4>Interactive Prototypes</h4>
+                            <p>Interactive prototypes simulate user flows with clickable elements, transitions, and animations, tested with users to validate designs. Tools like Figma and Adobe XD allow linking screens and adding microinteractions.</p>
+                            <p><strong>Key Points:</strong> Focus on key user paths; use realistic data; test for usability and flow.</p>
+                            <p><strong>Example:</strong> A prototype of an e-commerce app where clicking "Add to Cart" transitions to a checkout screen.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.interaction-design.org/literature/topics/prototyping" target="_blank">Interaction Design: Prototyping</a>, 
+                                <a href="https://www.figma.com/best-practices/prototyping" target="_blank">Figma: Prototyping Guide</a>, 
+                                <a href="https://www.youtube.com/watch?v=8m2aQ9r4e3M" target="_blank">📺 YouTube: Interactive Prototypes (Figma Official)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="project-mobile-app">
+                        <span>Project: Create a Wireframe for a Mobile App</span>
+                        <div class="details">
+                            <h4>Project: Create a Wireframe for a Mobile App</h4>
+                            <p>Design a wireframe for a mobile app (e.g., a task manager) using Figma or Adobe XD. Start with low-fidelity sketches, refine into high-fidelity, and add basic interactivity to showcase navigation.</p>
+                            <p><strong>Key Points:</strong> Prioritize screen size constraints; map user flows; use placeholder content for testing.</p>
+                            <p><strong>Example:</strong> A wireframe with a home screen, task list, and add-task form, linked for navigation.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.figma.com/resources/" target="_blank">Figma Resources</a>, 
+                                <a href="https://xd.adobe.com/ideas/process/ui-design/mobile-app-wireframe-guide/" target="_blank">Adobe XD: Mobile Wireframe Guide</a>, 
+                                <a href="https://www.youtube.com/watch?v=2o2zqK8D8b0" target="_blank">📺 YouTube: Mobile Wireframe Tutorial (Dansky)</a>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Step 3: Visual Design -->
+            <li>
+                <span>Step 3: Learn Visual Design</span>
+                <ul>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="typography-color">
+                        <span>Typography and Color Theory</span>
+                        <div class="details">
+                            <h4>Typography and Color Theory</h4>
+                            <p>Typography involves selecting fonts (e.g., serif, sans-serif) for readability and hierarchy, while color theory uses hue, saturation, and value to evoke emotions and guide attention. Tools like Adobe Color help create harmonious palettes.</p>
+                            <p><strong>Key Points:</strong> Limit fonts to 2-3 per project; use high contrast for accessibility; apply color psychology (e.g., blue for trust).</p>
+                            <p><strong>Example:</strong> A website using Roboto (sans-serif) with a blue and white palette for a professional feel.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.canva.com/learn/color-theory/" target="_blank">Canva: Color Theory</a>, 
+                                <a href="https://www.smashingmagazine.com/2014/09/better-typography-guide-web-designers/" target="_blank">Smashing Magazine: Typography</a>, 
+                                <a href="https://www.youtube.com/watch?v=1h8h8F7uXbI" target="_blank">📺 YouTube: Typography Basics (The Futur)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="iconography-imagery">
+                        <span>Iconography and Imagery</span>
+                        <div class="details">
+                            <h4>Iconography and Imagery</h4>
+                            <p>Iconography uses simple graphics to represent actions or ideas (e.g., a magnifying glass for search), while imagery (photos, illustrations) enhances visual appeal. Consistent styles and resolution are key.</p>
+                            <p><strong>Key Points:</strong> Use vector icons for scalability; optimize images for web performance; align imagery with brand identity.</p>
+                            <p><strong>Example:</strong> A travel app using a suitcase icon for bookings and high-quality destination photos.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.flaticon.com/" target="_blank">Flaticon: Icon Resources</a>, 
+                                <a href="https://www.smashingmagazine.com/2016/07/practical-guide-using-imagery-websites/" target="_blank">Smashing Magazine: Imagery</a>, 
+                                <a href="https://www.youtube.com/watch?v=3wX1cQfRwN0" target="_blank">📺 YouTube: Icon Design (Satori Graphics)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="design-systems">
+                        <span>Design Systems and Style Guides</span>
+                        <div class="details">
+                            <h4>Design Systems and Style Guides</h4>
+                            <p>Design systems are reusable components (e.g., buttons, typography) and guidelines ensuring consistency across products. Style guides document colors, fonts, and rules for a brand's visual identity.</p>
+                            <p><strong>Key Points:</strong> Include component libraries; update systems with new features; share with teams for scalability.</p>
+                            <p><strong>Example:</strong> A style guide defining a brand's red (#FF0000) and Arial font, with a button component in Figma.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.designbetter.co/design-systems-handbook" target="_blank">Design Better: Design Systems</a>, 
+                                <a href="https://styleguides.io/" target="_blank">Style Guides Directory</a>, 
+                                <a href="https://www.youtube.com/watch?v=OQdVMLqIr1g" target="_blank">📺 YouTube: Design Systems (Google Design)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="project-style-guide">
+                        <span>Project: Design a Style Guide for a Brand</span>
+                        <div class="details">
+                            <h4>Project: Design a Style Guide for a Brand</h4>
+                            <p>Create a style guide for a fictional brand, including logo usage, color palette, typography, and component examples (e.g., buttons, cards) using Figma or Adobe XD.</p>
+                            <p><strong>Key Points:</strong> Define 2-3 primary colors; select 1-2 font families; include usage examples for consistency.</p>
+                            <p><strong>Example:</strong> A style guide with a blue (#007BFF) palette, Open Sans font, and a button design spec.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.figma.com/resources/" target="_blank">Figma Resources</a>, 
+                                <a href="https://www.smashingmagazine.com/2015/04/style-guide-examples-tools/" target="_blank">Smashing Magazine: Style Guides</a>, 
+                                <a href="https://www.youtube.com/watch?v=OQdVMLqIr1g" target="_blank">📺 YouTube: Style Guide Tutorial (Google Design)</a>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Step 4: User Research -->
+            <li>
+                <span>Step 4: User Research</span>
+                <ul>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="user-personas">
+                        <span>User Personas and User Stories</span>
+                        <div class="details">
+                            <h4>User Personas and User Stories</h4>
+                            <p>User personas are fictional characters representing target users, including demographics and goals. User stories describe tasks from the user's perspective (e.g., "As a shopper, I want to filter products").</p>
+                            <p><strong>Key Points:</strong> Base personas on research data; write stories in the "As a [user], I want [action]" format; align with business goals.</p>
+                            <p><strong>Example:</strong> Persona: "Jane, 30, e-commerce shopper"; Story: "As Jane, I want to save items to a wishlist."</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.nngroup.com/articles/personas/" target="_blank">Nielsen Norman Group: Personas</a>, 
+                                <a href="https://www.agilealliance.org/glossary/user-stories/" target="_blank">Agile Alliance: User Stories</a>, 
+                                <a href="https://www.youtube.com/watch?v=0lQ7X7p9O0A" target="_blank">📺 YouTube: User Personas (UX Design Institute)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="usability-testing">
+                        <span>Usability Testing</span>
+                        <div class="details">
+                            <h4>Usability Testing</h4>
+                            <p>Usability testing involves observing users interacting with a design to identify issues. Methods include moderated sessions, remote testing, and A/B testing to compare variants.</p>
+                            <p><strong>Key Points:</strong> Test with 5-10 users for initial insights; focus on tasks, not opinions; iterate based on findings.</p>
+                            <p><strong>Example:</strong> Watching a user navigate a prototype and noting where they hesitate on a checkout process.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.nngroup.com/articles/usability-testing-101/" target="_blank">Nielsen Norman Group: Usability Testing</a>, 
+                                <a href="https://www.smashingmagazine.com/2014/09/a-beginners-guide-to-usability-testing/" target="_blank">Smashing Magazine: Usability Testing</a>, 
+                                <a href="https://www.youtube.com/watch?v=2uX2nW0XqNo" target="_blank">📺 YouTube: Usability Testing Guide (UserTesting)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="surveys-interviews">
+                        <span>Surveys and Interviews</span>
+                        <div class="details">
+                            <h4>Surveys and Interviews</h4>
+                            <p>Surveys gather quantitative data from many users (e.g., via Google Forms), while interviews provide qualitative insights through one-on-one conversations. Both inform design decisions.</p>
+                            <p><strong>Key Points:</strong> Keep surveys short and focused; ask open-ended questions in interviews; analyze data for trends.</p>
+                            <p><strong>Example:</strong> A survey asking "How easy is our app to use?" (1-5) and an interview exploring user frustrations.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.nngroup.com/articles/survey-research/" target="_blank">Nielsen Norman Group: Surveys</a>, 
+                                <a href="https://www.interaction-design.org/literature/topics/interviews" target="_blank">Interaction Design: Interviews</a>, 
+                                <a href="https://www.youtube.com/watch?v=8qJvx9M7wQA" target="_blank">📺 YouTube: User Research Methods (UX Mastery)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="project-usability-test">
+                        <span>Project: Conduct a Usability Test for a Website</span>
+                        <div class="details">
+                            <h4>Project: Conduct a Usability Test for a Website</h4>
+                            <p>Perform a usability test on an existing website (e.g., an e-commerce site) by recruiting 5 users, creating tasks (e.g., "Find a product"), and recording feedback to improve design.</p>
+                            <p><strong>Key Points:</strong> Define clear tasks; record sessions (with consent); analyze for common pain points.</p>
+                            <p><strong>Example:</strong> Testing a site's search function and noting users' difficulty with filters.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.usability.gov/how-to-and-tools/methods/usability-testing.html" target="_blank">Usability.gov: Testing Guide</a>, 
+                                <a href="https://www.smashingmagazine.com/2014/09/a-beginners-guide-to-usability-testing/" target="_blank">Smashing Magazine: Usability Testing</a>, 
+                                <a href="https://www.youtube.com/watch?v=2uX2nW0XqNo" target="_blank">📺 YouTube: Usability Testing Guide (UserTesting)</a>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Step 5: Interaction Design -->
+            <li>
+                <span>Step 5: Learn Interaction Design</span>
+                <ul>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="microinteractions">
+                        <span>Microinteractions</span>
+                        <div class="details">
+                            <h4>Microinteractions</h4>
+                            <p>Microinteractions are small, functional animations (e.g., a button click feedback, loading spinner) that enhance user engagement and provide feedback. They are designed using tools like Principle.</p>
+                            <p><strong>Key Points:</strong> Keep them subtle; ensure they serve a purpose (e.g., confirm an action); test for performance.</p>
+                            <p><strong>Example:</strong> A button that turns green and vibrates slightly when clicked to confirm a save.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.smashingmagazine.com/2016/07/practical-guide-designing-microinteractions/" target="_blank">Smashing Magazine: Microinteractions</a>, 
+                                <a href="https://uxdesign.cc/microinteractions-what-they-are-where-they-come-from-and-why-they-matter-9e8e3b0e6f47" target="_blank">UX Design: Microinteractions</a>, 
+                                <a href="https://www.youtube.com/watch?v=9oX8xZ5H_Sw" target="_blank">📺 YouTube: Microinteractions Tutorial (DesignCourse)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="animation-principles">
+                        <span>Animation Principles</span>
+                        <div class="details">
+                            <h4>Animation Principles</h4>
+                            <p>Animation principles (e.g., easing, timing, squash and stretch) from traditional animation improve digital transitions. Tools like After Effects or Principle apply these to UI design.</p>
+                            <p><strong>Key Points:</strong> Use easing for natural motion; keep durations short (0.2-0.5s); avoid over-animation.</p>
+                            <p><strong>Example:</strong> A menu that slides in with a smooth easing effect when opened.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.nngroup.com/articles/animation-principles/" target="_blank">Nielsen Norman Group: Animation</a>, 
+                                <a href="https://www.smashingmagazine.com/2019/01/useful-animation-ui-design/" target="_blank">Smashing Magazine: UI Animation</a>, 
+                                <a href="https://www.youtube.com/watch?v=0b8rW0Z5X1g" target="_blank">📺 YouTube: Animation in UI (The Futur)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="tools-interaction">
+                        <span>Tools: Principle, After Effects</span>
+                        <div class="details">
+                            <h4>Tools: Principle, After Effects</h4>
+                            <p>Principle is a macOS tool for creating interactive animations, while After Effects (part of Adobe Creative Cloud) offers advanced motion graphics for UI. Both export designs for prototyping.</p>
+                            <p><strong>Key Points:</strong> Principle is ideal for quick prototypes; After Effects suits complex animations; export as GIFs or videos.</p>
+                            <p><strong>Example:</strong> Using Principle to animate a button hover effect, exported to Figma.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://principleformac.com/" target="_blank">Principle Official</a>, 
+                                <a href="https://helpx.adobe.com/after-effects/tutorials.html" target="_blank">After Effects Tutorials</a>, 
+                                <a href="https://www.youtube.com/watch?v=9oX8xZ5H_Sw" target="_blank">📺 YouTube: Principle Tutorial (DesignCourse)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="project-microinteractions">
+                        <span>Project: Add Microinteractions to a Prototype</span>
+                        <div class="details">
+                            <h4>Project: Add Microinteractions to a Prototype</h4>
+                            <p>Enhance an existing Figma prototype (e.g., a mobile app) by adding microinteractions like button feedback or loading animations using Principle or After Effects.</p>
+                            <p><strong>Key Points:</strong> Focus on user feedback (e.g., success states); keep animations smooth; test on multiple devices.</p>
+                            <p><strong>Example:</strong> Adding a loading spinner to a form submission in a prototype.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.figma.com/resources/" target="_blank">Figma Resources</a>, 
+                                <a href="https://principleformac.com/learn/" target="_blank">Principle Learn</a>, 
+                                <a href="https://www.youtube.com/watch?v=9oX8xZ5H_Sw" target="_blank">📺 YouTube: Microinteractions Project (DesignCourse)</a>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Step 6: Advanced UX Design -->
+            <li>
+                <span>Step 6: Advanced UX Design</span>
+                <ul>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="information-architecture">
+                        <span>Information Architecture</span>
+                        <div class="details">
+                            <h4>Information Architecture</h4>
+                            <p>Information Architecture (IA) organizes content and navigation (e.g., sitemaps, hierarchies) to ensure users find information easily. It involves card sorting and user flow mapping.</p>
+                            <p><strong>Key Points:</strong> Simplify navigation; use sitemaps for clarity; test with users to validate structure.</p>
+                            <p><strong>Example:</strong> A sitemap for an e-commerce site with categories like "Clothing" and "Accessories."</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.nngroup.com/articles/information-architecture/" target="_blank">Nielsen Norman Group: IA</a>, 
+                                <a href="https://www.smashingmagazine.com/2011/07/information-architecture-an-ux-designer-primer/" target="_blank">Smashing Magazine: IA</a>, 
+                                <a href="https://www.youtube.com/watch?v=8u2X4E8jG5I" target="_blank">📺 YouTube: Information Architecture (UX Design Institute)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="accessibility">
+                        <span>Accessibility and Inclusive Design</span>
+                        <div class="details">
+                            <h4>Accessibility and Inclusive Design</h4>
+                            <p>Accessibility ensures designs work for all users (e.g., screen readers, color blindness), following WCAG guidelines. Inclusive design considers diverse abilities and backgrounds.</p>
+                            <p><strong>Key Points:</strong> Use alt text for images; ensure high contrast (4.5:1 ratio); test with assistive tools.</p>
+                            <p><strong>Example:</strong> A website with keyboard navigation and alt text for a blind user.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3.org/WAI/standards-guidelines/wcag/" target="_blank">WCAG Guidelines</a>, 
+                                <a href="https://www.smashingmagazine.com/2020/10/inclusive-design-explained/" target="_blank">Smashing Magazine: Inclusive Design</a>, 
+                                <a href="https://www.youtube.com/watch?v=vfB4g2uXvp4" target="_blank">📺 YouTube: Accessibility Basics (WebAIM)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="ux-writing">
+                        <span>UX Writing</span>
+                        <div class="details">
+                            <h4>UX Writing</h4>
+                            <p>UX writing crafts concise, user-friendly text (e.g., button labels, error messages) to guide users. It aligns with brand voice and improves usability.</p>
+                            <p><strong>Key Points:</strong> Use clear, action-oriented language; avoid jargon; test with users for clarity.</p>
+                            <p><strong>Example:</strong> Changing "Submit" to "Send My Application" for better context.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.nngroup.com/articles/ux-writing/" target="_blank">Nielsen Norman Group: UX Writing</a>, 
+                                <a href="https://www.smashingmagazine.com/2020/07/ux-writing-guide/" target="_blank">Smashing Magazine: UX Writing</a>, 
+                                <a href="https://www.youtube.com/watch?v=6jX5XjYq8s8" target="_blank">📺 YouTube: UX Writing Tips (UX Content Collective)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="project-accessibility">
+                        <span>Project: Redesign a Website for Accessibility</span>
+                        <div class="details">
+                            <h4>Project: Redesign a Website for Accessibility</h4>
+                            <p>Redesign an existing website to meet accessibility standards, adding alt text, high-contrast colors, and keyboard navigation using Figma or Adobe XD.</p>
+                            <p><strong>Key Points:</strong> Test with screen readers (e.g., NVDA); ensure WCAG 2.1 compliance; gather user feedback.</p>
+                            <p><strong>Example:</strong> Adding alt text to images and adjusting color contrast on a blog site.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.w3.org/WAI/standards-guidelines/wcag/" target="_blank">WCAG Guidelines</a>, 
+                                <a href="https://www.smashingmagazine.com/2020/10/inclusive-design-explained/" target="_blank">Smashing Magazine: Inclusive Design</a>, 
+                                <a href="https://www.youtube.com/watch?v=vfB4g2uXvp4" target="_blank">📺 YouTube: Accessibility Project (WebAIM)</a>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- Step 7: Portfolio and Career -->
+            <li>
+                <span>Step 7: Build Your Portfolio</span>
+                <ul>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="showcase-projects">
+                        <span>Showcase Your Projects</span>
+                        <div class="details">
+                            <h4>Showcase Your Projects</h4>
+                            <p>Showcase your best UI/UX projects in a portfolio, highlighting your process (e.g., research, wireframes) and final designs. Use platforms like Behance or a personal website.</p>
+                            <p><strong>Key Points:</strong> Include case studies; use high-quality visuals; tailor to your target audience (e.g., employers).</p>
+                            <p><strong>Example:</strong> A portfolio page with a mobile app redesign, showing wireframes and the final prototype.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.behance.net/" target="_blank">Behance</a>, 
+                                <a href="https://www.smashingmagazine.com/2016/11/how-to-create-a-killer-design-portfolio/" target="_blank">Smashing Magazine: Portfolio Tips</a>, 
+                                <a href="https://www.youtube.com/watch?v=7X7Xv-2gQ0c" target="_blank">📺 YouTube: Portfolio Design (The Futur)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="case-studies">
+                        <span>Case Studies</span>
+                        <div class="details">
+                            <h4>Case Studies</h4>
+                            <p>Case studies document a project's process, including problem statement, research, design solutions, and outcomes. They demonstrate your problem-solving skills to employers.</p>
+                            <p><strong>Key Points:</strong> Use visuals (e.g., before/after images); focus on user impact; keep it concise (1-2 pages).</p>
+                            <p><strong>Example:</strong> A case study on redesigning a checkout page, showing improved conversion rates.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.nngroup.com/articles/how-to-conduct-case-study/" target="_blank">Nielsen Norman Group: Case Studies</a>, 
+                                <a href="https://www.smashingmagazine.com/2019/01/how-to-write-a-design-case-study/" target="_blank">Smashing Magazine: Case Studies</a>, 
+                                <a href="https://www.youtube.com/watch?v=7X7Xv-2gQ0c" target="_blank">📺 YouTube: Case Study Tutorial (The Futur)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="networking-jobs">
+                        <span>Networking and Job Applications</span>
+                        <div class="details">
+                            <h4>Networking and Job Applications</h4>
+                            <p>Networking involves connecting with designers on LinkedIn or at events, while job applications require a tailored resume and portfolio. Follow up with recruiters for opportunities.</p>
+                            <p><strong>Key Points:</strong> Optimize LinkedIn with keywords; customize applications per job; attend design meetups.</p>
+                            <p><strong>Example:</strong> Connecting with a hiring manager on LinkedIn and sending a portfolio link for a UI/UX role.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.linkedin.com/help/" target="_blank">LinkedIn Help</a>, 
+                                <a href="https://www.smashingmagazine.com/2018/05/how-to-get-a-design-job/" target="_blank">Smashing Magazine: Job Tips</a>, 
+                                <a href="https://www.youtube.com/watch?v=9hB9Y2eC0wA" target="_blank">📺 YouTube: Networking for Designers (Design Better)</a>
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="checkbox" class="progress-checkbox" data-topic="project-portfolio">
+                        <span>Project: Create a UI/UX Design Portfolio</span>
+                        <div class="details">
+                            <h4>Project: Create a UI/UX Design Portfolio</h4>
+                            <p>Build a portfolio website or use Behance to showcase 3-5 projects, including case studies and contact information, using tools like Figma for design and hosting on GitHub Pages.</p>
+                            <p><strong>Key Points:</strong> Highlight your best work; include a bio; ensure mobile-friendly design.</p>
+                            <p><strong>Example:</strong> A portfolio with a landing page redesign, wireframe project, and accessibility case study.</p>
+                            <p><strong>Resource:</strong> 
+                                <a href="https://www.behance.net/" target="_blank">Behance</a>, 
+                                <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>, 
+                                <a href="https://www.youtube.com/watch?v=7X7Xv-2gQ0c" target="_blank">📺 YouTube: Portfolio Creation (The Futur)</a>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Additional Resources Section -->
+    <div class="resources fade-in delay-4">
+        <h2>Additional Resources to Master UI/UX Design</h2>
         <ul>
-          <li><span>Tools: Figma, Adobe XD, Sketch</span></li>
-          <li><span>Low-Fidelity vs High-Fidelity Wireframes</span></li>
-          <li><span>Interactive Prototypes</span></li>
-          <li><span>Project: Create a Wireframe for a Mobile App</span></li>
+            <li>
+                <a href="https://www.youtube.com/watch?v=c9Wg6Cb_YlU" target="_blank">
+                    📺 FreeCodeCamp: UI/UX Design Course (7+ Hours)
+                </a>
+            </li>
+            <li>
+                <a href="https://www.youtube.com/watch?v=_Hp_dI0DzY4" target="_blank">
+                    📺 DesignCourse: UI/UX Design Tutorial (1 Hour)
+                </a>
+            </li>
+            <li>
+                <a href="https://www.interaction-design.org/literature" target="_blank">
+                    📄 Interaction Design Foundation: Articles and Guides
+                </a>
+            </li>
+            <li>
+                <a href="https://www.nngroup.com/articles/" target="_blank">
+                    📖 Nielsen Norman Group: UX Research Articles
+                </a>
+            </li>
+            <li>
+                <a href="https://www.smashingmagazine.com/category/ux-design/" target="_blank">
+                    📖 Smashing Magazine: UX Design Articles
+                </a>
+            </li>
+            <li>
+                <a href="https://www.uxdesigninstitute.com/blog/" target="_blank">
+                    🖥️ UX Design Institute: Blog and Resources
+                </a>
+            </li>
         </ul>
-      </li>
+    </div>
 
-      <!-- Step 3: Visual Design -->
-      <li>
-        <span>Step 3: Learn Visual Design</span>
-        <ul>
-          <li><span>Typography and Color Theory</span></li>
-          <li><span>Iconography and Imagery</span></li>
-          <li><span>Design Systems and Style Guides</span></li>
-          <li><span>Project: Design a Style Guide for a Brand</span></li>
-        </ul>
-      </li>
+    <!-- Link to Schedule Page -->
+    <a href="scheduleUI.html" class="schedule-button fade-in delay-5">Schedule Your Learning</a>
 
-      <!-- Step 4: User Research -->
-      <li>
-        <span>Step 4: User Research</span>
-        <ul>
-          <li><span>User Personas and User Stories</span></li>
-          <li><span>Usability Testing</span></li>
-          <li><span>Surveys and Interviews</span></li>
-          <li><span>Project: Conduct a Usability Test for a Website</span></li>
-        </ul>
-      </li>
+    <a href="roadmaps.html" class="back-button fade-in delay-5">Back to Career Paths</a>
 
-      <!-- Step 5: Interaction Design -->
-      <li>
-        <span>Step 5: Learn Interaction Design</span>
-        <ul>
-          <li><span>Microinteractions</span></li>
-          <li><span>Animation Principles</span></li>
-          <li><span>Tools: Principle, After Effects</span></li>
-          <li><span>Project: Add Microinteractions to a Prototype</span></li>
-        </ul>
-      </li>
+    <footer class="fade-in delay-5">
+        <p>Happy Designing! 🚀 | Tech Udaan © 2025</p>
+    </footer>
 
-      <!-- Step 6: Advanced UX Design -->
-      <li>
-        <span>Step 6: Advanced UX Design</span>
-        <ul>
-          <li><span>Information Architecture</span></li>
-          <li><span>Accessibility and Inclusive Design</span></li>
-          <li><span>UX Writing</span></li>
-          <li><span>Project: Redesign a Website for Accessibility</span></li>
-        </ul>
-      </li>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-analytics-compat.js"></script>
 
-      <!-- Step 7: Portfolio and Career -->
-      <li>
-        <span>Step 7: Build Your Portfolio</span>
-        <ul>
-          <li><span>Showcase Your Projects</span></li>
-          <li><span>Case Studies</span></li>
-          <li><span>Networking and Job Applications</span></li>
-          <li><span>Project: Create a UI/UX Design Portfolio</span></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDI7bIBfyGR_r-EWPvpYjxj8c_OscWDMTU",
+            authDomain: "techudaan-54467.firebaseapp.com",
+            projectId: "techudaan-54467",
+            storageBucket: "techudaan-54467.appspot.com",
+            messagingSenderId: "86201497781",
+            appId: "1:86201497781:web:b1c428db8b320817b026fc",
+            measurementId: "G-0XLX6MTS9F",
+            databaseURL: "https://techudaan-54467-default-rtdb.firebaseio.com/"
+        };
 
-  <!-- Back Button -->
-  <a href="roadmaps.html" class="back-button">Back to Career Paths</a>
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+        const analytics = firebase.analytics();
 
-  <footer>
-    <p>Happy Designing! 🚀</p>
-  </footer>
+        // User state management
+        let currentUser = null;
+        let userProgress = {};
+        const authModal = document.getElementById('auth-modal');
 
-  <script>
-    // JavaScript for Interactivity
-    document.addEventListener("DOMContentLoaded", function () {
-      const items = document.querySelectorAll(".tree ul li span");
+        document.addEventListener("DOMContentLoaded", function () {
+            // Particle Animation
+            function createParticles() {
+                const particleCount = 50;
+                const particlesContainer = document.querySelector('.particles');
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    const size = Math.random() * 3 + 1;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${Math.random() * 100}vw`;
+                    particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                    particle.style.animationDelay = `${Math.random() * 5}s`;
+                    particlesContainer.appendChild(particle);
+                }
+            }
+            createParticles();
 
-      items.forEach((item) => {
-        item.addEventListener("click", () => {
-          alert(`You clicked: ${item.textContent}`);
+            // Fade-in Animation
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('visible');
+                }, index * 200);
+            });
+
+            // Initialize authentication state observer
+            initAuthState();
+
+            // Handle topic details toggle
+            const items = document.querySelectorAll(".tree ul li span");
+            items.forEach((item) => {
+                item.addEventListener("click", (e) => {
+                    // Prevent checkbox toggle when clicking on the span
+                    if (e.target.tagName !== 'INPUT') {
+                        // Close other open details
+                        const allDetails = document.querySelectorAll(".details");
+                        allDetails.forEach((detail) => {
+                            if (detail !== item.nextElementSibling) {
+                                detail.style.display = "none";
+                            }
+                        });
+
+                        // Toggle the clicked item's details
+                        const details = item.nextElementSibling;
+                        if (details.style.display === "block") {
+                            details.style.display = "none";
+                        } else {
+                            details.style.display = "block";
+                        }
+                    }
+                });
+            });
+
+            // Auth button event listeners
+            document.getElementById('login-btn').addEventListener('click', () => {
+                const email = prompt("Enter email:");
+                const password = prompt("Enter password:");
+                if (email && password) {
+                    auth.signInWithEmailAndPassword(email, password)
+                        .catch(error => {
+                            alert("Login failed: " + error.message);
+                        });
+                }
+            });
+
+            document.getElementById('signup-btn').addEventListener('click', () => {
+                const email = prompt("Enter email:");
+                const password = prompt("Enter password:");
+                if (email && password) {
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .catch(error => {
+                            alert("Signup failed: " + error.message);
+                        });
+                }
+            });
+
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                auth.signOut();
+            });
+
+            // Checkbox event listeners
+            document.querySelectorAll(".progress-checkbox").forEach((checkbox) => {
+                checkbox.addEventListener("change", function() {
+                    if (!currentUser) {
+                        showAuthModal();
+                        this.checked = !this.checked; // Revert the checkbox change
+                        return;
+                    }
+                    
+                    const topic = this.getAttribute("data-topic");
+                    userProgress[topic] = this.checked;
+                    updateCheckboxState(this, topic);
+                    updateProgress();
+                    saveProgress();
+                });
+            });
         });
-      });
-    });
-  </script>
+
+        // Authentication state handler
+        function initAuthState() {
+            auth.onAuthStateChanged((user) => {
+                currentUser = user;
+                const userStatus = document.getElementById('user-status');
+                const loginBtn = document.getElementById('login-btn');
+                const signupBtn = document.getElementById('signup-btn');
+                const logoutBtn = document.getElementById('logout-btn');
+
+                if (user) {
+                    // User is signed in
+                    userStatus.textContent = `Logged in as: ${user.email}`;
+                    userStatus.style.color = "var(--matrix-green)";
+                    loginBtn.style.display = "none";
+                    signupBtn.style.display = "none";
+                    logoutBtn.style.display = "block";
+                    loadProgress();
+                } else {
+                    // No user is signed in
+                    userStatus.textContent = "Please sign in to track your progress";
+                    userStatus.style.color = "var(--neon-blue)";
+                    loginBtn.style.display = "block";
+                    signupBtn.style.display = "block";
+                    logoutBtn.style.display = "none";
+                    userProgress = {};
+                    updateProgress();
+                }
+            });
+        }
+
+        // Show authentication modal
+        function showAuthModal() {
+            authModal.style.display = 'flex';
+            
+            document.getElementById('modal-login-btn').onclick = () => {
+                authModal.style.display = 'none';
+                const email = prompt("Enter email:");
+                const password = prompt("Enter password:");
+                if (email && password) {
+                    auth.signInWithEmailAndPassword(email, password)
+                        .catch(error => {
+                            alert("Login failed: " + error.message);
+                        });
+                }
+            };
+            
+            document.getElementById('modal-signup-btn').onclick = () => {
+                authModal.style.display = 'none';
+                const email = prompt("Enter email:");
+                const password = prompt("Enter password:");
+                if (email && password) {
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .catch(error => {
+                            alert("Signup failed: " + error.message);
+                        });
+                }
+            };
+            
+            // Close modal when clicking outside
+            window.onclick = function(event) {
+                if (event.target == authModal) {
+                    authModal.style.display = "none";
+                }
+            }
+        }
+
+        // Update checkbox visual state
+        function updateCheckboxState(checkbox, topic) {
+            if (checkbox.checked) {
+                checkbox.parentElement.classList.add("completed");
+            } else {
+                checkbox.parentElement.classList.remove("completed");
+            }
+        }
+
+        // Load progress from Firebase
+        function loadProgress() {
+            if (!currentUser) return;
+            
+            database.ref(`userProgress/${currentUser.uid}`).on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    userProgress = data;
+                    // Apply loaded progress to all checkboxes
+                    document.querySelectorAll(".progress-checkbox").forEach((checkbox) => {
+                        const topic = checkbox.getAttribute("data-topic");
+                        if (userProgress.hasOwnProperty(topic)) {
+                            checkbox.checked = userProgress[topic];
+                            updateCheckboxState(checkbox, topic);
+                        }
+                    });
+                    updateProgress();
+                }
+            }, (error) => {
+                console.error("Error loading progress:", error);
+            });
+        }
+
+        // Save progress to Firebase
+        function saveProgress() {
+            if (!currentUser) return;
+            
+            // Create a specific reference for the user's progress
+            const userProgressRef = database.ref(`userProgress/${currentUser.uid}`);
+            
+            // Update the entire progress object
+            userProgressRef.set(userProgress)
+                .then(() => {
+                    console.log("Progress saved successfully");
+                })
+                .catch((error) => {
+                    console.error("Error saving progress:", error);
+                });
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const completedTopics = Object.values(userProgress).filter(Boolean).length;
+            const totalTopics = document.querySelectorAll(".progress-checkbox").length;
+            const progressPercentage = currentUser ? (completedTopics / totalTopics) * 100 : 0;
+            document.getElementById('progress-text').textContent = currentUser ? `${Math.round(progressPercentage)}%` : "Sign in to track";
+            document.getElementById('progress-bar-fill').style.width = `${progressPercentage}%`;
+        }
+    </script>
 </body>
 </html>

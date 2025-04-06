@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cybersecurity Roadmap</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --neon-blue: #00f3ff;
+      --cyber-purple: #bc13fe;
+      --matrix-green: #00ff41;
+      --dark-bg: #0a0a0f;
+      --card-bg: rgba(15, 15, 25, 0.9);
+      --text-primary: #e0e0e0;
+      --text-secondary: #a0a0a0;
+      --gradient-1: linear-gradient(135deg, var(--neon-blue), var(--cyber-purple));
+      --gradient-2: linear-gradient(45deg, var(--matrix-green), var(--neon-blue));
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--dark-bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* Background Animations */
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(0, 243, 255, 0.1) 0%, transparent 70%);
+      animation: pulseGlow 5s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M10 10 L90 90 M90 10 L10 90" stroke="%2300f3ff" stroke-width="1" opacity="0.3"/></svg>');
+      background-size: 20px 20px;
+      animation: glitchShift 2s linear infinite alternate;
+      z-index: -1;
+    }
+
+    /* Particle Animation */
+    .particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      background: var(--neon-blue);
+      border-radius: 50%;
+      animation: float 10s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) scale(0); opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    @keyframes pulseGlow {
+      0% { opacity: 0.1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 0.1; }
+    }
+
+    @keyframes glitchShift {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(5px, 5px); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+    .delay-5 { transition-delay: 0.5s; }
+
+    /* Header */
+    header {
+      background: var(--gradient-1);
+      color: var(--text-primary);
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 243, 255, 0.3);
+      position: relative;
+      z-index: 10;
+    }
+
+    header h1 {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px var(--neon-blue);
+    }
+
+    header p {
+      margin: 0.5rem 0 0;
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      max-width: 800px;
+      margin: 1rem auto;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    .progress-container p {
+      font-size: 1.1rem;
+      color: var(--matrix-green);
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 5px var(--neon-blue);
+    }
+
+    .progress-bar {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      overflow: hidden;
+      height: 20px;
+      box-shadow: 0 2px 5px rgba(0, 243, 255, 0.2);
+      border: 1px solid var(--neon-blue);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--gradient-2);
+      width: 0%;
+      transition: width 0.5s ease;
+      box-shadow: 0 0 10px var(--matrix-green);
+    }
+
+    /* Tree Diagram Styles */
+    .tree {
+      display: flex;
+      justify-content: center;
+      margin: 2rem 1rem;
+      padding: 1rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .tree ul {
+      list-style-type: none;
+      padding-left: 30px;
+      position: relative;
+    }
+
+    .tree ul li {
+      margin: 10px 0;
+      padding: 10px;
+      position: relative;
+      animation: fadeIn 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    .tree ul li:nth-child(1) { animation-delay: 0.1s; }
+    .tree ul li:nth-child(2) { animation-delay: 0.2s; }
+    .tree ul li:nth-child(3) { animation-delay: 0.3s; }
+    .tree ul li:nth-child(4) { animation-delay: 0.4s; }
+    .tree ul li:nth-child(5) { animation-delay: 0.5s; }
+
+    /* Tree Lines */
+    .tree ul li::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -15px;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--neon-blue), var(--cyber-purple));
+    }
+
+    .tree ul li::after {
+      content: "";
+      position: absolute;
+      top: 25px;
+      left: -15px;
+      width: 25px;
+      height: 2px;
+      background: var(--neon-blue);
+    }
+
+    .tree ul li:last-child::before {
+      height: 25px;
+    }
+
+    /* Main Step Styling */
+    .tree ul > li > span {
+      background: var(--gradient-1);
+      border: none;
+      color: var(--dark-bg);
+      font-weight: 600;
+      font-size: 1.1rem;
+      font-family: 'Playfair Display', serif;
+      text-shadow: 0 0 5px var(--neon-blue);
+    }
+
+    /* Topic Styling */
+    .tree ul li span {
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+      background: var(--card-bg);
+      border: 2px solid var(--neon-blue);
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      color: var(--text-primary);
+      position: relative;
+      text-shadow: 0 0 3px var(--cyber-purple);
+    }
+
+    .tree ul li span:hover {
+      background: var(--gradient-2);
+      color: var(--dark-bg);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+    }
+
+    /* Icon Styling */
+    .tree ul li span::before {
+      content: "📘";
+      margin-right: 10px;
+      font-size: 1.2rem;
+      color: var(--matrix-green);
+      text-shadow: 0 0 5px var(--neon-blue);
+    }
+
+    /* Checkbox Styling */
+    .tree ul li input[type="checkbox"] {
+      margin-right: 10px;
+      cursor: pointer;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--matrix-green);
+      border: 1px solid var(--neon-blue);
+      background: var(--card-bg);
+    }
+
+    .tree ul li.completed span {
+      background: rgba(0, 255, 65, 0.2);
+      border-color: var(--matrix-green);
+      color: var(--text-primary);
+    }
+
+    .tree ul li.completed span::before {
+      content: "✅";
+      margin-right: 10px;
+      font-size: 1.2rem;
+      color: var(--matrix-green);
+    }
+
+    /* Details Section */
+    .details {
+      display: none;
+      margin-top: 10px;
+      padding: 15px;
+      background: var(--card-bg);
+      border-left: 4px solid var(--neon-blue);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 243, 255, 0.1);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      animation: slideDown 0.3s ease;
+      color: var(--text-secondary);
+    }
+
+    .details h4 {
+      margin: 0 0 10px;
+      color: var(--neon-blue);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      text-shadow: 0 0 5px var(--cyber-purple);
+    }
+
+    .details p {
+      margin: 5px 0;
+    }
+
+    .details a {
+      color: var(--matrix-green);
+      text-decoration: none;
+      font-weight: 500;
+      text-shadow: 0 0 3px var(--neon-blue);
+    }
+
+    .details a:hover {
+      text-decoration: underline;
+      color: var(--neon-blue);
+    }
+
+
+    /* Schedule Button */
+.schedule-button {
+  display: block;
+  width: 200px;
+  margin: 1rem auto;
+  padding: 12px 24px;
+  background: var(--gradient-1);
+  color: var(--dark-bg);
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
+  font-family: 'Playfair Display', serif;
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.schedule-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 243, 255, 0.1);
+  box-shadow: 0 0 10px var(--neon-blue);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.schedule-button:hover::before {
+  opacity: 1;
+}
+
+.schedule-button:hover {
+  background: var(--gradient-2);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .schedule-button {
+    width: 150px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+    /* Back Button */
+    .back-button {
+      display: block;
+      width: 200px;
+      margin: 1rem auto;
+      padding: 12px 24px;
+      background: var(--gradient-1);
+      color: var(--dark-bg);
+      text-align: center;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
+      font-family: 'Playfair Display', serif;
+      position: relative;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .back-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 243, 255, 0.1);
+      box-shadow: 0 0 10px var(--neon-blue);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .back-button:hover::before {
+      opacity: 1;
+    }
+
+    .back-button:hover {
+      background: var(--gradient-2);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--gradient-1);
+      color: var(--text-primary);
+      box-shadow: 0 -4px 10px rgba(0, 243, 255, 0.2);
+      position: relative;
+      z-index: 10;
+      margin-top: 2rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.2rem; }
+      header p { font-size: 1rem; }
+      .progress-container p { font-size: 1rem; }
+      .tree ul li span { font-size: 0.9rem; padding: 10px 15px; }
+      .back-button { width: 150px; padding: 10px 20px; font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Particles Container for Background Animation -->
+  <div class="particles"></div>
+
+  <header class="fade-in delay-1">
+    <h1>Cybersecurity Roadmap</h1>
+    <p>Protect Systems and Data with Expert Skills 🚀</p>
+  </header>
+
+  <!-- Progress Bar -->
+  <div class="progress-container fade-in delay-2">
+    <p>Progress: <span id="progress-text">0%</span></p>
+    <div class="progress-bar">
+      <div class="progress-bar-fill" id="progress-bar-fill"></div>
+    </div>
+  </div>
+
+  <div class="tree fade-in delay-3">
+    <ul>
+      <!-- Step 1: Foundations -->
+      <li>
+        <span>Step 1: Foundations</span>
+        <ul>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="network-basics">
+            <span>Networking Basics</span>
+            <div class="details">
+              <h4>Networking Basics</h4>
+              <p>Understand TCP/IP, HTTP, DNS, and network layers (OSI model) to identify security vulnerabilities and monitor traffic.</p>
+              <p><strong>Key Points:</strong> Learn packet structure; understand ports (e.g., 80, 443); use Wireshark for packet analysis.</p>
+              <p><strong>Example:</strong> Capturing HTTP traffic to detect unencrypted data using Wireshark.</p>
+              <p><strong>Resource:</strong> <a href="https://www.geeksforgeeks.org/computer-network-tutorials/" target="_blank">GeeksforGeeks: Networking</a>, <a href="https://www.wireshark.org/docs/" target="_blank">Wireshark Docs</a>, <a href="https://www.youtube.com/watch?v=5rAy_sjP8eY" target="_blank">📺 YouTube: Networking Basics (PowerCert Animated Videos)</a></p>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="os-security">
+            <span>Operating System Security</span>
+            <div class="details">
+              <h4>Operating System Security</h4>
+              <p>Learn to secure OS (Windows, Linux) with user permissions, firewalls, and patch management to prevent exploits.</p>
+              <p><strong>Key Points:</strong> Update regularly; configure firewalls; limit user privileges.</p>
+              <p><strong>Example:</strong> Setting up a firewall rule to block unauthorized ports on Linux.</p>
+              <p><strong>Resource:</strong> <a href="https://www.tutorialspoint.com/operating_system/os_security.htm" target="_blank">TutorialsPoint: OS Security</a>, <a href="https://www.redhat.com/en/topics/security" target="_blank">Red Hat Security</a>, <a href="https://www.youtube.com/watch?v=8Pq5z2v0Q0A" target="_blank">📺 YouTube: OS Security (Professor Messer)</a></p>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="threats">
+            <span>Types of Threats and Attacks</span>
+            <div class="details">
+              <h4>Types of Threats and Attacks</h4>
+              <p>Identify threats like malware, phishing, DDoS, and attacks such as SQL injection and man-in-the-middle (MITM).</p>
+              <p><strong>Key Points:</strong> Recognize social engineering; understand exploit vectors; monitor logs for anomalies.</p>
+              <p><strong>Example:</strong> Detecting a phishing email with suspicious links.</p>
+              <p><strong>Resource:</strong> <a href="https://www.owasp.org/www-project-top-ten/" target="_blank">OWASP Top 10</a>, <a href="https://www.sans.org/security-resources/" target="_blank">SANS Institute</a>, <a href="https://www.youtube.com/watch?v=6N0Q6No0LTA" target="_blank">📺 YouTube: Types of Attacks (The Cyber Mentor)</a></p>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="project-foundations">
+            <span>Project: Secure a Local Network</span>
+            <div class="details">
+              <h4>Project: Secure a Local Network</h4>
+              <p>Set up a small network with a router, configure a firewall, and test for vulnerabilities using basic tools.</p>
+              <p><strong>Key Points:</strong> Enable WPA3 encryption; disable unused ports; scan with Nmap.</p>
+              <p><strong>Example:</strong> Securing a home Wi-Fi network with a strong password.</p>
+              <p><strong>Resource:</strong> <a href="https://nmap.org/book/man.html" target="_blank">Nmap Manual</a>, <a href="https://www.wireshark.org/docs/" target="_blank">Wireshark Docs</a>, <a href="https://www.youtube.com/watch?v=5rAy_sjP8eY" target="_blank">📺 YouTube: Network Security Project (PowerCert Animated Videos)</a></p>
+            </div>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Step 2: Core Concepts -->
+      <li>
+        <span>Step 2: Core Concepts</span>
+        <ul>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="cryptography">
+            <span>Cryptography Fundamentals</span>
+            <div class="details">
+              <h4>Cryptography Fundamentals</h4>
+              <p>Cryptography secures data with encryption (e.g., AES, RSA) and hashing (e.g., SHA-256) to ensure confidentiality and integrity.</p>
+              <p><strong>Key Points:</strong> Use strong keys; understand symmetric vs. asymmetric; avoid weak algorithms.</p>
+              <p><strong>Example:</strong> Encrypting a file with AES-256 using OpenSSL.</p>
+              <p><strong>Resource:</strong> <a href="https://www.geeksforgeeks.org/cryptography-and-network-security-principles/" target="_blank">GeeksforGeeks: Cryptography</a>, <a href="https://www.openssl.org/docs/" target="_blank">OpenSSL Docs</a>, <a href="https://www.youtube.com/watch?v=AQDCe585Lpk" target="_blank">📺 YouTube: Cryptography Basics (The Cyber Mentor)</a></p>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="firewalls-ids">
+            <span>Firewalls and Intrusion Detection Systems (IDS)</span>
+            <div class="details">
+              <h4>Firewalls and Intrusion Detection Systems</h4>
+              <p>Firewalls filter traffic; IDS (e.g., Snort) detects suspicious activities by analyzing patterns.</p>
+              <p><strong>Key Points:</strong> Configure rules (allow/deny); use signature-based detection; integrate with SIEM.</p>
+              <p><strong>Example:</strong> Blocking port 23 (Telnet) with a firewall rule.</p>
+              <p><strong>Resource:</strong> <a href="https://www.snort.org/documents" target="_blank">Snort Docs</a>, <a href="https://www.paloaltonetworks.com/cyberpedia/what-is-a-firewall" target="_blank">Palo Alto: Firewalls</a>, <a href="https://www.youtube.com/watch?v=6z2dI4m8mfw" target="_blank">📺 YouTube: IDS Tutorial (Professor Messer)</a></p>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="vulnerability-assessment">
+            <span>Vulnerability Assessment and Management</span>
+            <div class="details">
+              <h4>Vulnerability Assessment and Management</h4>
+              <p>Identify weaknesses using tools like Nessus or OpenVAS, and manage risks with prioritization and patching.</p>
+              <p><strong>Key Points:</strong> Scan regularly; prioritize CVEs; document findings.</p>
+              <p><strong>Example:</strong> Running Nessus to find unpatched software on a server.</p>
+              <p><strong>Resource:</strong> <a href="https://www.tenable.com/products/nessus" target="_blank">Nessus Docs</a>, <a href="https://www.openvas.org/" target="_blank">OpenVAS</a>, <a href="https://www.youtube.com/watch?v=9wXzE2h3p5w" target="_blank">📺 YouTube: Vulnerability Scanning (The Cyber Mentor)</a></p>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="project-core">
+            <span>Project: Encrypt a File System</span>
+            <div class="details">
+              <h4>Project: Encrypt a File System</h4>
+              <p>Implement file encryption on a local system using tools like VeraCrypt or GPG, ensuring secure storage.</p>
+              <p><strong>Key Points:</strong> Use strong passwords; test decryption; backup keys.</p>
+              <p><strong>Example:</strong> Encrypting a folder with VeraCrypt and mounting it securely.</p>
+              <p><strong>Resource:</strong> <a href="https://www.veracrypt.fr/en/Home.html" target="_blank">VeraCrypt</a>, <a href="https://www.gnupg.org/documentation/" target="_blank">GPG Docs</a>, <a href="https://www.youtube.com/watch?v=AQDCe585Lpk" target="_blank">📺 YouTube: Encryption Project (The Cyber Mentor)</a></p>
+            </div>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Step 3: Advanced Techniques -->
+      <li>
+        <span>Step 3: Advanced Techniques</span>
+        <ul>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="penetration-testing">
+            <span>Penetration Testing</span>
+            <div class="details">
+              <h4>Penetration Testing</h4>
+              <p>Penetration testing simulates attacks to find exploitable vulnerabilities using tools like Metasploit or Burp Suite.</p>
+              <p><strong>Key Points:</strong> Obtain permission; follow methodologies (e.g., OWASP); document exploits.</p>
+              <p><strong>Example:</strong> Using Metasploit to test a SQL injection vulnerability.</p>
+              <p><strong>Resource:</strong> <a href="https://www.metasploit.com/" target="_blank">Metasploit Framework</a>, <a href="https://portswigger.net/burp" target="_blank">Burp Suite</a>, <a href="https://www.youtube.com/watch?v=2U9e2f8Qz9U" target="_blank">📺 YouTube: Pen Testing (The Cyber Mentor)</a></p>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="malware-analysis">
+            <span>Malware Analysis</span>
+            <div class="details">
+              <h4>Malware Analysis</h4>
+              <p>Analyze malware (e.g., viruses, ransomware) in sandboxed environments using tools like IDA Pro or REMnux.</p>
+              <p><strong>Key Points:</strong> Use static/dynamic analysis; isolate samples; understand behavior.</p>
+              <p><strong>Example:</strong> Disassembling a Trojan with IDA Pro to identify its payload.</p>
+              <p><strong>Resource:</strong> <a href="https://www.ida-pro.com/" target="_blank">IDA Pro</a>, <a href="https://remnux.org/" target="_blank">REMnux</a>, <a href="https://www.youtube.com/watch?v=9wXzE2h3p5w" target="_blank">📺 YouTube: Malware Analysis (MalwareTech)</a></p>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="incident-response">
+            <span>Incident Response and Forensics</span>
+            <div class="details">
+              <h4>Incident Response and Forensics</h4>
+              <p>Respond to security incidents with a plan (e.g., NIST framework) and use forensics tools (e.g., Autopsy) to investigate.</p>
+              <p><strong>Key Points:</strong> Contain breaches; preserve evidence; follow chain of custody.</p>
+              <p><strong>Example:</strong> Analyzing a breached server log with Autopsy.</p>
+              <p><strong>Resource:</strong> <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf" target="_blank">NIST IR Guide</a>, <a href="https://www.autopsy.com/" target="_blank">Autopsy</a>, <a href="https://www.youtube.com/watch?v=6z2dI4m8mfw" target="_blank">📺 YouTube: Incident Response (Professor Messer)</a></p>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="project-advanced">
+            <span>Project: Perform a Penetration Test</span>
+            <div class="details">
+              <h4>Project: Perform a Penetration Test</h4>
+              <p>Conduct a controlled penetration test on a virtual machine (e.g., Metasploitable) to identify and exploit vulnerabilities.</p>
+              <p><strong>Key Points:</strong> Use Kali Linux; document findings; simulate real-world attacks.</p>
+              <p><strong>Example:</strong> Exploiting a weak password on a VM with Metasploit.</p>
+              <p><strong>Resource:</strong> <a href="https://www.kali.org/" target="_blank">Kali Linux</a>, <a href="https://www.metasploit.com/" target="_blank">Metasploit</a>, <a href="https://www.youtube.com/watch?v=2U9e2f8Qz9U" target="_blank">📺 YouTube: Pen Test Project (The Cyber Mentor)</a></p>
+            </div>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Step 4: Specialization and Career -->
+      <li>
+        <span>Step 4: Specialization and Career</span>
+        <ul>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="compliance">
+            <span>Compliance and Regulations</span>
+            <div class="details">
+              <h4>Compliance and Regulations</h4>
+              <p>Understand standards like GDPR, HIPAA, and PCI-DSS to ensure legal and ethical security practices.</p>
+              <p><strong>Key Points:</strong> Conduct audits; document compliance; train staff.</p>
+              <p><strong>Example:</strong> Ensuring a healthcare app complies with HIPAA data protection.</p>
+              <p><strong>Resource:</strong> <a href="https://gdpr.eu/" target="_blank">GDPR Guide</a>, <a href="https://www.hhs.gov/hipaa/" target="_blank">HIPAA</a>, <a href="https://www.youtube.com/watch?v=8pH7q2Q5c-Q" target="_blank">📺 YouTube: Compliance Basics (Tech With Lucy)</a></p>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="certifications">
+            <span>Certifications and Skills</span>
+            <div class="details">
+              <h4>Certifications and Skills</h4>
+              <p>Earn certifications like CEH, CISSP, or CompTIA Security+ to validate expertise and boost career prospects.</p>
+              <p><strong>Key Points:</strong> Study exam objectives; practice with labs; network with professionals.</p>
+              <p><strong>Example:</strong> Preparing for CEH with TryHackMe labs.</p>
+              <p><strong>Resource:</strong> <a href="https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/" target="_blank">CEH</a>, <a href="https://www.isc2.org/Certifications/CISSP" target="_blank">CISSP</a>, <a href="https://www.youtube.com/watch?v=6z2dI4m8mfw" target="_blank">📺 YouTube: Certification Guide (Professor Messer)</a></p>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="portfolio-cyber">
+            <span>Build a Cybersecurity Portfolio</span>
+            <div class="details">
+              <h4>Build a Cybersecurity Portfolio</h4>
+              <p>Create a portfolio showcasing penetration tests, incident reports, and tools mastered, hosted on GitHub or a personal site.</p>
+              <p><strong>Key Points:</strong> Include case studies; use anonymized data; highlight skills.</p>
+              <p><strong>Example:</strong> A GitHub repo with a penetration test report PDF.</p>
+              <p><strong>Resource:</strong> <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>, <a href="https://tryhackme.com/" target="_blank">TryHackMe</a>, <a href="https://www.youtube.com/watch?v=7X7Xv-2gQ0c" target="_blank">📺 YouTube: Portfolio Building (The Futur)</a></p>
+            </div>
+          </li>
+          <li>
+            <input type="checkbox" class="progress-checkbox" data-topic="project-specialization">
+            <span>Project: Design a Security Policy</span>
+            <div class="details">
+              <h4>Project: Design a Security Policy</h4>
+              <p>Develop a comprehensive security policy for an organization, including incident response, access control, and compliance measures.</p>
+              <p><strong>Key Points:</strong> Address all threats; align with regulations; present to stakeholders.</p>
+              <p><strong>Example:</strong> A policy document for a small business with password requirements.</p>
+              <p><strong>Resource:</strong> <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-12r1.pdf" target="_blank">NIST SP 800-12</a>, <a href="https://www.sans.org/security-resources/policies" target="_blank">SANS Policies</a>, <a href="https://www.youtube.com/watch?v=8pH7q2Q5c-Q" target="_blank">📺 YouTube: Security Policy (Tech With Lucy)</a></p>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <a href="scheduledsa.html" class="schedule-button fade-in delay-5">Schedule Your Learning</a>
+
+  <a href="roadmaps.html" class="back-button fade-in delay-5">Back to Career Paths</a>
+
+  <footer class="fade-in delay-5">
+    <p>Happy Securing! 🚀 | Tech Udaan © 2025</p>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Particle Animation
+      function createParticles() {
+        const particleCount = 50;
+        const particlesContainer = document.querySelector('.particles');
+        for (let i = 0; i < particleCount; i++) {
+          const particle = document.createElement('div');
+          particle.className = 'particle';
+          const size = Math.random() * 3 + 1;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+          particle.style.left = `${Math.random() * 100}vw`;
+          particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+          particle.style.animationDelay = `${Math.random() * 5}s`;
+          particlesContainer.appendChild(particle);
+        }
+      }
+      createParticles();
+
+      // Fade-in Animation
+      const elements = document.querySelectorAll('.fade-in');
+      elements.forEach((element, index) => {
+        setTimeout(() => {
+          element.classList.add('visible');
+        }, index * 200);
+      });
+
+      const checkboxes = document.querySelectorAll(".progress-checkbox");
+      const progressText = document.getElementById("progress-text");
+      const progressBarFill = document.getElementById("progress-bar-fill");
+      const totalTopics = checkboxes.length;
+
+      // Load progress from localStorage
+      checkboxes.forEach((checkbox) => {
+        const topic = checkbox.getAttribute("data-topic");
+        const isChecked = localStorage.getItem(`cybersecurity-progress-${topic}`) === "true";
+        checkbox.checked = isChecked;
+        if (isChecked) {
+          checkbox.parentElement.classList.add("completed");
+        }
+      });
+
+      // Update progress bar
+      function updateProgress() {
+        const completedTopics = document.querySelectorAll(".progress-checkbox:checked").length;
+        const progressPercentage = (completedTopics / totalTopics) * 100;
+        progressText.textContent = `${Math.round(progressPercentage)}%`;
+        progressBarFill.style.width = `${progressPercentage}%`;
+      }
+
+      // Initial progress update
+      updateProgress();
+
+      // Handle checkbox changes
+      checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+          const topic = checkbox.getAttribute("data-topic");
+          localStorage.setItem(`cybersecurity-progress-${topic}`, checkbox.checked);
+          if (checkbox.checked) {
+            checkbox.parentElement.classList.add("completed");
+          } else {
+            checkbox.parentElement.classList.remove("completed");
+          }
+          updateProgress();
+        });
+      });
+
+      // Handle topic details toggle
+      const items = document.querySelectorAll(".tree ul li span");
+      items.forEach((item) => {
+        item.addEventListener("click", () => {
+          const allDetails = document.querySelectorAll(".details");
+          allDetails.forEach((detail) => {
+            if (detail !== item.nextElementSibling) {
+              detail.style.display = "none";
+            }
+          });
+          const details = item.nextElementSibling;
+          if (details.style.display === "block") {
+            details.style.display = "none";
+          } else {
+            details.style.display = "block";
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

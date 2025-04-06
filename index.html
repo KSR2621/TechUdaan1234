@@ -4,210 +4,940 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Career Path</title>
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --neon-blue: #00f3ff;
+            --cyber-purple: #bc13fe;
+            --matrix-green: #00ff41;
+            --dark-bg: #0a0a0f;
+            --card-bg: rgba(15, 15, 25, 0.9);
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --gradient-1: linear-gradient(135deg, var(--neon-blue), var(--cyber-purple));
+            --gradient-2: linear-gradient(45deg, var(--matrix-green), var(--neon-blue));
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100%;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 243, 255, 0.1) 0%, transparent 70%);
+            animation: pulseGlow 5s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M10 10 L90 90 M90 10 L10 90" stroke="%2300f3ff" stroke-width="1" opacity="0.3"/></svg>');
+            background-size: 20px 20px;
+            animation: glitchShift 2s linear infinite alternate;
+            z-index: -1;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            animation: float 10s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.1; }
+        }
+
+        @keyframes glitchShift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(5px, 5px); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-1);
+            border-radius: 4px;
+        }
+
+        .glow {
+            text-shadow: 0 0 10px var(--neon-blue),
+                         0 0 20px var(--neon-blue),
+                         0 0 30px var(--neon-blue);
+            animation: glitch 1.5s linear infinite alternate;
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes glitch {
+            0%, 100% { text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 30px var(--neon-blue); }
+            50% { text-shadow: 0 0 5px var(--cyber-purple), 2px 2px 15px var(--matrix-green); }
+        }
+
+        .gradient-text {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h1, h2, h3, .logo, .nav-links a, .btn {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.1);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            position: relative;
+            padding: 0.3rem 0;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            text-shadow: 0 0 5px rgba(0, 243, 255, 0.2);
+            font-size: 1rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            color: var(--neon-blue);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+        }
+
+        .hamburger:hover {
+            color: var(--matrix-green);
+            transform: rotate(90deg);
+        }
+
+        .hero {
+            position: relative;
+            padding: 140px 20px;
+            text-align: center;
+            background: url('img/websitelanding.jpg') no-repeat center center;
+            background-size: cover;
+            border-bottom: 2px solid var(--neon-blue);
+            animation: pulse-border 2s infinite;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 15, 0.6);
+            backdrop-filter: blur(5px);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            background: var(--gradient-1);
+            color: var(--dark-bg);
+            padding: 0.8rem 2rem;
+            border: 2px solid var(--neon-blue);
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 243, 255, 0.1);
+            box-shadow: 0 0 10px var(--neon-blue);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn:hover {
+            background: var(--gradient-2);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(0, 243, 255, 0.3); }
+            50% { border-color: rgba(0, 243, 255, 0.8); }
+        }
+
+        .career-paths {
+            padding: 80px 20px;
+        }
+
+        .career-paths h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+
+        .career-paths h2::after {
+            content: '';
+            width: 120px;
+            height: 4px;
+            background: var(--gradient-1);
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                transparent, 
+                var(--neon-blue),
+                transparent 30%);
+            animation: rotate 4s linear infinite;
+            opacity: 0.2;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .card:hover {
+            transform: translateY(-5px) rotate(1deg);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+
+        .card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .show-more {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .counseling {
+            padding: 80px 20px;
+        }
+
+        .counseling h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+
+        .counseling h2::after {
+            content: '';
+            width: 120px;
+            height: 4px;
+            background: var(--gradient-1);
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .counseling-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .counselor-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+        }
+
+        .counselor-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+
+        .counselor-card img {
+            width: auto;
+            max-width: 200px;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            object-fit: cover;
+        }
+
+        .counselor-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .counselor-card p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .show-more-experts {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .about {
+            padding: 100px 20px;
+            background: var(--dark-bg);
+            border: 2px solid rgba(0, 243, 255, 0.1);
+            border-radius: 8px;
+            margin: 40px 20px;
+        }
+
+        .about-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .about-content h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+
+        .about-content h2::after {
+            content: '';
+            width: 120px;
+            height: 4px;
+            background: var(--gradient-1);
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .about-content p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .contact-us {
+            padding: 100px 20px;
+            background: var(--dark-bg);
+            border: 2px solid rgba(0, 243, 255, 0.1);
+            border-radius: 8px;
+            margin: 40px 20px;
+        }
+
+        .contact-us h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+
+        .contact-us h2::after {
+            content: '';
+            width: 120px;
+            height: 4px;
+            background: var(--gradient-1);
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .contact-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-content p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .whatsapp-btn {
+            background: var(--gradient-2);
+            color: var(--dark-bg);
+            padding: 1rem 2rem;
+            border: 2px solid var(--matrix-green);
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whatsapp-btn img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .whatsapp-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 255, 65, 0.1);
+            box-shadow: 0 0 10px var(--matrix-green);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .whatsapp-btn:hover::before {
+            opacity: 1;
+        }
+
+        .whatsapp-btn:hover {
+            background: var(--gradient-1);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--matrix-green);
+        }
+
+        .footer {
+            background: linear-gradient(135deg, rgba(10, 10, 15, 0.95), rgba(20, 20, 30, 0.95));
+            color: var(--text-primary);
+            padding: 30px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(0, 243, 255, 0.1);
+            margin-top: 40px;
+        }
+
+        .footer-bottom p {
+            font-size: 1rem;
+            margin: 0;
+        }
+
+         /* Ensure no extra space below footer */
+         html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main-content {
+            flex: 1;
+        }
+
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: linear-gradient(135deg, rgba(15, 15, 25, 0.95), rgba(25, 25, 35, 0.95));
+                flex-direction: column;
+                padding: 4rem 1rem;
+                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 1001;
+                box-shadow: -5px 0 15px rgba(0, 243, 255, 0.1);
+                border-left: 1px solid var(--neon-blue);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.3rem;
+                padding: 0.8rem 1rem;
+                width: 100%;
+                border-bottom: 1px solid rgba(0, 243, 255, 0.1);
+            }
+
+            .hero {
+                padding: 100px 15px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            .container, .counseling-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .career-paths, .counseling, .about, .contact-us {
+                padding: 60px 15px;
+            }
+
+            .career-paths h2, .counseling h2, .about-content h2, .contact-us h2 {
+                font-size: 2.2rem;
+                margin-bottom: 40px;
+            }
+
+            .career-paths h2::after, .counseling h2::after, .about-content h2::after, .contact-us h2::after {
+                width: 80px;
+                bottom: -15px;
+            }
+
+            .counselor-card {
+                min-height: 350px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Header with Navbar -->
     <header>
         <nav class="navbar">
-            <div class="logo">Tech Uddan</div>
+            <div class="logo">Tech Udaan</div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#paths">Career Paths</a></li>
                 <li><a href="#counseling">Counseling</a></li>
-                <li><a href="#testimonials">Testimonials</a></li>
                 <li><a href="#About">About</a></li>
                 <li><a href="#Contact">Contact</a></li>
+                <!-- Auth Buttons -->
+                <li class="auth-buttons" id="auth-buttons">
+                    <a href="signup.html" class="btn">Sign Up</a>
+                    <a href="login.html" class="btn">Login</a>
+                </li>
+                <li class="profile-button" id="profile-button" style="display: none;">
+                    <a href="profile.html" class="btn">Profile</a>
+                </li>
             </ul>
-            <div class="hamburger" onclick="toggleMenu()">
-                &#9776;
-            </div>
+            <div class="hamburger" onclick="toggleMenu()">☰</div>
         </nav>
     </header>
 
+    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content">
-            <h1>Find Your Career Path with Ease</h1>
-            <p>Explore career roadmaps, access free resources, get one-on-one counseling with industry experts.</p>
-            <a href="#paths" class="btn">Get Started</a>
+            <h1 class="fade-in delay-1">Find Your Career Path with Ease</h1>
+            <p class="fade-in delay-2">Explore career roadmaps, access free resources, get one-on-one counseling with industry experts.</p>
+            <a href="#paths" class="btn fade-in delay-3">Get Started</a>
         </div>
     </section>
 
-    
+    <!-- Career Paths Section -->
     <section id="paths" class="career-paths">
-        <h2>Explore Career Paths</h2>
+        <h2 class="fade-in delay-1">Explore Career Paths</h2>
         <div class="container">
-            <div class="card">
+            <div class="card fade-in delay-1">
                 <h3>Learn Python</h3>
                 <p>Master Python with step-by-step guidance and free resources.</p>
                 <a href="Roadmaps/python.html" class="btn">View Roadmap</a>
             </div>
-
-            <div class="card">
+            <div class="card fade-in delay-2">
                 <h3>UI/UX Design</h3>
                 <p>Start your journey in UI/UX with our curated roadmap.</p>
                 <a href="Roadmaps/UI.html" class="btn">View Roadmap</a>
             </div>
-
-            <div class="card">
+            <div class="card fade-in delay-3">
+                <h3>Cybersecurity</h3>
+                <p>Learn to protect systems and networks with skills in ethical hacking and security protocols.</p>
+                <a href="Roadmaps/cybersecurity.html" class="btn">View Roadmap</a>
+            </div>
+            <div class="card fade-in delay-4">
                 <h3>Web Development</h3>
                 <p>Learn how to build modern websites with HTML, CSS, and JavaScript.</p>
                 <a href="Roadmaps/web_dev.html" class="btn">View Roadmap</a>
             </div>
-
-            <!-- <div class="card">
-                <h3>Data Science</h3>
-                <p>Dive into data science with Python, R, and machine learning.</p>
-                <a href="Roadmaps/data_sci.html" class="btn">View Roadmap</a>
-            </div>
-
-            <div class="card">
-                <h3>Graphic Design</h3>
-                <p>Create stunning visuals with tools like Photoshop and Illustrator.</p>
-                <a href="Roadmaps/graphic.html" class="btn">View Roadmap</a>
-            </div> -->
-
-            <div class="card">
+            <div class="card fade-in delay-1">
                 <h3>Mobile App Development</h3>
                 <p>Build mobile apps for iOS and Android using Flutter and React Native.</p>
                 <a href="Roadmaps/flutter.html" class="btn">View Roadmap</a>
             </div>
+            <div class="card fade-in delay-2">
+                <h3>DSA</h3>
+                <p>Master Data Structures and Algorithms to excel in coding interviews and problem-solving.</p>
+                <a href="Roadmaps/dsa.html" class="btn">View Roadmap</a>
+            </div>
         </div>
-
-        <div class="show-more">
-            <a href="/Roadmaps/roadmaps.html" class="btn">Show More</a>
+        <div class="show-more fade-in delay-3">
+            <a href="Roadmaps/roadmaps.html" class="btn">Show More</a>
         </div>
     </section>
 
+    <!-- Counseling Section -->
     <section id="counseling" class="counseling">
-        <h2>One-to-One Counseling</h2>
+        <h2 class="fade-in delay-1">One-to-One Counseling</h2>
         <div class="counseling-container">
-            <div class="counselor-card">
-                <img src="/img/Tapan.jpg" alt="Counselor 1">
+            <div class="counselor-card fade-in delay-1">
+                <img src="img/Tapan.jpg" alt="Counselor 1" onerror="this.style.display='none';">
                 <h3>Tapan Kumar</h3>
                 <p>Tapan Kumar Gadodia</p>
                 <p>Angel Investor | 10+ years</p>
                 <a href="/Experts/Tapan Kumar.html" class="btn">More Info</a>
             </div>
-    
-            <div class="counselor-card">
-                <img src="/img/Ravi.jpg" alt="Counselor 2">
+            <div class="counselor-card fade-in delay-2">
+                <img src="/img/Ravi.jpg" alt="Counselor 2" onerror="this.style.display='none';">
                 <h3>Ravi Shankar</h3>
                 <p>Ravi Shankar</p>
                 <p>Principal Innovator <br>Scientist holding 100+ patents</p>
                 <a href="/Experts/Ravi Shankar.html" class="btn">More Info</a>
             </div>
-    
-            <div class="counselor-card">
-                <img src="/img/Deepesh.jpg" alt="Counselor 3">
+            <div class="counselor-card fade-in delay-3">
+                <img src="/img/Deepesh.jpg" alt="Counselor 3" onerror="this.style.display='none';">
                 <h3>Deepesh Sodhi</h3>
                 <p>Deepesh Sodhi</p>
-                <p>Founder and CEO of <br> fluid.live</p>
+                <p>Founder and CEO of <br>fluid.live</p>
                 <a href="/Experts/Deepesh Sodhi.html" class="btn">More Info</a>
             </div>
         </div>
-    
-        <div class="show-more-experts">
+        <div class="show-more-experts fade-in delay-4">
             <a href="/Experts/experts.html" class="btn">Show More Experts</a>
         </div>
     </section>
 
-
-    <section id="testimonials">
-        <div class="testimonial-section">
-          <h2>From Happy Students</h2>
-          <div class="testimonial-slider">
-            <img src="/img/Rutuja.jpg" alt="User 1" />
-            <img src="/img/Sanika.jpg" alt="User 2" class="active" />
-            <img src="/img/pra.png" alt="User 3" />
-            <!-- <img src="img/4.jpeg" alt="User 4" class="hidden" />
-            <img src="img/5.jpeg" alt="User 5" class="hidden" /> -->
-          </div>
-          <div class="testimonial-content">
-            <p>
-                Tech Udaan has been a game-changer for me! The career roadmaps and one-on-one counseling sessions helped me gain clarity and confidence in my career path. Highly recommended!
-            </p>
-            <div class="stars">★★★★★</div>
-            <div class="author">– Rutuja</div>
-          </div>
-          <div class="navigation">
-            <button onclick="prevTestimonial()">←</button>
-            <button onclick="nextTestimonial()">→</button>
-          </div>
+    <!-- About Section -->
+    <section id="About" class="about">
+        <div class="about-content">
+            <h2 class="fade-in delay-1">About Tech Udaan</h2>
+            <div class="about-text fade-in delay-2">
+                <p>At <strong>Tech Udaan</strong>, we are dedicated to helping students and professionals find their ideal career paths. Our platform provides comprehensive roadmaps, free resources, and one-on-one counseling sessions with industry experts to guide you every step of the way.</p>
+                <p>Whether you're just starting your career or looking to make a switch, we are here to support you with personalized advice and actionable insights. Join us today and take the first step towards a successful future!</p>
+            </div>
         </div>
-      </section>
+    </section>
 
-     
-      <body>
-        <!-- Include the section here -->
-        <section id="testimonials">...</section>
-      
-        <script src="testimonials.js"></script>
-      </body>
-
-
-<!-- Previous sections (Hero, Career Paths, Counseling) -->
-
-<section id="About" class="about">
-    <div class="about-content">
-        <h2>About Tech Uddan</h2>
-        <p>
-            At <strong>Tech Uddan</strong>, we are dedicated to helping students and professionals find their ideal career paths. 
-            Our platform provides comprehensive roadmaps, free resources, and one-on-one counseling sessions with industry experts 
-            to guide you every step of the way.
-        </p>
-        <p>
-            Whether you're just starting your career or looking to make a switch, we are here to support you with personalized 
-            advice and actionable insights. Join us today and take the first step towards a successful future!
-        </p>
-        <a href="#meet" class="btn">Learn More</a>
-    </div>
-</section>
-
-<!-- Rest of the HTML -->
-      
-
-<section id="meet" class="meet-our-team">
-    <h2>Meet Our Team</h2>
-    <div class="team-container">
-        <div class="team-card">
-            <img src="img/Namu.jpg" alt="Team Member 1">
-            <h3>Namrata Sancheti</h3>
-            <p class="job-title"> Founder </p>
-            <p class="description"> Namrata is passionate about helping students achieve their career goals with innovative solutions.</p>
-            <a href="Meet our team/Namu.html" class="btn">More Info</a>
+    <!-- Contact Section -->
+    <section id="Contact" class="contact-us">
+        <h2 class="fade-in delay-1">Contact Us</h2>
+        <div class="contact-content">
+            <p class="fade-in delay-2">Have questions or need assistance? We're here to help! Reach out to us via WhatsApp, and our team will get back to you as soon as possible.</p>
+            <p class="fade-in delay-3">We'd also love to hear your feedback on how we can make this platform more useful for you. Let us know!</p>
+            <a href="https://wa.me/+918789548725" class="whatsapp-btn fade-in delay-4" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon">
+                Chat on WhatsApp
+            </a>
         </div>
+    </section>
 
-        <div class="team-card">
-            <img src="img/0.KSR.jpeg" alt="Team Member 2">
-            <h3>Kunal Singh</h3>
-            <p class="job-title">Co-Founder </p>
-            <p class="description">Kunal Singh is passionate about mentoring students, guiding them with expertise and dedication to help them achieve their career goals 🚀.</p>
-            <a href="Meet our team/ksr.html" class="btn">More Info</a>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>© 2025 Tech Udaan. All rights reserved.</p>
         </div>
-    </div>
-</section>
+    </footer>
 
+    <!-- JavaScript -->
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDI7bIBfyGR_r-EWPvpYjxj8c_OscWDMTU",
+            authDomain: "techudaan-54467.firebaseapp.com",
+            projectId: "techudaan-54467",
+            storageBucket: "techudaan-54467.firebasestorage.app",
+            messagingSenderId: "86201497781",
+            appId: "1:86201497781:web:b1c428db8b320817b026fc",
+            measurementId: "G-0XLX6MTS9F"
+        };
 
-<section id = "Contact" class="contact-us">
-    <h2>Contact Us</h2>
-    <div class="contact-content">
-        <p>
-            Have questions or need assistance? We're here to help! Reach out to us via WhatsApp, and our team will get back to you as soon as possible.
-        </p>
-        <p>
-            We'd also love to hear your feedback on how we can make this platform more useful for you. Let us know!
-        </p>
-        <a href="https://wa.me/+918789548725" class="whatsapp-btn" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon">
-            Chat on WhatsApp
-        </a>
-    </div>
-</section>
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
 
+        document.addEventListener('DOMContentLoaded', () => {
+            // Fade-in Animation
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('visible');
+                }, index * 200);
+            });
 
-<footer class="footer">
-    <div class="footer-bottom">
-        <p>&copy; 2025 Tech Uddan. All rights reserved.</p>
-    </div>
-</footer>
+            // Check authentication state
+            auth.onAuthStateChanged((user) => {
+                const authButtons = document.getElementById('auth-buttons');
+                const profileButton = document.getElementById('profile-button');
+                
+                if (user) {
+                    // User is signed in
+                    authButtons.style.display = 'none';
+                    profileButton.style.display = 'block';
+                    localStorage.setItem('isLoggedIn', 'true');
+                    saveUserData(user);
+                } else {
+                    // No user is signed in
+                    authButtons.style.display = 'block';
+                    profileButton.style.display = 'none';
+                    localStorage.setItem('isLoggedIn', 'false');
+                }
+            });
+
+            // Create particles
+            createParticles();
+        });
+
+        // Function to save user data to Firestore
+        async function saveUserData(user) {
+            try {
+                const userRef = db.collection("users").doc(user.uid);
+                await userRef.set({
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName || "Anonymous",
+                    lastLogin: new Date().toISOString()
+                }, { merge: true });
+                console.log("User data saved successfully!");
+            } catch (error) {
+                console.error("Error saving user data: ", error);
+            }
+        }
+
+        // Toggle mobile menu
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Create particles
+        function createParticles() {
+            const particleCount = 50;
+            const particlesContainer = document.createElement('div');
+            particlesContainer.className = 'particles';
+            document.body.appendChild(particlesContainer);
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 3 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Check if user is logged in when page loads
+        window.addEventListener('load', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const authButtons = document.getElementById('auth-buttons');
+            const profileButton = document.getElementById('profile-button');
+
+            if (isLoggedIn) {
+                authButtons.style.display = 'none';
+                profileButton.style.display = 'block';
+            } else {
+                authButtons.style.display = 'block';
+                profileButton.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile | Tech Udaan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-blue: #00f3ff;
+            --cyber-purple: #bc13fe;
+            --matrix-green: #00ff41;
+            --dark-bg: #0a0a0f;
+            --card-bg: rgba(15, 15, 25, 0.9);
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --gradient-1: linear-gradient(135deg, var(--neon-blue), var(--cyber-purple));
+            --gradient-2: linear-gradient(45deg, var(--matrix-green), var(--neon-blue));
+            --gradient-3: linear-gradient(135deg, var(--matrix-green), var(--cyber-purple));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            background: radial-gradient(circle at 50% 50%, rgba(11, 11, 25, 0.9) 0%, var(--dark-bg) 100%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+        }
+
+        .btn {
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--dark-bg);
+            text-decoration: none;
+        }
+
+        .btn i {
+            font-size: 0.9rem;
+        }
+
+        .logout-btn {
+            background: var(--gradient-1);
+        }
+
+        .back-btn {
+            background: var(--gradient-2);
+        }
+
+        .test-learning-btn {
+            background: var(--gradient-3);
+        }
+
+        .freelance-btn {
+            background: linear-gradient(135deg, #ff8a00, #ff0058);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4);
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .profile-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
+            border-color: var(--neon-blue);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 1rem;
+            font-size: 2.2rem;
+            color: var(--dark-bg);
+        }
+
+        .profile-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: var(--neon-blue);
+        }
+
+        .profile-email {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0.8rem;
+            background: rgba(0, 243, 255, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--matrix-green);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .learning-track {
+            margin-top: 1.2rem;
+            padding: 0.8rem;
+            background: rgba(0, 243, 255, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid var(--cyber-purple);
+        }
+
+        .track-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--neon-blue);
+            font-size: 0.9rem;
+        }
+
+        .track-name {
+            font-weight: 700;
+            color: var(--matrix-green);
+            font-size: 1rem;
+        }
+
+        .progress-section {
+            margin-top: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--neon-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            font-size: 1rem;
+        }
+
+        .progress-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+
+        .progress-milestone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            z-index: 2;
+        }
+
+        .milestone-marker {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 2px solid var(--text-secondary);
+            margin-bottom: 0.3rem;
+        }
+
+        .milestone-marker.completed {
+            background: var(--matrix-green);
+            border-color: var(--matrix-green);
+        }
+
+        .milestone-label {
+            font-size: 0.6rem;
+            color: var(--text-secondary);
+            text-align: center;
+            position: absolute;
+            top: 16px;
+            width: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .progress-track {
+            position: absolute;
+            height: 2px;
+            background: var(--text-secondary);
+            top: 5px;
+            left: 0;
+            right: 0;
+            z-index: 1;
+        }
+
+        .progress-fill {
+            position: absolute;
+            height: 2px;
+            background: var(--matrix-green);
+            top: 5px;
+            left: 0;
+            z-index: 1;
+        }
+
+        .progress-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            height: 8px;
+            margin-bottom: 0.8rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            border-radius: 8px;
+            background: var(--gradient-1);
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .learning-report {
+            margin-top: 1.5rem;
+        }
+
+        .completed-topics-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        .completed-count {
+            font-size: 0.8rem;
+            color: var(--matrix-green);
+        }
+
+        .report-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: rgba(0, 243, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            border-left: 3px solid rgba(0, 243, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .report-item.completed {
+            border-left-color: var(--matrix-green);
+            background: rgba(0, 255, 65, 0.05);
+        }
+
+        .report-item.in-progress {
+            border-left-color: var(--neon-blue);
+            background: rgba(0, 243, 255, 0.05);
+        }
+
+        .report-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .report-topic {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .report-description {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .report-progress {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: 0.5rem;
+        }
+
+        .progress-circle {
+            width: 36px;
+            height: 36px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-width: 3;
+        }
+
+        .circle-progress {
+            fill: none;
+            stroke: var(--matrix-green);
+            stroke-width: 3;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .progress-percent {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.65rem;
+            font-weight: bold;
+            color: var(--matrix-green);
+        }
+
+        .report-status {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .status-completed {
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--matrix-green);
+        }
+
+        .status-in-progress {
+            background: rgba(0, 243, 255, 0.1);
+            color: var(--neon-blue);
+        }
+
+        .status-not-started {
+            background: rgba(188, 19, 254, 0.1);
+            color: var(--cyber-purple);
+        }
+
+        .schedule-section {
+            margin-top: 1.5rem;
+        }
+
+        .schedule-day {
+            margin-bottom: 1rem;
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.3rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        .day-title {
+            font-weight: 600;
+            color: var(--neon-blue);
+            font-size: 0.9rem;
+        }
+
+        .day-date {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.6rem;
+            background: rgba(0, 243, 255, 0.05);
+            border-radius: 6px;
+            margin-bottom: 0.3rem;
+            font-size: 0.8rem;
+        }
+
+        .schedule-time {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-right: 0.5rem;
+        }
+
+        .schedule-topic {
+            font-weight: 500;
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .schedule-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--matrix-green);
+            margin-left: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .schedule-status.pending {
+            background: var(--cyber-purple);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--text-secondary);
+            border: 1px dashed rgba(0, 243, 255, 0.3);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .empty-state i {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--neon-blue);
+        }
+
+        .empty-state p {
+            margin-bottom: 0.3rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 2rem;
+            }
+            
+            .profile-grid {
+                grid-template-columns: 1fr 2fr;
+                gap: 2rem;
+            }
+            
+            .profile-avatar {
+                width: 120px;
+                height: 120px;
+                font-size: 3rem;
+            }
+            
+            .profile-name {
+                font-size: 1.5rem;
+            }
+            
+            .btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .header-actions {
+                gap: 1rem;
+                flex-wrap: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Tech Udaan</div>
+            <div class="header-actions">
+                <a href="index.html" class="btn back-btn">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+                <a href="freelance.html" class="btn freelance-btn">
+                    <i class="fas fa-briefcase"></i> Freelance
+                </a>
+                <a href="quiz.html" class="btn test-learning-btn">
+                    <i class="fas fa-question-circle"></i> Test
+                </a>
+                <button class="btn logout-btn" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </header>
+
+        <div class="profile-grid">
+            <!-- User Profile Section -->
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h2 class="profile-name" id="user-name">Loading...</h2>
+                    <p class="profile-email" id="user-email">user@example.com</p>
+                </div>
+
+                <div class="learning-track">
+                    <div class="track-title">Currently Learning:</div>
+                    <div class="track-name" id="current-track">Python Programming</div>
+                </div>
+
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="completed-topics">0</div>
+                        <div class="stat-label">Topics Completed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="total-hours">0</div>
+                        <div class="stat-label">Hours Learned</div>
+                    </div>
+                </div>
+
+                <div class="progress-section">
+                    <div class="section-title">
+                        <i class="fas fa-chart-line"></i> Learning Progress
+                    </div>
+                    
+                    <div class="progress-details">
+                        <div class="progress-milestone">
+                            <div class="milestone-marker" id="milestone-25"></div>
+                            <div class="milestone-label">Beginner</div>
+                        </div>
+                        <div class="progress-milestone">
+                            <div class="milestone-marker" id="milestone-50"></div>
+                            <div class="milestone-label">Intermediate</div>
+                        </div>
+                        <div class="progress-milestone">
+                            <div class="milestone-marker" id="milestone-75"></div>
+                            <div class="milestone-label">Advanced</div>
+                        </div>
+                        <div class="progress-milestone">
+                            <div class="milestone-marker" id="milestone-100"></div>
+                            <div class="milestone-label">Master</div>
+                        </div>
+                        <div class="progress-track"></div>
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="progress-percent">0</span>% of <span id="roadmap-name">Python</span> roadmap completed
+                        (<span id="completed-count">0</span>/<span id="total-topics">0</span> topics)
+                    </div>
+
+                    <div class="button-group">
+                        <a href="quiz.html" class="btn test-learning-btn">
+                            <i class="fas fa-question-circle"></i> Test My Learning
+                        </a>
+                        <a href="freelance.html" class="btn freelance-btn">
+                            <i class="fas fa-briefcase"></i> Freelance Job
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Report and Schedule Section -->
+            <div class="profile-card">
+                <div class="learning-report">
+                    <div class="section-title">
+                        <i class="fas fa-book"></i> Learning Report
+                    </div>
+                    
+                    <div id="learning-report-container">
+                        <div class="empty-state">
+                            <i class="fas fa-book-open"></i>
+                            <p>No learning progress yet</p>
+                            <p>Start your Python journey to see your progress here</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="schedule-section">
+                    <div class="section-title">
+                        <i class="fas fa-calendar-alt"></i> Daily Schedule
+                    </div>
+                    
+                    <div id="schedule-container">
+                        <div class="empty-state">
+                            <i class="fas fa-calendar-plus"></i>
+                            <p>No schedule yet</p>
+                            <p>Create a learning schedule to see your daily plan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDI7bIBfyGR_r-EWPvpYjxj8c_OscWDMTU",
+            authDomain: "techudaan-54467.firebaseapp.com",
+            projectId: "techudaan-54467",
+            storageBucket: "techudaan-54467.appspot.com",
+            messagingSenderId: "86201497781",
+            appId: "1:86201497781:web:b1c428db8b320817b026fc",
+            measurementId: "G-0XLX6MTS9F",
+            databaseURL: "https://techudaan-54467-default-rtdb.firebaseio.com/"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        // User data and progress
+        let currentUser = null;
+        let userProgress = {};
+        let userSchedule = {};
+        let currentTrack = "Python"; // Default track
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize auth state listener
+            initAuthState();
+
+            // Logout button
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                auth.signOut().then(() => {
+                    window.location.href = 'index.html';
+                });
+            });
+        });
+
+        function initAuthState() {
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    currentUser = user;
+                    loadUserProfile();
+                    loadUserProgress();
+                    loadUserSchedule();
+                    loadUserTrack();
+                } else {
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+
+        function loadUserProfile() {
+            // Display basic user info
+            document.getElementById('user-name').textContent = currentUser.email.split('@')[0];
+            document.getElementById('user-email').textContent = currentUser.email;
+            
+            // Generate avatar with first letter
+            const firstLetter = currentUser.email.charAt(0).toUpperCase();
+            const avatar = document.getElementById('user-avatar');
+            avatar.innerHTML = firstLetter;
+            avatar.style.background = getRandomGradient();
+        }
+
+        function loadUserTrack() {
+            database.ref(`userTracks/${currentUser.uid}`).on('value', (snapshot) => {
+                const trackData = snapshot.val();
+                if (trackData && trackData.currentTrack) {
+                    currentTrack = trackData.currentTrack;
+                    document.getElementById('current-track').textContent = currentTrack;
+                    document.getElementById('roadmap-name').textContent = currentTrack;
+                }
+            });
+        }
+
+        function loadUserProgress() {
+            database.ref(`userProgress/${currentUser.uid}`).on('value', (snapshot) => {
+                userProgress = snapshot.val() || {};
+                updateProgressUI();
+            });
+        }
+
+        function loadUserSchedule() {
+            database.ref(`userSchedule/${currentUser.uid}`).on('value', (snapshot) => {
+                userSchedule = snapshot.val() || {};
+                updateScheduleUI();
+            });
+        }
+
+        function updateProgressUI() {
+            // Calculate progress
+            const totalTopics = 20; // Total topics in the roadmap
+            const completedTopics = Object.values(userProgress).filter(p => p.status === 'completed').length;
+            const inProgressTopics = Object.values(userProgress).filter(p => p.status === 'in-progress').length;
+            const progressPercentage = Math.round((completedTopics / totalTopics) * 100);
+            
+            // Update progress elements
+            document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
+            document.getElementById('progress-percent').textContent = progressPercentage;
+            document.getElementById('progress-fill').style.width = `${progressPercentage}%`;
+            document.getElementById('completed-count').textContent = completedTopics;
+            document.getElementById('total-topics').textContent = totalTopics;
+            
+            // Update milestone markers
+            updateMilestoneMarkers(progressPercentage);
+            
+            // Update stats
+            document.getElementById('completed-topics').textContent = completedTopics;
+            document.getElementById('total-hours').textContent = Math.floor((completedTopics * 0.5) + (inProgressTopics * 0.2));
+            
+            // Update learning report
+            updateLearningReport(completedTopics, inProgressTopics, totalTopics);
+        }
+        
+        function updateMilestoneMarkers(percentage) {
+            const milestones = [25, 50, 75, 100];
+            milestones.forEach(milestone => {
+                const marker = document.getElementById(`milestone-${milestone}`);
+                if (percentage >= milestone) {
+                    marker.classList.add('completed');
+                } else {
+                    marker.classList.remove('completed');
+                }
+            });
+        }
+        
+        function updateLearningReport(completedCount, inProgressCount, totalTopics) {
+            const reportContainer = document.getElementById('learning-report-container');
+            
+            if (completedCount > 0 || inProgressCount > 0) {
+                reportContainer.innerHTML = '';
+                
+                // Add header with completed count
+                const header = document.createElement('div');
+                header.className = 'completed-topics-header';
+                header.innerHTML = `
+                    <div class="section-title" style="margin: 0;">
+                        <i class="fas fa-check-circle"></i> Your Progress
+                    </div>
+                    <div class="completed-count">${completedCount}/${totalTopics} completed</div>
+                `;
+                reportContainer.appendChild(header);
+                
+                // Add completed topics first
+                for (const [topic, data] of Object.entries(userProgress)) {
+                    const reportItem = document.createElement('div');
+                    reportItem.className = `report-item ${data.status}`;
+                    
+                    // Calculate progress percentage for circle
+                    const progressPercent = data.status === 'completed' ? 100 : 
+                                          data.status === 'in-progress' ? Math.min(Math.max(data.progress || 50, 10), 90) : 0;
+                    const circumference = 2 * Math.PI * 15;
+                    const offset = circumference - (progressPercent / 100) * circumference;
+                    
+                    reportItem.innerHTML = `
+                        <div class="report-content">
+                            <div class="report-topic">${formatTopicName(topic)}</div>
+                            <div class="report-description">${getTopicDescription(topic)}</div>
+                        </div>
+                        <div class="report-progress">
+                            <div class="progress-circle">
+                                <svg width="36" height="36" viewBox="0 0 36 36">
+                                    <circle class="circle-bg" cx="18" cy="18" r="15"></circle>
+                                    <circle class="circle-progress" cx="18" cy="18" r="15" 
+                                            stroke-dasharray="${circumference}" 
+                                            stroke-dashoffset="${offset}"></circle>
+                                </svg>
+                                <div class="progress-percent">${progressPercent}%</div>
+                            </div>
+                            <div class="report-status status-${data.status.replace(' ', '-')}">
+                                ${formatStatus(data.status)}
+                            </div>
+                        </div>
+                    `;
+                    reportContainer.appendChild(reportItem);
+                }
+            } else {
+                reportContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-book-open"></i>
+                        <p>No learning progress yet</p>
+                        <p>Start your ${currentTrack} journey to see your progress here</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function getTopicDescription(topic) {
+            const descriptions = {
+                'variables': 'Understanding data storage and types',
+                'input-output': 'Handling user input and program output',
+                'conditionals': 'Making decisions in your code',
+                'loops': 'Repeating actions efficiently',
+                'defining-functions': 'Creating reusable code blocks',
+                'arguments-return': 'Passing data to and from functions',
+                'built-in-modules': 'Leveraging Python standard library',
+                'custom-modules': 'Organizing code into reusable modules',
+                'lists-tuples-dicts': 'Working with collections of data',
+                'list-comprehensions': 'Creating lists concisely',
+                'sets': 'Working with unique collections',
+                'strings': 'Manipulating text data',
+                'classes-objects': 'Object-oriented programming basics',
+                'inheritance': 'Creating hierarchical class structures',
+                'polymorphism': 'Implementing flexible interfaces',
+                'encapsulation': 'Protecting data within objects',
+                'file-handling': 'Reading and writing files',
+                'error-handling': 'Gracefully handling exceptions',
+                'regex': 'Pattern matching in text',
+                'apis': 'Connecting to web services'
+            };
+            return descriptions[topic] || 'Essential programming concept';
+        }
+        
+        function formatStatus(status) {
+            const statusMap = {
+                'completed': 'Completed',
+                'in-progress': 'In Progress',
+                'not-started': 'Not Started'
+            };
+            return statusMap[status] || status;
+        }
+
+        function formatTopicName(topic) {
+            // Convert topic IDs to readable names
+            const topicNames = {
+                'variables': 'Variables and Data Types',
+                'input-output': 'Input and Output',
+                'conditionals': 'Conditional Statements',
+                'loops': 'Loops',
+                'defining-functions': 'Defining Functions',
+                'arguments-return': 'Arguments and Return Values',
+                'built-in-modules': 'Built-in Modules',
+                'custom-modules': 'Creating Modules',
+                'lists-tuples-dicts': 'Lists, Tuples, Dictionaries',
+                'list-comprehensions': 'List Comprehensions',
+                'sets': 'Sets',
+                'strings': 'Working with Strings',
+                'classes-objects': 'Classes and Objects',
+                'inheritance': 'Inheritance',
+                'polymorphism': 'Polymorphism',
+                'encapsulation': 'Encapsulation',
+                'file-handling': 'File Handling',
+                'error-handling': 'Error Handling',
+                'regex': 'Regular Expressions',
+                'apis': 'Working with APIs'
+            };
+            
+            return topicNames[topic] || topic;
+        }
+
+        function getRandomGradient() {
+            const gradients = [
+                'linear-gradient(135deg, #00f3ff, #bc13fe)',
+                'linear-gradient(135deg, #00ff41, #00f3ff)',
+                'linear-gradient(135deg, #bc13fe, #00ff41)'
+            ];
+            return gradients[Math.floor(Math.random() * gradients.length)];
+        }
+
+        function updateScheduleUI() {
+            const scheduleContainer = document.getElementById('schedule-container');
+            
+            if (Object.keys(userSchedule).length > 0) {
+                scheduleContainer.innerHTML = '';
+                
+                // Get current date and next 3 days
+                const today = new Date();
+                const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                
+                for (let i = 0; i < 3; i++) {
+                    const date = new Date();
+                    date.setDate(today.getDate() + i);
+                    
+                    const dayName = days[date.getDay()];
+                    const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    
+                    const daySchedule = userSchedule[dayName] || [];
+                    
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'schedule-day';
+                    dayElement.innerHTML = `
+                        <div class="day-header">
+                            <div class="day-title">${dayName}</div>
+                            <div class="day-date">${dateStr}</div>
+                        </div>
+                    `;
+                    
+                    if (daySchedule.length > 0) {
+                        daySchedule.forEach(item => {
+                            const scheduleItem = document.createElement('div');
+                            scheduleItem.className = 'schedule-item';
+                            scheduleItem.innerHTML = `
+                                <div class="schedule-time">${item.time}</div>
+                                <div class="schedule-topic">${item.topic}</div>
+                                <div class="schedule-status ${item.completed ? '' : 'pending'}"></div>
+                            `;
+                            dayElement.appendChild(scheduleItem);
+                        });
+                    } else {
+                        const emptyItem = document.createElement('div');
+                        emptyItem.className = 'empty-state';
+                        emptyItem.style.padding = '0.8rem';
+                        emptyItem.style.margin = '0.3rem 0';
+                        emptyItem.innerHTML = `
+                            <i class="fas fa-calendar-plus"></i>
+                            <p>No schedule for ${dayName}</p>
+                        `;
+                        dayElement.appendChild(emptyItem);
+                    }
+                    
+                    scheduleContainer.appendChild(dayElement);
+                }
+            } else {
+                scheduleContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-calendar-plus"></i>
+                        <p>No schedule yet</p>
+                        <p>Create a learning schedule to see your daily plan</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,56 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Career Roadmaps</title>
     <link rel="stylesheet" href="roadmaps.css" />
-  </head>
-  <body>
+</head>
+<body>
+    <!-- Particles Container for Background Animation -->
+    <div class="particles"></div>
+
+    <!-- Back Button (Top Left Corner) -->
+    <div class="back-btn">
+        <a href="/index.html" class="back-button fade-in delay-1">Back</a>
+    </div>
+
     <section id="roadmaps" class="section">
-      <!-- Centered Heading -->
-      <div class="heading-container">
-        <h2>Explore Career Paths</h2>
-      </div>
-
-      <!-- Grid of Cards -->
-      <div class="roadmap-grid">
-        <div class="card">
-          <h3>Learn Python</h3>
-          <p>Master Python with step-by-step guidance and free resources.</p>
-          <a href="/roadmaps/python.html" class="btn">View Roadmap</a>
+        <!-- Centered Heading and Search Bar -->
+        <div class="heading-container">
+            <h2 class="glow">Explore Career Paths</h2>
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-bar" placeholder="Search roadmaps..." />
+                <span class="search-icon">🔍</span>
+            </div>
         </div>
 
-        <div class="card">
-          <h3>UI/UX Design</h3>
-          <p>Start your journey in UI/UX with our curated roadmap.</p>
-          <a href="/roadmaps/UI.html" class="btn">View Roadmap</a>
-        </div>
+        <!-- Grid of Cards -->
+        <div class="roadmap-grid">
+            <div class="card fade-in delay-2" data-title="Learn Python">
+                <h3>Learn Python</h3>
+                <p>Master Python with step-by-step guidance and free resources.</p>
+                <a href="python.html" class="btn">View Roadmap</a>
+            </div>
 
-        <div class="card">
-          <h3>Web Development</h3>
-          <p>Learn how to build modern websites.</p>
-          <a href="/roadmaps/web_dev.html" class="btn">View Roadmap</a>
-        </div>
+            <div class="card fade-in delay-3" data-title="UI/UX Design">
+                <h3>UI/UX Design</h3>
+                <p>Start your journey in UI/UX with our curated roadmap.</p>
+                <a href="UI.html" class="btn">View Roadmap</a>
+            </div>
 
-        <div class="card">
-          <h3>Mobile App Development</h3>
-          <p>Build mobile apps for iOS and Android using Flutter and React Native.</p>
-          <a href="/roadmaps/flutter.html" class="btn">View Roadmap</a>
-        </div>
+            <div class="card fade-in delay-4" data-title="Cybersecurity">
+                <h3>Cybersecurity</h3>
+                <p>Learn to protect systems and networks with skills in ethical hacking and security protocols.</p>
+                <a href="cybersecurity.html" class="btn">View Roadmap</a>
+            </div>
 
-        <div class="card">
-          <h3>Frontend Development</h3>
-          <p>Create beautifully designed websites by following our roadmaps.</p>
-          <a href="/roadmaps/frontend.html" class="btn">View Roadmap</a>
-        </div>
-      </div>
+            <div class="card fade-in delay-1" data-title="Web Development">
+                <h3>Web Development</h3>
+                <p>Learn how to build modern websites with HTML, CSS, and JavaScript.</p>
+                <a href="web_dev.html" class="btn">View Roadmap</a>
+            </div>
 
-      <!-- Centered Back Button -->
-      <div class="back-btn">
-        <a href="/index.html#paths" class="back-button">Back</a>
+            <div class="card fade-in delay-2" data-title="Mobile App Development">
+                <h3>Mobile App Development</h3>
+                <p>Build mobile apps for iOS and Android using Flutter and React Native.</p>
+                <a href="flutter.html" class="btn">View Roadmap</a>
+            </div>
 
-      </div>
+            <div class="card fade-in delay-3" data-title="DSA">
+                <h3>DSA</h3>
+                <p>Master Data Structures and Algorithms to excel in coding interviews and problem-solving.</p>
+                <a href="dsa.html" class="btn">View Roadmap</a>
+            </div>
+
     </section>
-  </body>
+
+    <!-- JavaScript for Fade-In Animation, Particles, and Search Functionality -->
+    <script>
+        // Fade-in Animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('visible');
+                }, index * 200); // Staggered animation with 200ms delay
+            });
+        });
+
+        // Particle Animation
+        function createParticles() {
+            const particleCount = 50;
+            const particlesContainer = document.querySelector('.particles');
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 3 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particlesContainer.appendChild(particle);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', createParticles);
+
+        // Search Functionality
+        const searchInput = document.getElementById('searchInput');
+        const cards = document.querySelectorAll('.card');
+
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            cards.forEach(card => {
+                const title = card.getAttribute('data-title').toLowerCase();
+                if (title.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
 </html>

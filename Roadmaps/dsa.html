@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile App Development Roadmap - Interactive Tree with Progress Tracking</title>
+    <title>DSA Roadmap - Interactive Tree with Progress Tracking</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
@@ -306,6 +306,59 @@
             color: var(--matrix-green);
         }
 
+/* Schedule Button */
+.schedule-button {
+  display: block;
+  width: 200px;
+  margin: 1rem auto;
+  padding: 12px 24px;
+  background: var(--gradient-1);
+  color: var(--dark-bg);
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
+  font-family: 'Playfair Display', serif;
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.schedule-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 243, 255, 0.1);
+  box-shadow: 0 0 10px var(--neon-blue);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.schedule-button:hover::before {
+  opacity: 1;
+}
+
+.schedule-button:hover {
+  background: var(--gradient-2);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .schedule-button {
+    width: 150px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
         /* Details Section */
         .details {
             display: none;
@@ -389,59 +442,6 @@
             box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
         }
 
-        /* Schedule Button */
-.schedule-button {
-  display: block;
-  width: 200px;
-  margin: 1rem auto;
-  padding: 12px 24px;
-  background: var(--gradient-1);
-  color: var(--dark-bg);
-  text-align: center;
-  text-decoration: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 243, 255, 0.2);
-  font-family: 'Playfair Display', serif;
-  position: relative;
-  overflow: hidden;
-  z-index: 10;
-}
-
-.schedule-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 243, 255, 0.1);
-  box-shadow: 0 0 10px var(--neon-blue);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.schedule-button:hover::before {
-  opacity: 1;
-}
-
-.schedule-button:hover {
-  background: var(--gradient-2);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0, 243, 255, 0.4);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .schedule-button {
-    width: 150px;
-    padding: 10px 20px;
-    font-size: 0.9rem;
-  }
-}
-
         /* Footer */
         footer {
             text-align: center;
@@ -469,8 +469,8 @@
     <div class="particles"></div>
 
     <header class="fade-in delay-1">
-        <h1>Mobile App Development Roadmap</h1>
-        <p>Build Cross-Platform Apps Step-by-Step 🚀</p>
+        <h1>DSA Roadmap</h1>
+        <p>Master Data Structures and Algorithms for Coding Interviews 🚀</p>
     </header>
 
     <!-- Progress Bar -->
@@ -484,260 +484,195 @@
     <div class="tree fade-in delay-3">
         <ul>
             <li>
-                <span>Step 1: Fundamentals</span>
+                <span>Step 1: Basics</span>
                 <ul>
                     <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="mobile-basics">
-                        <span>Mobile Development Basics</span>
+                        <input type="checkbox" class="progress-checkbox" data-topic="arrays">
+                        <span>Arrays and Strings</span>
                         <div class="details">
-                            <h4>Mobile Development Basics</h4>
-                            <p>Mobile app development involves creating apps for Android, iOS, or cross-platform using languages like Java, Swift, or frameworks like Flutter. It requires understanding mobile UI, APIs, and device constraints.</p>
-                            <p><strong>Key Points:</strong> Learn device screen sizes; use responsive design; understand app lifecycle.</p>
-                            <p><strong>Example:</strong> A simple app displaying a "Hello World" message on Android.</p>
+                            <h4>Arrays and Strings</h4>
+                            <p>Arrays store elements of the same type; strings are character arrays. Key operations include traversal, searching, and manipulation.</p>
+                            <p><strong>Key Points:</strong> Use O(n) for linear search; handle edge cases; optimize space.</p>
+                            <p><strong>Example:</strong> Reversing a string: <code>char[] str = "hello".toCharArray(); reverse(str);</code></p>
                             <p><strong>Resource:</strong> 
-                                <a href="https://developer.android.com/guide" target="_blank">Android Developer Guide</a>, 
-                                <a href="https://developer.apple.com/documentation" target="_blank">Apple Developer Docs</a>, 
-                                <a href="https://www.youtube.com/watch?v=1ukSR1GRtMU" target="_blank">📺 YouTube: Mobile Dev Basics (freeCodeCamp)</a>
+                                <a href="https://www.geeksforgeeks.org/array-data-structure/" target="_blank">GeeksforGeeks: Arrays</a>, 
+                                <a href="https://www.programiz.com/dsa/string" target="_blank">Programiz: Strings</a>, 
+                                <a href="https://www.youtube.com/watch?v=9oX8xZ5H_Sw" target="_blank">📺 YouTube: Arrays Tutorial (Abdul Bari)</a>
                             </p>
                         </div>
                     </li>
                     <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="setup-env">
-                        <span>Setting Up Development Environment</span>
+                        <input type="checkbox" class="progress-checkbox" data-topic="linked-lists">
+                        <span>Linked Lists</span>
                         <div class="details">
-                            <h4>Setting Up Development Environment</h4>
-                            <p>Set up tools like Android Studio (Android), Xcode (iOS), or VS Code (Flutter) with SDKs, emulators, and version control (e.g., Git). This is the foundation for coding.</p>
-                            <p><strong>Key Points:</strong> Install Java/JDK for Android; configure simulators; use Git for version tracking.</p>
-                            <p><strong>Example:</strong> Installing Android Studio and running a virtual device.</p>
+                            <h4>Linked Lists</h4>
+                            <p>Linked lists are dynamic data structures with nodes containing data and pointers, supporting insertion and deletion.</p>
+                            <p><strong>Key Points:</strong> Use O(1) for insertion at head; handle null pointers; compare with arrays.</p>
+                            <p><strong>Example:</strong> <code>Node head = new Node(1); head.next = new Node(2);</code></p>
                             <p><strong>Resource:</strong> 
-                                <a href="https://developer.android.com/studio" target="_blank">Android Studio Setup</a>, 
-                                <a href="https://developer.apple.com/xcode/" target="_blank">Xcode Guide</a>, 
-                                <a href="https://www.youtube.com/watch?v=PeQeF9lS_2U" target="_blank">📺 YouTube: Environment Setup (The Net Ninja)</a>
+                                <a href="https://www.geeksforgeeks.org/data-structures/linked-list/" target="_blank">GeeksforGeeks: Linked Lists</a>, 
+                                <a href="https://www.tutorialspoint.com/data_structures_algorithms/linked_list_algorithms.htm" target="_blank">TutorialsPoint: Linked Lists</a>, 
+                                <a href="https://www.youtube.com/watch?v=58lFZBZ8xPg" target="_blank">📺 YouTube: Linked Lists (Abdul Bari)</a>
                             </p>
                         </div>
                     </li>
                     <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="ui-design">
-                        <span>UI Design for Mobile</span>
+                        <input type="checkbox" class="progress-checkbox" data-topic="time-complexity">
+                        <span>Time and Space Complexity</span>
                         <div class="details">
-                            <h4>UI Design for Mobile</h4>
-                            <p>Mobile UI design focuses on touch-friendly layouts, navigation bars, and material design principles using XML (Android) or SwiftUI (iOS).</p>
-                            <p><strong>Key Points:</strong> Use 48dp touch targets; follow Material Design; test on multiple devices.</p>
-                            <p><strong>Example:</strong> Designing a button layout in XML for an Android app.</p>
+                            <h4>Time and Space Complexity</h4>
+                            <p>Complexity analysis measures algorithm efficiency (e.g., O(n) for linear, O(log n) for binary search) in time and space.</p>
+                            <p><strong>Key Points:</strong> Use Big-O notation; consider best/worst cases; optimize loops.</p>
+                            <p><strong>Example:</strong> Binary search: O(log n) time complexity.</p>
                             <p><strong>Resource:</strong> 
-                                <a href="https://material.io/design" target="_blank">Material Design</a>, 
-                                <a href="https://developer.apple.com/design/human-interface-guidelines" target="_blank">Apple HIG</a>, 
-                                <a href="https://www.youtube.com/watch?v=8pH7q2Q5c-Q" target="_blank">📺 YouTube: Mobile UI Design (DesignCode)</a>
+                                <a href="https://www.geeksforgeeks.org/analysis-of-algorithms/" target="_blank">GeeksforGeeks: Complexity</a>, 
+                                <a href="https://www.programiz.com/dsa/time-complexity" target="_blank">Programiz: Complexity</a>, 
+                                <a href="https://www.youtube.com/watch?v=0IAPZzGSbME" target="_blank">📺 YouTube: Complexity Tutorial (HackerRank)</a>
                             </p>
                         </div>
                     </li>
                     <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="project-basics">
-                        <span>Project: Simple To-Do App</span>
+                        <input type="checkbox" class="progress-checkbox" data-topic="project-basics-dsa">
+                        <span>Project: Implement Array Operations</span>
                         <div class="details">
-                            <h4>Project: Simple To-Do App</h4>
-                            <p>Build a basic To-Do app with add, delete, and view functionality using Android Studio or Xcode.</p>
-                            <p><strong>Key Points:</strong> Use lists or tables; implement basic CRUD; test on emulator.</p>
-                            <p><strong>Example:</strong> An app with a text input and a list of tasks.</p>
+                            <h4>Project: Implement Array Operations</h4>
+                            <p>Implement functions for array operations like reversal, sorting, and searching in any language.</p>
+                            <p><strong>Key Points:</strong> Use built-in sort if allowed; test edge cases; analyze complexity.</p>
+                            <p><strong>Example:</strong> <code>int[] arr = {3, 1, 4}; Arrays.sort(arr);</code></p>
                             <p><strong>Resource:</strong> 
-                                <a href="https://developer.android.com/codelabs" target="_blank">Android Codelabs</a>, 
-                                <a href="https://developer.apple.com/tutorials" target="_blank">Apple Tutorials</a>, 
-                                <a href="https://www.youtube.com/watch?v=7hZ8T4RgQYA" target="_blank">📺 YouTube: To-Do App Tutorial (Coding in Flow)</a>
+                                <a href="https://www.geeksforgeeks.org/array-data-structure/" target="_blank">GeeksforGeeks: Arrays</a>, 
+                                <a href="https://leetcode.com/problemset/all/" target="_blank">LeetCode Problems</a>, 
+                                <a href="https://www.youtube.com/watch?v=9oX8xZ5H_Sw" target="_blank">📺 YouTube: Array Projects (Abdul Bari)</a>
                             </p>
                         </div>
                     </li>
                 </ul>
             </li>
             <li>
-                <span>Step 2: Core Development</span>
+                <span>Step 2: Intermediate DSA</span>
                 <ul>
                     <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="native-dev">
-                        <span>Native Development (Android/iOS)</span>
+                        <input type="checkbox" class="progress-checkbox" data-topic="stacks-queues">
+                        <span>Stacks and Queues</span>
                         <div class="details">
-                            <h4>Native Development</h4>
-                            <p>Native development uses platform-specific languages (Java/Kotlin for Android, Swift/Objective-C for iOS) for optimal performance and access to device features.</p>
-                            <p><strong>Key Points:</strong> Learn platform APIs; handle permissions; optimize for speed.</p>
-                            <p><strong>Example:</strong> Using Kotlin to access Android camera API.</p>
+                            <h4>Stacks and Queues</h4>
+                            <p>Stacks (LIFO) and queues (FIFO) are linear structures for managing data, used in undo operations and task scheduling.</p>
+                            <p><strong>Key Points:</strong> Use O(1) for push/pop; implement with arrays or linked lists; handle overflow.</p>
+                            <p><strong>Example:</strong> <code>Stack&lt;Integer&gt; stack = new Stack&lt;&gt;(); stack.push(1);</code></p>
                             <p><strong>Resource:</strong> 
-                                <a href="https://kotlinlang.org/docs/mobile/home.html" target="_blank">Kotlin Docs</a>, 
-                                <a href="https://developer.apple.com/swift/" target="_blank">Swift Docs</a>, 
-                                <a href="https://www.youtube.com/watch?v=X0m1C6m8Q8A" target="_blank">📺 YouTube: Native Dev (CodeWithChris)</a>
+                                <a href="https://www.geeksforgeeks.org/stack-data-structure/" target="_blank">GeeksforGeeks: Stacks</a>, 
+                                <a href="https://www.tutorialspoint.com/data_structures_algorithms/queue_algorithm.htm" target="_blank">TutorialsPoint: Queues</a>, 
+                                <a href="https://www.youtube.com/watch?v=J2eme2kZLIk" target="_blank">📺 YouTube: Stacks/Queues (Abdul Bari)</a>
                             </p>
                         </div>
                     </li>
                     <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="cross-platform">
-                        <span>Cross-Platform Development</span>
+                        <input type="checkbox" class="progress-checkbox" data-topic="trees">
+                        <span>Trees and Binary Trees</span>
                         <div class="details">
-                            <h4>Cross-Platform Development</h4>
-                            <p>Cross-platform frameworks (Flutter, React Native) allow single codebase deployment on Android and iOS, using Dart or JavaScript.</p>
-                            <p><strong>Key Points:</strong> Reuse code; manage state; handle platform differences.</p>
-                            <p><strong>Example:</strong> Building a Flutter app with a shared UI for iOS and Android.</p>
+                            <h4>Trees and Binary Trees</h4>
+                            <p>Trees are hierarchical structures; binary trees have at most two children per node, used for searching and sorting.</p>
+                            <p><strong>Key Points:</strong> Use inorder traversal; balance trees for O(log n); handle null nodes.</p>
+                            <p><strong>Example:</strong> <code>class Node { int value; Node left, right; }</code></p>
                             <p><strong>Resource:</strong> 
-                                <a href="https://flutter.dev/docs" target="_blank">Flutter Docs</a>, 
-                                <a href="https://reactnative.dev/docs/getting-started" target="_blank">React Native Docs</a>, 
-                                <a href="https://www.youtube.com/watch?v=1ukSR1GRtMU" target="_blank">📺 YouTube: Cross-Platform (freeCodeCamp)</a>
+                                <a href="https://www.geeksforgeeks.org/binary-tree-data-structure/" target="_blank">GeeksforGeeks: Trees</a>, 
+                                <a href="https://www.programiz.com/dsa/tree" target="_blank">Programiz: Trees</a>, 
+                                <a href="https://www.youtube.com/watch?v=9oX8xZ5H_Sw" target="_blank">📺 YouTube: Trees Tutorial (Abdul Bari)</a>
                             </p>
                         </div>
                     </li>
                     <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="apis-mobile">
-                        <span>Working with APIs</span>
+                        <input type="checkbox" class="progress-checkbox" data-topic="sorting">
+                        <span>Sorting Algorithms</span>
                         <div class="details">
-                            <h4>Working with APIs</h4>
-                            <p>Integrate RESTful APIs to fetch data (e.g., weather, user info) using HTTP requests in mobile apps.</p>
-                            <p><strong>Key Points:</strong> Use Retrofit (Android) or URLSession (iOS); handle JSON; manage network errors.</p>
-                            <p><strong>Example:</strong> Fetching weather data in a Flutter app.</p>
+                            <h4>Sorting Algorithms</h4>
+                            <p>Sorting includes algorithms like Quick Sort (O(n log n)), Merge Sort, and Bubble Sort (O(n²)) for ordering data.</p>
+                            <p><strong>Key Points:</strong> Choose based on stability; optimize for small/large datasets; implement recursively.</p>
+                            <p><strong>Example:</strong> <code>quickSort(arr, 0, arr.length - 1);</code></p>
                             <p><strong>Resource:</strong> 
-                                <a href="https://square.github.io/retrofit/" target="_blank">Retrofit</a>, 
-                                <a href="https://developer.apple.com/documentation/foundation/urlsession" target="_blank">URLSession</a>, 
-                                <a href="https://www.youtube.com/watch?v=3uF9Z7gA-YI" target="_blank">📺 YouTube: API Integration (The Net Ninja)</a>
+                                <a href="https://www.geeksforgeeks.org/sorting-algorithms/" target="_blank">GeeksforGeeks: Sorting</a>, 
+                                <a href="https://www.tutorialspoint.com/data_structures_algorithms/sorting_algorithms.htm" target="_blank">TutorialsPoint: Sorting</a>, 
+                                <a href="https://www.youtube.com/watch?v=9oX8xZ5H_Sw" target="_blank">📺 YouTube: Sorting Algorithms (Abdul Bari)</a>
                             </p>
                         </div>
                     </li>
                     <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="project-core">
-                        <span>Project: Social Media Feed App</span>
+                        <input type="checkbox" class="progress-checkbox" data-topic="project-intermediate-dsa">
+                        <span>Project: Implement Stack-Based Expression Evaluator</span>
                         <div class="details">
-                            <h4>Project: Social Media Feed App</h4>
-                            <p>Develop an app displaying a social media feed with posts, likes, and comments using a cross-platform framework.</p>
-                            <p><strong>Key Points:</strong> Use API for data; implement lists; add user interaction.</p>
-                            <p><strong>Example:</strong> A React Native app fetching posts from a mock API.</p>
+                            <h4>Project: Implement Stack-Based Expression Evaluator</h4>
+                            <p>Build a program to evaluate arithmetic expressions (e.g., "3 + 5 * 2") using a stack.</p>
+                            <p><strong>Key Points:</strong> Use postfix notation; handle operators; test with multiple inputs.</p>
+                            <p><strong>Example:</strong> Evaluating "3 5 2 * +" = 13.</p>
                             <p><strong>Resource:</strong> 
-                                <a href="https://reactnative.dev/docs/tutorial" target="_blank">React Native Tutorial</a>, 
-                                <a href="https://flutter.dev/docs/codelabs" target="_blank">Flutter Codelabs</a>, 
-                                <a href="https://www.youtube.com/watch?v=0kL5h6iS7zQ" target="_blank">📺 YouTube: Feed App (Academind)</a>
+                                <a href="https://www.geeksforgeeks.org/expression-evaluation/" target="_blank">GeeksforGeeks: Expression Eval</a>, 
+                                <a href="https://leetcode.com/problems/evaluate-reverse-polish-notation/" target="_blank">LeetCode: RPN</a>, 
+                                <a href="https://www.youtube.com/watch?v=9oX8xZ5H_Sw" target="_blank">📺 YouTube: Stack Project (Abdul Bari)</a>
                             </p>
                         </div>
                     </li>
                 </ul>
             </li>
             <li>
-                <span>Step 3: Advanced Features</span>
+                <span>Step 3: Advanced DSA</span>
                 <ul>
                     <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="offline-sync">
-                        <span>Offline Sync and Storage</span>
+                        <input type="checkbox" class="progress-checkbox" data-topic="graphs">
+                        <span>Graphs</span>
                         <div class="details">
-                            <h4>Offline Sync and Storage</h4>
-                            <p>Enable offline functionality using Room (Android), Core Data (iOS), or SQLite, syncing data when online.</p>
-                            <p><strong>Key Points:</strong> Use local databases; handle conflicts; test offline mode.</p>
-                            <p><strong>Example:</strong> Saving a to-do list offline in a Flutter app.</p>
+                            <h4>Graphs</h4>
+                            <p>Graphs consist of nodes and edges, used for networks and pathfinding (e.g., Dijkstra’s algorithm).</p>
+                            <p><strong>Key Points:</strong> Use adjacency lists; implement BFS/DFS; optimize for cycles.</p>
+                            <p><strong>Example:</strong> <code>graph.addEdge(0, 1);</code> in an adjacency list.</p>
                             <p><strong>Resource:</strong> 
-                                <a href="https://developer.android.com/training/data-storage/room" target="_blank">Room Docs</a>, 
-                                <a href="https://developer.apple.com/documentation/coredata" target="_blank">Core Data</a>, 
-                                <a href="https://www.youtube.com/watch?v=7gOWx0pQ-6o" target="_blank">📺 YouTube: Offline Sync (Reso Coder)</a>
+                                <a href="https://www.geeksforgeeks.org/graph-data-structure-and-algorithms/" target="_blank">GeeksforGeeks: Graphs</a>, 
+                                <a href="https://www.programiz.com/dsa/graph" target="_blank">Programiz: Graphs</a>, 
+                                <a href="https://www.youtube.com/watch?v=9oX8xZ5H_Sw" target="_blank">📺 YouTube: Graphs Tutorial (Abdul Bari)</a>
                             </p>
                         </div>
                     </li>
                     <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="push-notifications">
-                        <span>Push Notifications</span>
+                        <input type="checkbox" class="progress-checkbox" data-topic="dynamic-programming">
+                        <span>Dynamic Programming</span>
                         <div class="details">
-                            <h4>Push Notifications</h4>
-                            <p>Implement push notifications using Firebase Cloud Messaging (FCM) or APNs to engage users.</p>
-                            <p><strong>Key Points:</strong> Set up FCM/APNs; handle user permissions; test delivery.</p>
-                            <p><strong>Example:</strong> Sending a reminder notification in an Android app.</p>
+                            <h4>Dynamic Programming</h4>
+                            <p>DP solves complex problems by breaking them into subproblems, storing results (memoization or tabulation).</p>
+                            <p><strong>Key Points:</strong> Identify overlapping subproblems; use bottom-up/top-down; optimize space.</p>
+                            <p><strong>Example:</strong> Fibonacci with DP: <code>dp[0] = 0; dp[1] = 1; for (i=2; i&lt;n; i++) dp[i] = dp[i-1] + dp[i-2];</code></p>
                             <p><strong>Resource:</strong> 
-                                <a href="https://firebase.google.com/docs/cloud-messaging" target="_blank">FCM Docs</a>, 
-                                <a href="https://developer.apple.com/notifications/" target="_blank">APNs Docs</a>, 
-                                <a href="https://www.youtube.com/watch?v=4YJ8vZaUo1Q" target="_blank">📺 YouTube: Push Notifications (The Net Ninja)</a>
+                                <a href="https://www.geeksforgeeks.org/dynamic-programming/" target="_blank">GeeksforGeeks: DP</a>, 
+                                <a href="https://www.programiz.com/dsa/dynamic-programming" target="_blank">Programiz: DP</a>, 
+                                <a href="https://www.youtube.com/watch?v=9oX8xZ5H_Sw" target="_blank">📺 YouTube: DP Tutorial (Abdul Bari)</a>
                             </p>
                         </div>
                     </li>
                     <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="security-mobile">
-                        <span>Security Best Practices</span>
+                        <input type="checkbox" class="progress-checkbox" data-topic="greedy">
+                        <span>Greedy Algorithms</span>
                         <div class="details">
-                            <h4>Security Best Practices</h4>
-                            <p>Secure apps with encryption, secure API calls, and input validation to protect user data.</p>
-                            <p><strong>Key Points:</strong> Use HTTPS; encrypt sensitive data; validate inputs.</p>
-                            <p><strong>Example:</strong> Encrypting user passwords in an iOS app.</p>
+                            <h4>Greedy Algorithms</h4>
+                            <p>Greedy algorithms make locally optimal choices (e.g., Huffman coding, Kruskal’s algorithm) for global solutions.</p>
+                            <p><strong>Key Points:</strong> Prove optimality; handle constraints; compare with DP.</p>
+                            <p><strong>Example:</strong> Coin change with greedy: Use largest denomination first.</p>
                             <p><strong>Resource:</strong> 
-                                <a href="https://developer.android.com/topic/security/best-practices" target="_blank">Android Security</a>, 
-                                <a href="https://developer.apple.com/security/" target="_blank">Apple Security</a>, 
-                                <a href="https://www.youtube.com/watch?v=9wXzE2h3p5w" target="_blank">📺 YouTube: Mobile Security (OWASP)</a>
+                                <a href="https://www.geeksforgeeks.org/greedy-algorithms/" target="_blank">GeeksforGeeks: Greedy</a>, 
+                                <a href="https://www.tutorialspoint.com/data_structures_algorithms/greedy_algorithm.htm" target="_blank">TutorialsPoint: Greedy</a>, 
+                                <a href="https://www.youtube.com/watch?v=9oX8xZ5H_Sw" target="_blank">📺 YouTube: Greedy Tutorial (Abdul Bari)</a>
                             </p>
                         </div>
                     </li>
                     <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="project-advanced">
-                        <span>Project: E-Commerce App</span>
+                        <input type="checkbox" class="progress-checkbox" data-topic="project-advanced-dsa">
+                        <span>Project: Solve Coding Challenges</span>
                         <div class="details">
-                            <h4>Project: E-Commerce App</h4>
-                            <p>Build an e-commerce app with product listings, cart, and payment integration using a native or cross-platform framework.</p>
-                            <p><strong>Key Points:</strong> Integrate payment APIs; use offline storage; ensure security.</p>
-                            <p><strong>Example:</strong> A Flutter app with Stripe payment and product search.</p>
+                            <h4>Project: Solve Coding Challenges</h4>
+                            <p>Solve 10-15 problems on platforms like LeetCode or HackerRank using various DSA techniques.</p>
+                            <p><strong>Key Points:</strong> Practice daily; use optimal solutions; review explanations.</p>
+                            <p><strong>Example:</strong> Solving "Two Sum" with hash maps.</p>
                             <p><strong>Resource:</strong> 
-                                <a href="https://stripe.com/docs" target="_blank">Stripe Docs</a>, 
-                                <a href="https://flutter.dev/docs/cookbook" target="_blank">Flutter Cookbook</a>, 
-                                <a href="https://www.youtube.com/watch?v=8m2aQ9r4e3M" target="_blank">📺 YouTube: E-Commerce App (Fireship)</a>
-                            </p>
-                        </div>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <span>Step 4: Deployment and Maintenance</span>
-                <ul>
-                    <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="app-store">
-                        <span>Publishing to App Stores</span>
-                        <div class="details">
-                            <h4>Publishing to App Stores</h4>
-                            <p>Publish apps to Google Play (Android) or App Store (iOS) by preparing assets, writing descriptions, and meeting guidelines.</p>
-                            <p><strong>Key Points:</strong> Create icons/screenshots; comply with policies; test before submission.</p>
-                            <p><strong>Example:</strong> Uploading a To-Do app to Google Play.</p>
-                            <p><strong>Resource:</strong> 
-                                <a href="https://play.google.com/console" target="_blank">Google Play Console</a>, 
-                                <a href="https://developer.apple.com/app-store/" target="_blank">App Store Connect</a>, 
-                                <a href="https://www.youtube.com/watch?v=5XgY3yF0S5E" target="_blank">📺 YouTube: App Store Publish (DesignCourse)</a>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="updates">
-                        <span>App Updates and Maintenance</span>
-                        <div class="details">
-                            <h4>App Updates and Maintenance</h4>
-                            <p>Maintain apps with bug fixes, feature updates, and performance optimization based on user feedback.</p>
-                            <p><strong>Key Points:</strong> Monitor crash reports; roll out updates; improve UI/UX.</p>
-                            <p><strong>Example:</strong> Fixing a login bug in an iOS app update.</p>
-                            <p><strong>Resource:</strong> 
-                                <a href="https://developer.android.com/studio/publish/updating" target="_blank">Android Updates</a>, 
-                                <a href="https://developer.apple.com/app-store/maintenance/" target="_blank">Apple Maintenance</a>, 
-                                <a href="https://www.youtube.com/watch?v=7hZ8T4RgQYA" target="_blank">📺 YouTube: App Maintenance (Coding in Flow)</a>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="analytics">
-                        <span>Analytics and User Feedback</span>
-                        <div class="details">
-                            <h4>Analytics and User Feedback</h4>
-                            <p>Use tools like Firebase Analytics or Mixpanel to track user behavior and gather feedback for improvements.</p>
-                            <p><strong>Key Points:</strong> Track events (e.g., clicks); analyze retention; act on feedback.</p>
-                            <p><strong>Example:</strong> Monitoring app crashes with Firebase.</p>
-                            <p><strong>Resource:</strong> 
-                                <a href="https://firebase.google.com/docs/analytics" target="_blank">Firebase Analytics</a>, 
-                                <a href="https://mixpanel.com/" target="_blank">Mixpanel</a>, 
-                                <a href="https://www.youtube.com/watch?v=4YJ8vZaUo1Q" target="_blank">📺 YouTube: Analytics Setup (The Net Ninja)</a>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <input type="checkbox" class="progress-checkbox" data-topic="project-deploy">
-                        <span>Project: Deploy a Final App</span>
-                        <div class="details">
-                            <h4>Project: Deploy a Final App</h4>
-                            <p>Deploy a complete app (e.g., e-commerce or social app) to both Google Play and App Store.</p>
-                            <p><strong>Key Points:</strong> Prepare assets; submit for review; monitor post-launch.</p>
-                            <p><strong>Example:</strong> Publishing a Flutter e-commerce app to both stores.</p>
-                            <p><strong>Resource:</strong> 
-                                <a href="https://flutter.dev/docs/deployment" target="_blank">Flutter Deployment</a>, 
-                                <a href="https://developer.apple.com/app-store/submissions/" target="_blank">App Store Submission</a>, 
-                                <a href="https://www.youtube.com/watch?v=5XgY3yF0S5E" target="_blank">📺 YouTube: Deployment Guide (DesignCourse)</a>
+                                <a href="https://leetcode.com/problemset/all/" target="_blank">LeetCode</a>, 
+                                <a href="https://www.hackerrank.com/domains/algorithms" target="_blank">HackerRank</a>, 
+                                <a href="https://www.youtube.com/watch?v=9oX8xZ5H_Sw" target="_blank">📺 YouTube: Coding Challenges (Abdul Bari)</a>
                             </p>
                         </div>
                     </li>
@@ -745,7 +680,7 @@
             </li>
         </ul>
     </div>
-    <a href="scheduleflutter.html" class="schedule-button fade-in delay-5">Schedule Your Learning</a>
+    <a href="scheduledsa.html" class="schedule-button fade-in delay-5">Schedule Your Learning</a>
 
     <a href="roadmaps.html" class="back-button fade-in delay-5">Back to Career Paths</a>
 
@@ -790,7 +725,7 @@
             // Load progress from localStorage
             checkboxes.forEach((checkbox) => {
                 const topic = checkbox.getAttribute("data-topic");
-                const isChecked = localStorage.getItem(`mobile-progress-${topic}`) === "true";
+                const isChecked = localStorage.getItem(`dsa-progress-${topic}`) === "true";
                 checkbox.checked = isChecked;
                 if (isChecked) {
                     checkbox.parentElement.classList.add("completed");
@@ -812,7 +747,7 @@
             checkboxes.forEach((checkbox) => {
                 checkbox.addEventListener("change", () => {
                     const topic = checkbox.getAttribute("data-topic");
-                    localStorage.setItem(`mobile-progress-${topic}`, checkbox.checked);
+                    localStorage.setItem(`dsa-progress-${topic}`, checkbox.checked);
                     if (checkbox.checked) {
                         checkbox.parentElement.classList.add("completed");
                     } else {
