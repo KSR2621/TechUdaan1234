@@ -197,7 +197,7 @@
         .counselor-card h3 {
             font-family: 'Playfair Display', serif;
             font-size: 1.5rem;
-            color: var(--text-primary);
+            color: var (--text-primary);
             margin-bottom: 0.5rem;
             text-shadow: 0 0 5px var(--cyber-purple);
         }
@@ -315,7 +315,7 @@
     </section>
 
     <!-- Back Button -->
-    <a href="/index.html#counseling" class="back-button fade-in delay-4">Back</a>
+    <a href="javascript:void(0);" id="backButton" class="back-button fade-in delay-4">Back</a>
 
     <footer class="fade-in delay-4">
         <p>Happy Learning! 🚀 | Tech Udaan © 2025</p>
@@ -401,6 +401,11 @@
         window.showExpertDetails = function (id) {
             window.location.href = `expert.html?id=${id}`;
         };
+
+        // Back Button Event Listener
+        document.getElementById('backButton').addEventListener('click', function() {
+            window.location.href = '/index.html#counseling';
+        });
     </script>
 </body>
 </html>
