@@ -235,7 +235,7 @@
             margin: 2rem auto;
             padding: 12px 24px;
             background: var(--gradient-1);
-            color: var(--dark-bg);
+            color: var (--dark-bg);
             text-align: center;
             text-decoration: none;
             border-radius: 8px;
@@ -347,11 +347,11 @@
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 const size = Math.random() * 3 + 1;
-                particle.style.width = ${size}px;
-                particle.style.height = ${size}px;
-                particle.style.left = ${Math.random() * 100}vw;
-                particle.style.animationDuration = ${Math.random() * 5 + 5}s;
-                particle.style.animationDelay = ${Math.random() * 5}s;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
                 particlesContainer.appendChild(particle);
             }
         }
@@ -399,7 +399,7 @@
 
         // Redirect to expert.html with the expert's ID
         window.showExpertDetails = function (id) {
-            window.location.href = expert.html?id=${id};
+            window.location.href = `expert.html?id=${id}`;
         };
     </script>
 </body>
